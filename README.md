@@ -13,9 +13,9 @@ a dostupný priamo v ChatGPT chate.
 
 Hotový je návrh stacku a databázová schéma. Kód aplikácie zatiaľ neexistuje.
 
-- **Stack:** TypeScript (Node 22, Hono), PostgreSQL 17 s `pg_trgm` a `unaccent`,
-  prevádzka na vlastnom VPS.
-- **Schéma:** [`db/migrations/0001_init.sql`](db/migrations/0001_init.sql)
+- **Popis projektu:** [`docs/projekt.md`](docs/projekt.md)
+- **Plán, časová os a aktuálny stav:** [`docs/plan.md`](docs/plan.md)
+- **Schéma databázy:** [`db/migrations/0001_init.sql`](db/migrations/0001_init.sql)
 
 ## Vývoj s Claude Code
 
