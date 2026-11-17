@@ -1,0 +1,61 @@
+import { mkdtemp, writeFile, rm } from 'node:fs/promises';
+import path from 'node:path';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { migrate } from '../../src/db/migrate.ts';
+import { createEmptyDb, type Sql } from '../helpers/db.ts';
+
+let sql: Sql;
+let drop: () => Promise<void>;
+
+beforeEach(async () => {
+  ({ sql, drop } = await createEmptyDb());
+});
+afterEach(async () => {
+  await drop();
+});
+
+describe('migrate', () => {
+  it('vytvorí tabuľky z migrácií v repozitári', async () => {
+    const applied = await migrate(sql);
+
+    expect(applied).toEqual(['0001_init.sql']);
+    const tables = await sql<{ table_name: string }[]>`
+      SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'`;
+    expect(tables.map((t) => t.table_name)).toEqual(
+      expect.arrayContaining(['shops', 'offers', 'offer_price_history', 'price_alerts', 'click_logs']),
+    );
+  });
+
+  it('pri druhom spustení už nič neaplikuje', async () => {
+    await migrate(sql);
+
+    expect(await migrate(sql)).toEqual([]);
+  });
+
+  it('aplikuje len nové migrácie a v poradí podľa názvu', async () => {
+    const dir = await mkdtemp(path.join(process.cwd(), 'node_modules', '.cache', 'mig-'));
+    try {
+      await writeFile(path.join(dir, '0002_b.sql'), 'ALTER TABLE a ADD COLUMN y int;');
+      await writeFile(path.join(dir, '0001_a.sql'), 'CREATE TABLE a (x int);');
+      expect(await migrate(sql, dir)).toEqual(['0001_a.sql', '0002_b.sql']);
+
+      await writeFile(path.join(dir, '0003_c.sql'), 'ALTER TABLE a ADD COLUMN z int;');
+      expect(await migrate(sql, dir)).toEqual(['0003_c.sql']);
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+
+  it('chybná migrácia sa neaplikuje ani čiastočne', async () => {
+    const dir = await mkdtemp(path.join(process.cwd(), 'node_modules', '.cache', 'mig-'));
+    try {
+      await writeFile(path.join(dir, '0001_bad.sql'), 'CREATE TABLE ok_part (x int); SELECT nonexistent_fn();');
+      await expect(migrate(sql, dir)).rejects.toThrow();
+
+      const [row] = await sql<{ exists: boolean }[]>`SELECT to_regclass('ok_part') IS NOT NULL AS exists`;
+      expect(row?.exists).toBe(false);
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+});
