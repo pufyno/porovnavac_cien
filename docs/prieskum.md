@@ -424,6 +424,9 @@ Zdroj: <https://www.legislation.gov.uk/eudr/2019/2161/article/3/data.htm>
 - Odporúčanie: do MVP nie. Vrátiť sa k tomu po spustení, keď budú partnerské
   obchody a návštevnosť.
 
+**Rozhodnutie majiteľa 17. 11.:** súhlasí, recenzie a hodnotenie obchodov
+sa riešia až po spustení.
+
 ## 11. Čo ostáva overiť
 
 | Otázka | Kto a ako |

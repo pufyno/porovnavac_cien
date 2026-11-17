@@ -294,6 +294,7 @@ s pokynom pre asistenta, aby ceny neodhadoval.
 | 2026-11-17 | TypeScript 6 namiesto 7 | Zostavovací nástroj Vercelu s TypeScriptom 7 padá; typová kontrola aj testy prechádzajú na oboch. |
 | 2026-11-17 | Databáza ukážky je v Neone (bezplatný plán); ostrá databáza ostáva na VPS | Funkcie Vercelu nemajú pevné adresy, takže databázu na VPS by bolo treba otvoriť do internetu. Ukážkové dáta majú približne 10 MB. Neon založil PostgreSQL 18; ostrá prevádzka a testy ostávajú na 17. |
 | 2026-11-17 | Žiadosť o zaradenie do katalógu ChatGPT až s reálnymi feedmi a s MCP serverom na vlastnej doméne | Pravidlá OpenAI neprijímajú ukážkové pluginy; adresu MCP servera po zverejnení zmení len podpora. |
+| 2026-11-17 | Recenzie produktov a hodnotenie obchodov nie sú v MVP; vrátiť sa k nim po spustení (rozhodol majiteľ) | Feedy ich neobsahujú, scraping sme vylúčili a zhrnutie recenzií z webu robí AI asistent sám. Podklady v [prieskum.md](prieskum.md), kapitola 10. |
 
 ## 10. Riziká
 
@@ -325,8 +326,6 @@ Strategické, čakajú na majiteľa:
 - Len Slovensko na začiatok, alebo aj Česko. Kód podporuje obe.
 - Služba na odosielanie e-mailov a kam ukladať zálohy.
 - Kedy a podľa čoho projekt vyhodnotiť (napríklad počet preklikov po mesiaci).
-- Recenzie produktov a hodnotenie obchodov (nápad z 17. 11.; podklady
-  v [prieskum.md](prieskum.md), kapitola 10).
 
 Technické, vyriešia sa s reálnymi dátami:
 

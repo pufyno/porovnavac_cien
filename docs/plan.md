@@ -16,7 +16,7 @@ _Aktualizované: 2026-11-17_
 | **Naposledy hotové** | Názov **Cenoradar** je v kóde aj na webe (hlavička, e-maily, popis API, MCP server). Stránky `/o-nas` a `/ochrana-sukromia` uvádzajú prevádzkovateľa podľa § 4 z nastavení `OPERATOR_*` a orgán dohľadu (SOI). Zásady ochrany súkromia uvádzajú IP adresu pri preklikoch aj v záznamoch servera. Domény cenoradar.sk, .cz a .com sú voľné a v TMview nie je zhodná ochranná známka. Ukážka na <https://porovnavac-cien-nu.vercel.app> (len po prihlásení do Vercelu) funguje celá, 270 testov. |
 | **Rozpracované** | Nič. |
 | **Ďalší krok (Claude)** | Zvyšok fázy 2 čaká na rozhodnutia 6 (vizuál) a 7 (služba na e-maily). Po kúpe domény príprava nasadenia na ňu. |
-| **Čaká na majiteľa** | Kúpa domén cenoradar.sk a .cz (odporúčane aj .com), rozhodnutie 10 o recenziách, rozhodnutia 5 až 9 a dve krátke kontroly v ChatGPT. |
+| **Čaká na majiteľa** | Kúpa domén cenoradar.sk a .cz (odporúčane aj .com), rozhodnutia 5 až 9 a dve krátke kontroly v ChatGPT. |
 
 ## Rozhodnutia majiteľa
 
@@ -62,10 +62,11 @@ platili odkazy na ne. Podklady sú v [prieskum.md](prieskum.md).
    `main` ostáva v stave z 15. 11. Vercel berie `main` ako produkčnú vetvu,
    takže po zlúčení sa z nej nasadí samo.
 10. **Recenzie produktov a hodnotenie obchodov** (nápad majiteľa zo 17. 11.).
-    Feedy recenzie neobsahujú; inak by sa dali získať len scrapingom alebo
-    dohodou s Heurekou či obchodmi. Zhrnutie recenzií z webu robí ChatGPT
-    sám. Odporúčanie Claude: do MVP nie, vrátiť sa po spustení. Podklady sú
-    v [prieskum.md](prieskum.md), kapitola 10.
+    **Rozhodnuté 17. 11.:** do MVP nie, vrátiť sa po spustení, keď budú
+    partnerské obchody a návštevnosť. Feedy recenzie neobsahujú; inak by sa
+    dali získať len scrapingom alebo dohodou s Heurekou či obchodmi. Zhrnutie
+    recenzií z webu robí ChatGPT sám. Podklady sú v [prieskum.md](prieskum.md),
+    kapitola 10.
 
 ## Stratégia
 
@@ -184,3 +185,4 @@ marca 2027.
 | 2026-11-17 | Majiteľ rozhodol: priame affiliate odkazy (pred žiadosťou otázka na podporu OpenAI), MCP ako hlavné rozhranie, registrácie na fyzickú osobu. Claude pripravil šesť kandidátov na názov s doménami overenými v registroch .sk, .cz a .com. Zistené: fyzická osoba musí podľa § 4 zákona o elektronickom obchode uviesť na webe adresu bydliska a telefón. |
 | 2026-11-17 | Majiteľ vybral názov Cenoradar a potvrdil prevádzku na fyzickú osobu aj s povinnými údajmi na webe. Názov je v kóde aj na webe (predvolený `SITE_NAME`, popis OpenAPI, názov MCP servera, hlavička pri sťahovaní feedov). Domény .sk, .cz a .com overené znova, v TMview nie je zhodná ochranná známka. |
 | 2026-11-17 | Údaje prevádzkovateľa podľa § 4 zákona o elektronickom obchode: web ich berie z premenných `OPERATOR_*` (do repozitára nepatria), chýbajúce označí na doplnenie, ako orgán dohľadu uvádza SOI. Zásady ochrany súkromia doplnené o IP adresu a cookies siete pri preklikoch a o technické záznamy servera; ostáva doplniť hosting, službu na e-maily a dobu uchovania logov. Nápad majiteľa na recenzie a hodnotenie obchodov rozobraný v `prieskum.md` (kapitola 10); odporúčanie: do MVP nie. |
+| 2026-11-17 | Rozhodnutie 10: recenzie produktov a hodnotenie obchodov do MVP nie, vrátiť sa k nim po spustení. |
