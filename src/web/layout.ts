@@ -141,6 +141,17 @@ const CHROME = `
 .footer-note p{margin:0;max-width:80ch}
 `;
 
+/** Prvky, ktoré zdieľa viac stránok. */
+const PARTS = `
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;font-size:13px;font-weight:700;line-height:1.3;white-space:nowrap}
+.badge-bad-dark{background:rgba(255,122,110,.14);color:var(--coral)}
+.badge-good-dark{background:rgba(75,227,166,.14);color:var(--mint)}
+.feature-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 52px;width:52px;height:52px;border-radius:14px;background:var(--navy);color:var(--accent)}
+.badge-neutral-dark{background:rgba(238,243,251,.1);color:var(--on-dark-2)}
+.badge-wait-dark{background:rgba(255,201,120,.14);color:#FFC978}
+.icon-box{display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;width:44px;height:44px;border-radius:12px;background:var(--navy);color:var(--accent)}
+`;
+
 /** Úvodná stránka (home.ts). */
 const HOME = `
 .radar{position:absolute;width:960px;height:960px;right:-300px;top:50%;transform:translateY(-50%);border-radius:50%;pointer-events:none;
@@ -161,9 +172,6 @@ const HOME = `
 .trust{display:flex;flex-wrap:wrap;gap:10px 24px;margin:20px 0 0;padding:0;list-style:none;color:var(--on-dark-2);font-size:15px}
 .trust li{display:inline-flex;align-items:center;gap:8px}
 .trust .icon{color:var(--accent)}
-.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;font-size:13px;font-weight:700;line-height:1.3;white-space:nowrap}
-.badge-bad-dark{background:rgba(255,122,110,.14);color:var(--coral)}
-.badge-good-dark{background:rgba(75,227,166,.14);color:var(--mint)}
 .example{margin:0;padding:24px;background:var(--surface);border:1px solid var(--line-dark);border-radius:24px;box-shadow:0 30px 60px rgba(3,8,20,.35)}
 .example-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:12px}
 .example-head p{margin:0}
@@ -192,7 +200,6 @@ const HOME = `
 .features{display:grid;gap:16px;margin:32px 0 0;padding:0;list-style:none}
 @media (min-width:800px){.features{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}}
 .feature{padding:24px;background:var(--card);border:1px solid var(--border);border-radius:20px}
-.feature-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 52px;width:52px;height:52px;border-radius:14px;background:var(--navy);color:var(--accent)}
 .feature h3{margin:18px 0 8px;font-size:21px}
 .feature p{margin:0;color:var(--muted)}
 .ai-grid{display:grid;gap:40px;align-items:center}
@@ -233,7 +240,69 @@ const HOME = `
 .money a{display:inline-flex;align-items:center;gap:6px;font-weight:600}
 `;
 
-const STYLES = [FONTS, BASE, FORMS, CHROME, HOME].join('\n');
+/** Stránka produktu (search.ts, chart.ts). */
+const PRODUCT = `
+.product-head{margin-bottom:20px}
+.product-head h1{margin:0;font-size:clamp(28px,4.4vw,40px);line-height:1.15}
+.product-meta{margin:8px 0 0;color:var(--muted);font-size:14px}
+.product-top,.product-summary{display:grid;gap:10px}
+.product-bottom{display:grid;gap:24px;margin-top:32px}
+@media (min-width:1000px){.product-top{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px;align-items:start}.product-bottom{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:32px;align-items:start}.alert-card{position:sticky;top:24px}}
+.verdict{position:relative;overflow:hidden;padding:20px;border-radius:22px;background:var(--navy);color:var(--on-dark)}
+@media (min-width:640px){.verdict{padding:28px}}
+.verdict-radar{position:absolute;right:-110px;top:-110px;width:280px;height:280px;border-radius:50%;pointer-events:none;background:repeating-radial-gradient(circle,transparent 0 33px,rgba(53,224,161,.16) 33px 34px)}
+.verdict-inner{position:relative}
+.verdict-inner p{margin:0}
+.verdict-inner .verdict-kicker{margin-top:16px;color:var(--on-dark-muted);font-size:13px}
+.verdict-inner .verdict-price{margin-top:2px;font:700 48px/1.05 var(--display);font-variant-numeric:tabular-nums;letter-spacing:-.03em;color:var(--on-dark-strong)}
+.verdict-inner .verdict-shop{margin-top:4px;color:var(--on-dark-2);font-size:15px}
+.verdict-inner .verdict-reason{margin-top:14px;padding-top:14px;border-top:1px solid var(--line-dark);color:var(--on-dark-2);font-size:15px;line-height:1.5}
+.verdict-cta{display:flex;min-height:52px;margin-top:16px;border-radius:14px}
+.verdict-inner .verdict-fine{margin-top:10px;color:#8E9FBA;font-size:13px;text-align:center}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0}
+.tiles div{min-width:0;padding:12px;background:var(--card);border:1px solid var(--border);border-radius:14px}
+.tiles dt{color:var(--muted);font-size:12px;line-height:1.3}
+.tiles dd{margin:6px 0 0;font:700 clamp(16px,4.4vw,20px)/1.2 var(--display);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.tiles-note{margin:0;color:var(--muted);font-size:13px}
+.chart-card{padding:18px 16px 16px;background:var(--card);border:1px solid var(--border);border-radius:20px}
+@media (min-width:640px){.chart-card{padding:24px}}
+.chart-card h2{margin:0;font-size:18px;line-height:1.3}
+.chart-card>p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.chart{display:block;margin-top:16px;overflow:visible}
+.chart-area{fill:var(--accent);fill-opacity:.16}
+.chart-line{fill:none;stroke:var(--navy);stroke-width:2.5px;stroke-linejoin:round}
+.chart-base{stroke:var(--border);stroke-width:1px}
+.chart-ref{stroke:#8E9AAE;stroke-width:1px;stroke-dasharray:4 4}
+.chart-dot{fill:var(--accent);stroke:var(--navy);stroke-width:2px}
+.chart text{font-family:var(--font);font-size:13px;fill:var(--muted)}
+.chart .chart-max{font-weight:600;fill:var(--ink-2)}
+.chart .chart-min{font-weight:700;fill:var(--ink)}
+.offers-section h2{margin:0;font-size:22px;letter-spacing:-.01em}
+.offers-section>p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.offers{display:grid;gap:10px;margin:14px 0 0;padding:0;list-style:none}
+.offer{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 16px;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:18px}
+.offer-best{padding:15px;border:2px solid var(--navy)}
+.offer p{margin:0}
+.offer-shop{font-weight:600;overflow-wrap:anywhere}
+.offer .stock{display:flex;align-items:center;gap:6px;margin-top:4px;color:var(--muted);font-size:13px}
+.offer .stock-yes{color:var(--good)}
+.offer-price{text-align:right}
+.offer-price .num{font:700 24px/1.15 var(--display);font-variant-numeric:tabular-nums;white-space:nowrap}
+.offer .offer-label{margin-top:2px;color:var(--good);font-size:12px;font-weight:600}
+.offer-warn{grid-column:1/-1;display:flex;gap:10px;padding:12px;border-radius:12px;background:var(--bad-bg);color:var(--bad);font-size:14px;line-height:1.5}
+.offer-warn .icon{margin-top:2px;color:var(--bad-icon)}
+.offer-cta{grid-column:1/-1}
+.offer-best .offer-cta .icon{color:var(--accent)}
+@media (min-width:640px){.offer{grid-template-columns:minmax(0,1fr) auto auto;align-items:center}.offer-cta{grid-column:3;grid-row:1}.offer-warn{grid-row:2}}
+.offers-note{margin:12px 0 0;color:var(--muted);font-size:13px}
+.alert-card{padding:20px;background:var(--card);border:1px solid var(--border);border-radius:20px}
+.alert-card-head{display:flex;align-items:center;gap:12px}
+.alert-card h2{margin:0;font-size:20px;line-height:1.25}
+.alert-card p{margin:12px 0 0;color:var(--muted);font-size:15px;line-height:1.55}
+.alert-card .button{display:flex;margin-top:14px}
+`;
+
+const STYLES = [FONTS, BASE, FORMS, CHROME, PARTS, HOME, PRODUCT].join('\n');
 
 const navLinks = (variant: 'desktop' | 'mobile') =>
   variant === 'desktop'

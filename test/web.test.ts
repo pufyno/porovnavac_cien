@@ -36,6 +36,9 @@ const text = (html: string) =>
     .replace(/<[^>]+>/g, ' ')
     .replace(/\s+/g, ' ');
 
+/** Karty ponúk v poradí, v akom sú na stránke produktu. */
+const offerCards = (html: string) => (html.match(/<ol class="offers">[^]*?<\/ol>/)?.[0] ?? '').split('<li').slice(1);
+
 /** Samostatná databáza pre testy, ktoré dáta menia. */
 async function isolated<T>(run: (ctx: { sql: Sql; app: ReturnType<typeof createApp>; mailer: typeof mailer }) => Promise<T>) {
   const fresh = await createTestDb();
@@ -275,6 +278,66 @@ describe('stránka produktu', () => {
     expect(html).toContain('Dobrá cena');
     expect(html).toContain('pod 90-dňovým priemerom');
     expect(html).toContain('538,16 €');
+  });
+
+  it('karta verdiktu vedie do obchodu s najnižšou cenou skladom', async () => {
+    const { html } = await get(`/produkt/${EAN.roborockS8}`);
+    const offer = first(await sql`SELECT id FROM offers WHERE external_id = 'a-s8'`);
+    const cta = html.match(/<a [^>]*>Do obchodu E-shop alfa/)?.[0];
+
+    expect(cta).toContain(`href="https://go.domena.example/redirect?offer_id=${offer.id}&amp;source=web"`);
+    expect(cta).toContain('rel="sponsored nofollow noopener"');
+  });
+
+  it('najlacnejšiu ponuku označí', async () => {
+    const [alfa, beta] = offerCards((await get(`/produkt/${EAN.roborockS8}`)).html);
+
+    expect(alfa).toContain('E-shop alfa');
+    expect(alfa).toContain('Najnižšia cena');
+    expect(beta).toContain('E-shop beta');
+    expect(beta).not.toContain('Najnižšia cena');
+  });
+
+  it('lacnejšiu ponuku mimo skladu neoznačí ako najlepšiu', async () => {
+    await isolated(async (ctx) => {
+      await ctx.sql`UPDATE offers SET price = 479 WHERE external_id = 'b-s8'`;
+      const alfaOffer = first(await ctx.sql`SELECT id FROM offers WHERE external_id = 'a-s8'`);
+
+      const html = await (await ctx.app.request(`/produkt/${EAN.roborockS8}`)).text();
+      const [beta, alfa] = offerCards(html);
+
+      expect(beta).toContain('E-shop beta');
+      expect(beta).not.toContain('Najnižšia cena');
+      expect(alfa).toContain('Najlacnejšie skladom');
+      expect(html.match(/<a [^>]*>Do obchodu E-shop alfa/)?.[0]).toContain(`offer_id=${alfaOffer.id}&amp;`);
+    });
+  });
+
+  it('bez histórie ukáže, že priemery nevieme', async () => {
+    await isolated(async (ctx) => {
+      await ctx.sql`UPDATE product_price_stats SET avg_30d = NULL, avg_90d = NULL, min_90d = NULL, history_days = 3`;
+
+      const res = await ctx.app.request(`/produkt/${EAN.roborockS8}`);
+      const page = text(await res.text());
+
+      expect(res.status).toBe(200);
+      expect(page).toContain('Zatiaľ málo údajov');
+      expect(page).toContain('Priemer za 30 dní nevieme');
+      expect(page).toContain('Najnižšia za 90 dní nevieme');
+    });
+  });
+
+  it('bez histórie cien graf nahradí vysvetlením', async () => {
+    await isolated(async (ctx) => {
+      await ctx.sql`DELETE FROM product_price_history`;
+
+      const res = await ctx.app.request(`/produkt/${EAN.roborockS8}`);
+      const html = await res.text();
+
+      expect(res.status).toBe(200);
+      expect(html).not.toContain('class="chart"');
+      expect(text(html)).toContain('Graf ukážeme, keď budeme cenu sledovať aspoň dva dni.');
+    });
   });
 
   it('ukáže graf vývoja ceny', async () => {
