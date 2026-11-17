@@ -117,9 +117,45 @@ Web nepoužíva cookies, JavaScript ani analytiku tretích strán.
 
 ### Vizuál
 
-Zatiaľ nerozhodnuté. Prototyp má zámerne neutrálny vzhľad, názov Cenoradar je
-len text v hlavičke; všetky štýly sú v `src/web/layout.ts`. Treba určiť logo,
-farby, typografiu a tón textov.
+**Rozhodnuté 17. 11.: smer A „Radar“.** Majiteľ prijal odporúčanie Claude.
+Náhľady všetkých troch smerov sú na plátne
+<https://claude.ai/artifact/3JcfEyAZU2oFLn75mJ1QoF> (otvorí ho len majiteľ).
+
+Zvažované smery: A „Radar“ (tmavý úvod s motívom radaru), B „Svieži“ (svetlé
+farby, nálepkový štýl) a C „Nezávislý test“ (redakčný štýl spotrebiteľského
+testu). Texty a štruktúra boli vo všetkých troch rovnaké. A vyhral, lebo
+z názvu robí obraz a je zapamätateľný.
+
+- **Farby.** Tmavomodrá `#0B1220` (úvod, hlavička, pätička, karta verdiktu),
+  zvýrazňovacia mätová `#35E0A1`, svetlé stránky `#F3F6FA` s bielymi
+  kartami. Dobrá cena zelenou `#0B7A55`, „radšej počkať“ oranžovou `#A1520B`,
+  zdanlivá zľava červenou `#8A1C12` na `#FDECEA`. Význam nikdy nenesie len
+  farba, vždy aj text a ikona. Text má kontrast aspoň 4,5 : 1.
+- **Písmo.** Space Grotesk na nadpisy, ceny a logo, Inter na text. Obe sú
+  z vlastného servera, nie z Google Fonts, aby web neposielal IP adresy
+  návštevníkov tretej strane. Súbory WOFF2 sú z Fontsource 5.3.0 (latinka
+  a rozšírená latinka), licencia SIL OFL 1.1 je pri nich.
+- **Logo.** Kruhový radar s výsekom a bodom. Vychádza z neho favicon (SVG
+  a ICO), ikona pre iOS aj obrázok na zdieľanie (OG, 1200 × 630). Zdroje
+  obrázkov sú v `design/`.
+- **Úvodná stránka.** Nadpis „Je to naozaj zľava?“ s vyhľadávaním,
+  ilustračný príklad zdanlivej zľavy (515 → 740 → 519 €, vymyslené obchody,
+  výslovne označený), tri prínosy, sekcia o AI chate s ukážkou rozhovoru,
+  pás so strážením ceny a blok „Ako zarábame“. Z AI asistentov uvádzame len
+  ChatGPT a Claude; Gemini pripojí vlastný MCP server len v USA. Žiadne
+  vymyslené počty používateľov ani hodnotenia.
+- **Stránka produktu.** Tmavá karta s verdiktom, najnižšou cenou a tlačidlom
+  do obchodu, dlaždice s priemermi, graf ceny, ponuky ako karty
+  (najlacnejšia zvýraznená, zdanlivá zľava červeným blokom), karta
+  stráženia ceny.
+- **Bez JavaScriptu a cookies.** Mobilné menu je prvok `<details>`. Štýly
+  sú vložené v stránke (`src/web/layout.ts`), statické súbory v `public/`:
+  na Verceli ich podáva CDN, na VPS aplikácia. Písma sa ukladajú do
+  vyrovnávacej pamäte natrvalo, preto nový súbor písma musí mať nový názov.
+- **Tón.** Vykanie, krátke vety, bez superlatívov.
+- **Odložené.** Sekcia „Ceny, ktoré sa pohli“ na úvodnej stránke sa zapne
+  s prvým reálnym feedom. Na ukážkových dátach by vydávala vymyslené ceny
+  za skutočné.
 
 ## 5. Technológie a prevádzka
 
@@ -295,6 +331,8 @@ s pokynom pre asistenta, aby ceny neodhadoval.
 | 2026-11-17 | Databáza ukážky je v Neone (bezplatný plán); ostrá databáza ostáva na VPS | Funkcie Vercelu nemajú pevné adresy, takže databázu na VPS by bolo treba otvoriť do internetu. Ukážkové dáta majú približne 10 MB. Neon založil PostgreSQL 18; ostrá prevádzka a testy ostávajú na 17. |
 | 2026-11-17 | Žiadosť o zaradenie do katalógu ChatGPT až s reálnymi feedmi a s MCP serverom na vlastnej doméne | Pravidlá OpenAI neprijímajú ukážkové pluginy; adresu MCP servera po zverejnení zmení len podpora. |
 | 2026-11-17 | Recenzie produktov a hodnotenie obchodov nie sú v MVP; vrátiť sa k nim po spustení (rozhodol majiteľ) | Feedy ich neobsahujú, scraping sme vylúčili a zhrnutie recenzií z webu robí AI asistent sám. Podklady v [prieskum.md](prieskum.md), kapitola 10. |
+| 2026-11-17 | Vizuál webu podľa smeru A „Radar“ (majiteľ prijal odporúčanie) | Z názvu robí obraz a je zapamätateľný. Písma z vlastného servera, web ostáva bez JavaScriptu a cookies. Podrobnosti v kapitole 4. |
+| 2026-11-17 | Sekcia „Ceny, ktoré sa pohli“ na úvodnej stránke až s prvým reálnym feedom | Rozširuje rozsah fázy 2 a na ukážkových dátach by ukazovala vymyslené ceny ako skutočné. |
 
 ## 10. Riziká
 

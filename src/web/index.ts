@@ -5,9 +5,10 @@ import { registerAlertRoutes } from './alert.ts';
 import { page } from './layout.ts';
 import { registerSearchRoutes, searchForm } from './search.ts';
 import { STATIC_PAGES } from './static-pages.ts';
+import { registerStaticFiles } from './static-files.ts';
 
 const CONTENT_SECURITY_POLICY =
-  "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; form-action 'self'; " +
+  "default-src 'none'; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data:; form-action 'self'; " +
   "base-uri 'none'; frame-ancestors 'none'";
 
 const ROBOTS = `User-agent: *
@@ -29,6 +30,8 @@ export function registerWeb(app: OpenAPIHono, deps: AppDeps): void {
       c.header('Content-Security-Policy', CONTENT_SECURITY_POLICY);
     }
   });
+
+  registerStaticFiles(app);
 
   app.get('/', (c) =>
     c.html(
