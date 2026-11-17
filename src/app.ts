@@ -2,6 +2,7 @@ import { OpenAPIHono } from '@hono/zod-openapi';
 import { registerCompareRoute } from './api/compare-route.ts';
 import { UNAVAILABLE_INSTRUCTION, type AppDeps } from './deps.ts';
 import { handleMcpRequest } from './mcp/server.ts';
+import { registerRedirectRoute } from './redirect/route.ts';
 
 export function createApp(deps: AppDeps): OpenAPIHono {
   const app = new OpenAPIHono();
@@ -17,6 +18,7 @@ export function createApp(deps: AppDeps): OpenAPIHono {
   });
 
   registerCompareRoute(app, deps);
+  registerRedirectRoute(app, deps);
 
   app.doc31('/openapi.json', {
     openapi: '3.1.0',
