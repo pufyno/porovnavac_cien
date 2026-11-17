@@ -2,7 +2,7 @@ import postgres from 'postgres';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { createApp } from '../src/app.ts';
 import { createTestDb, type Sql } from './helpers/db.ts';
-import { seedCatalog, TEST_CONFIG } from './helpers/scenario.ts';
+import { seedCatalog, testDeps } from './helpers/scenario.ts';
 
 let sql: Sql;
 let drop: () => Promise<void>;
@@ -11,7 +11,7 @@ let app: ReturnType<typeof createApp>;
 beforeAll(async () => {
   ({ sql, drop } = await createTestDb());
   await seedCatalog(sql);
-  app = createApp({ sql, config: TEST_CONFIG });
+  app = createApp(testDeps(sql));
 });
 afterAll(async () => {
   await drop();
@@ -25,7 +25,7 @@ const compare = async (params: Record<string, string>) => {
 /** Aplikácia nad databázou, ktorá neodpovedá. */
 function appWithDeadDb() {
   const dead = postgres('postgres://x:x@127.0.0.1:1/x', { connect_timeout: 1, max: 1 });
-  return createApp({ sql: dead, config: TEST_CONFIG });
+  return createApp(testDeps(dead));
 }
 
 describe('GET /api/v1/product-compare', () => {

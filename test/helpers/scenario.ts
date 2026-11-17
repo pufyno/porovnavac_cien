@@ -1,4 +1,6 @@
 import { expect } from 'vitest';
+import type { Mail, Mailer } from '../../src/alerts/mailer.ts';
+import type { AppDeps } from '../../src/deps.ts';
 import type { FeedItem } from '../../src/ingest/heureka-parser.ts';
 import { importFeed } from '../../src/ingest/import-feed.ts';
 import { recomputeStats } from '../../src/stats/recompute.ts';
@@ -49,4 +51,20 @@ export async function seedCatalog(sql: Sql): Promise<{ today: string }> {
   ]);
   await recomputeStats(sql, '2026-11-17');
   return { today: '2026-11-17' };
+}
+
+/** Mailer, ktorý správy len zbiera; `failFor` simuluje výpadok doručenia na danú adresu. */
+export function memoryMailer(failFor?: string): Mailer & { sent: Mail[] } {
+  const sent: Mail[] = [];
+  return {
+    sent,
+    async send(mail) {
+      if (mail.to === failFor) throw new Error('SMTP nedostupné');
+      sent.push(mail);
+    },
+  };
+}
+
+export function testDeps(sql: Sql, mailer: Mailer = memoryMailer()): AppDeps {
+  return { sql, config: TEST_CONFIG, mailer };
 }

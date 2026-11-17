@@ -18,7 +18,7 @@ describe('migrate', () => {
   it('vytvorí tabuľky z migrácií v repozitári', async () => {
     const applied = await migrate(sql);
 
-    expect(applied).toEqual(['0001_init.sql', '0002_integrity.sql', '0003_search_text.sql']);
+    expect(applied).toEqual(['0001_init.sql', '0002_integrity.sql', '0003_search_text.sql', '0004_alert_emails.sql']);
     const tables = await sql<{ table_name: string }[]>`
       SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'`;
     expect(tables.map((t) => t.table_name)).toEqual(

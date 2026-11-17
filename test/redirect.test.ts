@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { createApp } from '../src/app.ts';
 import { createTestDb, first, type Sql } from './helpers/db.ts';
-import { seedCatalog, TEST_CONFIG } from './helpers/scenario.ts';
+import { seedCatalog, testDeps } from './helpers/scenario.ts';
 
 let sql: Sql;
 let drop: () => Promise<void>;
@@ -11,7 +11,7 @@ let offer: { id: string; shop_id: number; product_id: string };
 beforeAll(async () => {
   ({ sql, drop } = await createTestDb());
   await seedCatalog(sql);
-  app = createApp({ sql, config: TEST_CONFIG });
+  app = createApp(testDeps(sql));
   offer = first(await sql`SELECT id, shop_id, product_id FROM offers WHERE external_id = 'a-s8'`);
 });
 afterAll(async () => {
@@ -91,7 +91,7 @@ describe('GET /redirect', () => {
       await fresh.sql`UPDATE offers SET is_active = false WHERE external_id = 'a-s8'`;
       const { id } = first(await fresh.sql`SELECT id FROM offers WHERE external_id = 'a-s8'`);
 
-      const res = await createApp({ sql: fresh.sql, config: TEST_CONFIG }).request(`/redirect?offer_id=${id}`);
+      const res = await createApp(testDeps(fresh.sql)).request(`/redirect?offer_id=${id}`);
 
       expect(res.status).toBe(302);
     } finally {
@@ -106,7 +106,7 @@ describe('GET /redirect', () => {
       await fresh.sql`UPDATE shop_feeds SET is_active = false`;
       const { id } = first(await fresh.sql`SELECT id FROM offers WHERE external_id = 'a-s8'`);
 
-      const res = await createApp({ sql: fresh.sql, config: TEST_CONFIG }).request(`/redirect?offer_id=${id}`);
+      const res = await createApp(testDeps(fresh.sql)).request(`/redirect?offer_id=${id}`);
 
       expect(res.headers.get('location')).toBe('https://shop.example/p/a-s8');
     } finally {
