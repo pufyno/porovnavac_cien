@@ -243,7 +243,7 @@ const HOME = `
 /** Stránka produktu (search.ts, chart.ts). */
 const PRODUCT = `
 .product-head{margin-bottom:20px}
-.product-head h1{margin:0;font-size:clamp(28px,4.4vw,40px);line-height:1.15}
+.product-head h1{margin:0;font-size:clamp(28px,4.4vw,40px);line-height:1.15;overflow-wrap:anywhere}
 .product-meta{margin:8px 0 0;color:var(--muted);font-size:14px}
 .product-top,.product-summary{display:grid;gap:10px}
 .product-bottom{display:grid;gap:24px;margin-top:32px}
@@ -316,7 +316,7 @@ const FLOWS = `
 .result .icon{color:var(--good)}
 .alert-product{margin:0 0 4px;padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:14px}
 .alert-product p{margin:0}
-.alert-product .alert-product-name{font-weight:700}
+.alert-product .alert-product-name{font-weight:700;overflow-wrap:anywhere}
 .alert-product p+p{margin-top:4px;color:var(--muted)}
 .field-error{display:flex;align-items:flex-start;gap:6px;margin:8px 0 0;color:var(--bad);font-size:14px;font-weight:600}
 .field-error .icon{margin-top:2px;color:var(--bad-icon)}
