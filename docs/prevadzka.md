@@ -92,10 +92,22 @@ funkcia beží so starou hodnotou.
 
 ### Stav k 17. 11. 2026
 
-Databáza v Neone je naplnená a aplikácia nad ňou lokálne funguje:
-vyhľadávanie, stránka produktu s grafom, API, MCP aj preklik. Na Verceli je
-`DATABASE_URL` ešte zástupná hodnota, takže nasadená ukážka zatiaľ ukazuje len
-informačné stránky.
+Ukážka funguje celá: vyhľadávanie, stránka produktu s grafom, stráženie ceny,
+API, MCP aj preklik na zástupnú stránku e-shopu. `DATABASE_URL` je na Verceli
+uložená ako citlivá premenná, takže jej hodnotu už nejde prečítať, len
+prepísať:
+
+```
+node --env-file=.env.local -e "process.stdout.write(process.env.DATABASE_URL)" | vercel env add DATABASE_URL production --force --yes --sensitive
+```
+
+To isté pre `preview`. Príkaz treba spustiť v priečinku prepojenom s projektom
+(`vercel link`). Pozor: `vercel link` v novom priečinku stiahne premenné do
+`.env.local` a prepísal by súbor s údajmi z Neonu; v tomto repozitári ho preto
+nespúšťať, prepojenie spraviť v pomocnom priečinku a použiť `--cwd`.
+
+Produkčné nasadenie z vetvy sa robí ručne (nasadenie s cieľom `production`
+a vetvou `prototyp-api-ingestor`); push na vetvu vytvorí len náhľad.
 
 ### Na čo si dať pozor
 

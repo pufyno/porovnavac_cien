@@ -12,11 +12,11 @@ _Aktualizované: 2026-11-17_
 
 | | |
 | --- | --- |
-| **Aktuálna fáza** | Prototyp celého reťazca je hotový. Ukážka webu je nasadená na Verceli a má databázu v Neone; ostáva ich prepojiť. |
-| **Naposledy hotové** | Založený projekt v Neone (Frankfurt, PostgreSQL 18), repozitár je s ním prepojený, databáza je naplnená ukážkovými dátami. Aplikácia nad ňou lokálne funguje vrátane grafu ceny, API, MCP a prekliku. 264 testov. |
-| **Rozpracované** | Na Verceli je `DATABASE_URL` stále zástupná hodnota, preto nasadená ukážka ukazuje len informačné stránky. |
-| **Ďalší krok (Claude)** | Nastaviť `DATABASE_URL` na Verceli, nasadiť znova a overiť vyhľadávanie, graf ceny a preklik na <https://porovnavac-cien-nu.vercel.app>. |
-| **Čaká na majiteľa** | Prihlásenie nástroja Vercel na VPS (alebo ručné vloženie `DATABASE_URL` v nastaveniach projektu na Verceli). Potom rozhodnutia nižšie. |
+| **Aktuálna fáza** | Prototyp celého reťazca je hotový a ukážka beží na Verceli s databázou v Neone. |
+| **Naposledy hotové** | Ukážka na <https://porovnavac-cien-nu.vercel.app> (len po prihlásení do Vercelu) funguje celá: vyhľadávanie, stránka produktu s grafom ceny, API, preklik. Dáta sú ukážkové, štyri vymyslené e-shopy. 264 testov. |
+| **Rozpracované** | Nič. |
+| **Ďalší krok (Claude)** | Podľa rozhodnutí majiteľa nižšie. |
+| **Čaká na majiteľa** | Pozrieť si ukážku a rozhodnúť body nižšie; najviac blokujú 1 až 3. |
 
 ## Rozhodnutia, ktoré čakajú na majiteľa
 
@@ -124,7 +124,7 @@ marca 2027.
 ## Úlohy majiteľa
 
 - [x] Založiť hostovanú databázu pre ukážku na Verceli (Neon, 17. 11.).
-- [ ] Umožniť nastavenie `DATABASE_URL` na Verceli: prihlásiť nástroj Vercel na VPS alebo hodnotu vložiť ručne.
+- [x] Prihlásiť nástroj Vercel na VPS, aby sa dala nastaviť `DATABASE_URL` (17. 11.).
 - [ ] Rozhodnúť, na koho sa registrovať. Dognet podľa podmienok vypláca aj fyzickej osobe (minimum 100 €); pri eHub treba overiť.
 - [ ] Overiť pravidlá sietí pre zdroj návštevnosti (odkazy v AI chate).
 - [ ] Otvoriť v prehliadači stránku OpenAI o konci vlastných GPT a potvrdiť dátum 11. 12. 2026 (odkaz je v `prieskum.md`).
@@ -146,3 +146,4 @@ marca 2027.
 | 2026-11-17 | Príprava ukážky na Verceli: vstupný bod `src/index.ts`, naplnenie hostovanej databázy `pnpm demo:seed`, prechod na TypeScript 6 (Vercel so 7 nezostaví). Vetva `prototyp-api-ingestor` pushnutá na GitHub. Chýba hostovaná databáza. |
 | 2026-11-17 | Ukážka nasadená na Vercel (projekt `porovnavac-cien`, prepojený s GitHubom, región funkcií Frankfurt, prístup len po prihlásení do Vercelu). Prvé nasadenie padlo pri štarte, lebo preložené súbory odkazovali na moduly s príponou `.ts`; opravené voľbou `rewriteRelativeImportExtensions`. Overené: informačné stránky vracajú 200, API bez databázy 503, neprihlásený návštevník je presmerovaný na prihlásenie. |
 | 2026-11-17 | Databáza pre ukážku: projekt v Neone (bezplatný plán, Frankfurt, PostgreSQL 18), prepojený nástrojom `neon` (`neon.ts`, `.env.local`). Migrácie a ukážkové dáta prebehli; `pnpm migrate` a `pnpm demo:seed` používajú priame pripojenie `DATABASE_URL_UNPOOLED`, ak je nastavené. Aplikácia cez pooler overená lokálne. Na Verceli ešte treba nastaviť `DATABASE_URL`. |
+| 2026-11-17 | `DATABASE_URL` nastavená na Verceli ako citlivá premenná (Production aj Preview) priamo zo súboru cez nástroj `vercel`; nasadený commit `0c5fba3`. Na Verceli overené: API vracia porovnanie s verdiktom a upozornením na zdanlivú zľavu, stránka produktu má graf ceny, neprihlásený návštevník je presmerovaný na prihlásenie. Na VPS sú prihlásené nástroje `neon` a `vercel` (aktualizovaný na 65.17.0) a nainštalované ich pluginy pre Claude Code. |
