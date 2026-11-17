@@ -90,7 +90,9 @@ function productBody(result: Ok, history: HistoryPoint[], alertPath: string): Ht
             <h2 id="cena-teraz" class="visually-hidden">Cena teraz</h2>
             <span class="badge ${badge.className}">${icon(badge.icon, 16)}${VERDICT_LABEL[analysis.verdict]}</span>
             ${best
-              ? html`<p class="verdict-kicker">Najnižšia cena teraz</p>
+              ? html`<p class="verdict-kicker">
+                    ${best === offers[0] ? 'Najnižšia cena teraz' : 'Najnižšia cena skladom'}
+                  </p>
                   <p class="verdict-price">${formatPrice(best.price, currency)}</p>
                   <p class="verdict-shop">${best.shop_name} · ${availability(best)}</p>`
               : ''}

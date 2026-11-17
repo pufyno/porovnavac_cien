@@ -329,6 +329,18 @@ describe('stránka produktu', () => {
     });
   });
 
+  it('pri lacnejšej ponuke mimo skladu karta verdiktu píše „Najnižšia cena skladom“', async () => {
+    await isolated(async (ctx) => {
+      await ctx.sql`UPDATE offers SET price = 479 WHERE external_id = 'b-s8'`;
+
+      const html = await (await ctx.app.request(`/produkt/${EAN.roborockS8}`)).text();
+      const verdict = html.match(/<section class="verdict[^]*?<\/section>/)?.[0] ?? '';
+
+      expect(text(verdict)).toContain('Najnižšia cena skladom 489 €');
+      expect(verdict).not.toContain('Najnižšia cena teraz');
+    });
+  });
+
   it('bez histórie ukáže, že priemery nevieme', async () => {
     await isolated(async (ctx) => {
       await ctx.sql`UPDATE product_price_stats SET avg_30d = NULL, avg_90d = NULL, min_90d = NULL, history_days = 3`;
