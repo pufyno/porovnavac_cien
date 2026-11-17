@@ -18,12 +18,30 @@ describe('migrate', () => {
   it('vytvorí tabuľky z migrácií v repozitári', async () => {
     const applied = await migrate(sql);
 
-    expect(applied).toEqual(['0001_init.sql']);
+    expect(applied).toEqual(['0001_init.sql', '0002_integrity.sql']);
     const tables = await sql<{ table_name: string }[]>`
       SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'`;
     expect(tables.map((t) => t.table_name)).toEqual(
       expect.arrayContaining(['shops', 'offers', 'offer_price_history', 'price_alerts', 'click_logs']),
     );
+  });
+
+  it('e-shop musí mať menu svojej krajiny, aby sa ceny v krajine dali porovnávať', async () => {
+    await migrate(sql);
+
+    await expect(
+      sql`INSERT INTO shops (slug, name, country, currency, website_url) VALUES ('x', 'X', 'SK', 'CZK', 'https://x.example')`,
+    ).rejects.toThrow(/shops_currency_matches_country/);
+  });
+
+  it('produkt môže mať v krajine len jeden otvorený cenový interval', async () => {
+    await migrate(sql);
+    await sql`INSERT INTO products (name) VALUES ('P')`;
+    await sql`INSERT INTO product_price_history (product_id, country, valid_from, min_price) VALUES (1, 'SK', '2026-11-01', 10)`;
+
+    await expect(
+      sql`INSERT INTO product_price_history (product_id, country, valid_from, min_price) VALUES (1, 'SK', '2026-11-02', 11)`,
+    ).rejects.toThrow(/product_price_history_open/);
   });
 
   it('pri druhom spustení už nič neaplikuje', async () => {
