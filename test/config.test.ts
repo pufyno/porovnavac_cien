@@ -11,6 +11,11 @@ describe('loadConfig', () => {
         PUBLIC_BASE_URL: 'https://domena.sk/',
         REDIRECT_BASE_URL: 'https://go.domena.sk',
         SITE_NAME: 'Cenník',
+        OPERATOR_NAME: 'Ján Vzorový',
+        OPERATOR_ADDRESS: 'Hlavná 1, 811 01 Bratislava',
+        OPERATOR_EMAIL: 'kontakt@domena.sk',
+        OPERATOR_PHONE: '+421 900 000 000',
+        OPERATOR_REGISTRATION: 'IČO 12345678',
       }),
     ).toEqual({
       databaseUrl: 'postgres://u:p@localhost/db',
@@ -18,7 +23,20 @@ describe('loadConfig', () => {
       publicBaseUrl: 'https://domena.sk',
       redirectBaseUrl: 'https://go.domena.sk',
       siteName: 'Cenník',
+      operator: {
+        name: 'Ján Vzorový',
+        address: 'Hlavná 1, 811 01 Bratislava',
+        email: 'kontakt@domena.sk',
+        phone: '+421 900 000 000',
+        registration: 'IČO 12345678',
+      },
     });
+  });
+
+  it('prázdne údaje prevádzkovateľa berie ako chýbajúce', () => {
+    expect(
+      loadConfig({ DATABASE_URL: 'postgres://localhost/db', OPERATOR_NAME: '  ', OPERATOR_EMAIL: '' }).operator,
+    ).toEqual({});
   });
 
   it('bez nastavení beží lokálne na porte 3000 a presmerováva z tej istej adresy', () => {

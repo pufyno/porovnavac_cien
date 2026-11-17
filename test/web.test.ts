@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { createApp } from '../src/app.ts';
 import { createTestDb, first, type Sql } from './helpers/db.ts';
-import { memoryMailer, seedCatalog, testDeps } from './helpers/scenario.ts';
+import { memoryMailer, seedCatalog, TEST_CONFIG, testDeps } from './helpers/scenario.ts';
 import { EAN } from './helpers/seed.ts';
 
 let sql: Sql;
@@ -73,12 +73,61 @@ describe('obsahové a právne stránky', () => {
     },
   );
 
+  it('zásady ochrany súkromia priznávajú IP adresu pri preklikoch aj v technických záznamoch servera', async () => {
+    const { html } = await get('/ochrana-sukromia');
+
+    expect(html).toContain('spracúvajú vašu IP adresu a cookies');
+    expect(html).toContain('technické záznamy');
+  });
+
   it('robots.txt drží roboty mimo presmerovaní a stráženia', async () => {
     const { res, html } = await get('/robots.txt');
 
     expect(res.headers.get('content-type')).toContain('text/plain');
     expect(html).toContain('Disallow: /redirect');
     expect(html).toContain('Disallow: /alert');
+  });
+});
+
+describe('údaje prevádzkovateľa', () => {
+  const OPERATOR = {
+    name: 'Ján Vzorový',
+    address: 'Hlavná 1, 811 01 Bratislava',
+    email: 'kontakt@domena.example',
+    phone: '+421 900 000 000',
+  };
+  const getWithOperator = async (path: string) =>
+    (await createApp({ ...testDeps(sql), config: { ...TEST_CONFIG, operator: OPERATOR } }).request(path)).text();
+
+  it('kým nie sú nastavené, stránka o službe ich označí na doplnenie', async () => {
+    const { html } = await get('/o-nas');
+
+    expect(html).toContain('Pracovná verzia');
+    expect(html).toContain('[DOPLNIŤ: meno a priezvisko]');
+    expect(html).toContain('[DOPLNIŤ: adresa bydliska]');
+    expect(html).toContain('[DOPLNIŤ: e-mail]');
+    expect(html).toContain('[DOPLNIŤ: telefón]');
+  });
+
+  it('stránka o službe uvádza všetko, čo vyžaduje § 4 zákona o elektronickom obchode', async () => {
+    const html = await getWithOperator('/o-nas');
+
+    expect(html).toContain('Ján Vzorový');
+    expect(html).toContain('Hlavná 1, 811 01 Bratislava');
+    expect(html).toContain('href="mailto:kontakt@domena.example"');
+    expect(html).toContain('+421 900 000 000');
+    expect(html).toContain('Slovenská obchodná inšpekcia');
+    expect(html).not.toContain('DOPLNIŤ');
+    expect(html).not.toContain('Pracovná verzia');
+  });
+
+  it('zásady ochrany súkromia uvádzajú prevádzkovateľa a kam posielať žiadosti', async () => {
+    const html = await getWithOperator('/ochrana-sukromia');
+
+    expect(html).toContain('Prevádzkovateľom je Ján Vzorový, Hlavná 1, 811 01 Bratislava');
+    expect(html).toContain('href="mailto:kontakt@domena.example"');
+    expect(html).not.toContain('[DOPLNIŤ: meno a priezvisko]');
+    expect(html).not.toContain('[DOPLNIŤ: e-mail]');
   });
 });
 

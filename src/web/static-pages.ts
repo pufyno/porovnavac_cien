@@ -1,5 +1,5 @@
 import { html } from 'hono/html';
-import type { AppConfig } from '../config.ts';
+import type { AppConfig, OperatorInfo } from '../config.ts';
 import type { Html } from './layout.ts';
 
 interface StaticPage {
@@ -16,6 +16,17 @@ const draftNotice = html`<div class="box warn">
   <strong>Pracovná verzia.</strong> Tento text je návrh. Pred zverejnením treba doplniť označené údaje
   a dať ho skontrolovať.
 </div>`;
+
+/** Orgán dohľadu podľa § 7 zákona č. 22/2004 Z. z.; web ho musí uvádzať podľa § 4 ods. 1 písm. e). */
+const SUPERVISOR = 'Slovenská obchodná inšpekcia, Bajkalská 21/A, P. O. BOX 29, 827 99 Bratislava 27';
+
+/** Všetko, čo § 4 zákona o elektronickom obchode vyžaduje od fyzickej osoby. */
+const operatorComplete = (op: OperatorInfo) => Boolean(op.name && op.address && op.email && op.phone);
+
+const operatorName = (op: OperatorInfo) => op.name ?? todo('meno a priezvisko');
+const operatorAddress = (op: OperatorInfo) => op.address ?? todo('adresa bydliska');
+const operatorEmail = (op: OperatorInfo) =>
+  op.email ? html`<a href="mailto:${op.email}">${op.email}</a>` : todo('e-mail');
 
 export const STATIC_PAGES: StaticPage[] = [
   {
@@ -116,30 +127,40 @@ export const STATIC_PAGES: StaticPage[] = [
     path: '/o-nas',
     title: 'O službe a kontakt',
     description: 'Kto službu prevádzkuje a ako nás kontaktovať.',
-    body: () => html`<h1>O službe a kontakt</h1>
-      ${draftNotice}
+    body: ({ operator }) => html`<h1>O službe a kontakt</h1>
+      ${operatorComplete(operator) ? '' : draftNotice}
       <p>
         Porovnávame ceny elektroniky v slovenských a českých e-shopoch, sledujeme ich vývoj a upozorňujeme na
         zdanlivé zľavy.
       </p>
       <h2>Prevádzkovateľ</h2>
-      <p>${todo('meno alebo obchodné meno, adresa, IČO')}</p>
+      <p>
+        ${operatorName(operator)}<br />
+        ${operatorAddress(operator)}${operator.registration ? html`<br />${operator.registration}` : ''}
+      </p>
       <h2>Kontakt</h2>
-      <p>${todo('kontaktný e-mail')}</p>`,
+      <p>
+        E-mail: ${operatorEmail(operator)}<br />
+        Telefón: ${operator.phone ?? todo('telefón')}
+      </p>
+      <h2>Dohľad</h2>
+      <p>Dohľad nad dodržiavaním zákona o elektronickom obchode vykonáva ${SUPERVISOR}.</p>`,
   },
   {
     path: '/ochrana-sukromia',
     title: 'Ochrana súkromia',
     description: 'Aké údaje spracúvame, prečo a ako dlho.',
-    body: () => html`<h1>Ochrana súkromia</h1>
+    body: ({ operator }) => html`<h1>Ochrana súkromia</h1>
       ${draftNotice}
       <h2>Kto údaje spracúva</h2>
-      <p>${todo('prevádzkovateľ a kontakt pre otázky k osobným údajom')}</p>
+      <p>
+        Prevádzkovateľom je ${operatorName(operator)}, ${operatorAddress(operator)}.
+        Otázky k osobným údajom posielajte na ${operatorEmail(operator)}.
+      </p>
       <h2>Stráženie ceny</h2>
       <p>
         Keď si nastavíte stráženie ceny, uložíme váš e-mail, produkt a cieľovú cenu. E-mail použijeme len na
-        potvrdenie stráženia a na jednu správu, keď cena klesne. Nepoužívame ho na reklamu a nikomu ho
-        neposkytujeme, okrem služby, ktorá e-maily technicky odosiela: ${todo('názov služby na odosielanie e-mailov')}.
+        potvrdenie stráženia a na jednu správu, keď cena klesne. Nepoužívame ho na reklamu.
       </p>
       <ul>
         <li>Nepotvrdené stráženie zmažeme do 7 dní.</li>
@@ -151,15 +172,32 @@ export const STATIC_PAGES: StaticPage[] = [
       <p>
         Pri prekliku do obchodu si zapíšeme, na ktorú ponuku ste klikli, kedy a z akého zdroja (napríklad web
         alebo AI asistent). Záznam neobsahuje vašu IP adresu ani iný údaj, podľa ktorého by sme vás vedeli
-        identifikovať. Obchod a partnerská sieť môžu po prekliku používať vlastné cookies podľa svojich
-        pravidiel.
+        identifikovať.
+      </p>
+      <p>
+        Preklik vedie cez partnerskú (affiliate) sieť do obchodu.
+        Sieť a obchod pritom spracúvajú vašu IP adresu a cookies podľa svojich zásad ochrany súkromia, ako
+        samostatní prevádzkovatelia. Sieti odovzdáme len náhodný identifikátor prekliku, aby sme v jej prehľade
+        videli, z akého zdroja nákup prišiel.
+      </p>
+      <h2>Technické záznamy servera</h2>
+      <p>
+        Server, na ktorom web beží, zapisuje o každej požiadavke technické záznamy vrátane IP adresy. Slúžia na
+        ochranu pred zneužitím a na riešenie porúch, čo je náš oprávnený záujem. Mažeme ich do
+        ${todo('počet dní podľa nastavenia servera')}.
+      </p>
+      <h2>Komu údaje poskytujeme</h2>
+      <p>
+        Údaje sú uložené na serveri, ktorý nám poskytuje ${todo('poskytovateľ hostingu')}, a e-maily odosiela
+        ${todo('služba na odosielanie e-mailov')}. Tieto služby ich spracúvajú len podľa našich pokynov. Inak údaje
+        nikomu neposkytujeme ani nepredávame.
       </p>
       <h2>Cookies a analytika</h2>
       <p>Tento web nepoužíva cookies ani analytické nástroje tretích strán.</p>
       <h2>Vaše práva</h2>
       <p>
         Máte právo na prístup k údajom, ich opravu a vymazanie, na odvolanie súhlasu a na podanie sťažnosti
-        na Úrad na ochranu osobných údajov SR. ${todo('kontakt, kam žiadosti posielať')}
+        na Úrad na ochranu osobných údajov SR. Žiadosti posielajte na ${operatorEmail(operator)}.
       </p>`,
   },
 ];

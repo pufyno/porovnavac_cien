@@ -1,3 +1,15 @@
+/** Údaje o prevádzkovateľovi, ktoré musí web uvádzať (§ 4 zákona č. 22/2004 Z. z.). */
+export interface OperatorInfo {
+  /** Meno a priezvisko; pri firme obchodné meno. */
+  name?: string;
+  /** Adresa bydliska; pri firme sídlo. */
+  address?: string;
+  email?: string;
+  phone?: string;
+  /** IČO, register a číslo zápisu, IČ DPH; len ak sú. */
+  registration?: string;
+}
+
 export interface AppConfig {
   databaseUrl: string;
   port: number;
@@ -5,8 +17,27 @@ export interface AppConfig {
   publicBaseUrl: string;
   /** Adresa, na ktorej beží /redirect. Môže byť rovnaká ako publicBaseUrl. */
   redirectBaseUrl: string;
-  /** Názov služby v hlavičke webu a v e-mailoch. Finálny názov ešte nie je vybraný. */
+  /** Názov služby v hlavičke webu a v e-mailoch. */
   siteName: string;
+  /** Prevádzkovateľ pre stránky o službe a ochrane súkromia. Chýbajúce údaje web označí na doplnenie. */
+  operator: OperatorInfo;
+}
+
+const OPERATOR_ENV = {
+  name: 'OPERATOR_NAME',
+  address: 'OPERATOR_ADDRESS',
+  email: 'OPERATOR_EMAIL',
+  phone: 'OPERATOR_PHONE',
+  registration: 'OPERATOR_REGISTRATION',
+} as const satisfies Record<keyof OperatorInfo, string>;
+
+function operatorInfo(env: Record<string, string | undefined>): OperatorInfo {
+  const info: OperatorInfo = {};
+  for (const [field, name] of Object.entries(OPERATOR_ENV) as [keyof OperatorInfo, string][]) {
+    const value = env[name]?.trim();
+    if (value) info[field] = value;
+  }
+  return info;
 }
 
 function baseUrl(name: string, value: string): string {
@@ -29,6 +60,7 @@ export function loadConfig(env: Record<string, string | undefined>): AppConfig {
     publicBaseUrl,
     redirectBaseUrl: baseUrl('REDIRECT_BASE_URL', env.REDIRECT_BASE_URL ?? publicBaseUrl),
     siteName: env.SITE_NAME ?? 'Cenoradar',
+    operator: operatorInfo(env),
   };
 }
 

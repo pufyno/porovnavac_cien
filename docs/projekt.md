@@ -107,7 +107,7 @@ Web má tri úlohy, v tomto poradí dôležitosti:
 | Ako to funguje (zdroje dát, verdikt, zdanlivé zľavy) | `/ako-to-funguje` | Hotová |
 | Pripojenie do AI chatu | `/pre-ai-asistentov` | Hotová |
 | Ako zarábame | `/affiliate` | Hotová |
-| O službe a kontakt, ochrana súkromia | `/o-nas`, `/ochrana-sukromia` | Pracovná verzia; chýba prevádzkovateľ a kontakt |
+| O službe a kontakt, ochrana súkromia | `/o-nas`, `/ochrana-sukromia` | Prevádzkovateľ podľa § 4 sa berie z nastavení `OPERATOR_*`, orgán dohľadu je uvedený; v zásadách chýba hosting, služba na e-maily a doba uchovania logov |
 | Vyhľadávač | `/hladat` | Hotový |
 | Stránka produktu (ponuky, verdikt, graf ceny) | `/produkt/{ean}` | Hotová |
 | Stráženie ceny (formulár, potvrdenie, odhlásenie) | `/alert` | Hotové; e-maily sa zatiaľ neodosielajú |
@@ -197,9 +197,8 @@ Dôležité vlastnosti:
 - **Najnižšia cena produktu** je najlacnejšia ponuka skladom; ak nie je
   skladom nikde, najlacnejšia vôbec.
 - **Prekliky sú anonymné**, neukladá sa IP adresa ani údaje o prehliadači.
-  Affiliate sieť pri preklike spracúva cookies aj IP adresu. Pracovná verzia
-  zásad ochrany súkromia spomína cookies; pred zverejnením treba doplniť IP
-  adresu a príjemcov.
+  Affiliate sieť pri preklike spracúva cookies aj IP adresu; zásady ochrany
+  súkromia to uvádzajú, rovnako ako technické záznamy servera s IP adresou.
 - **E-maily zo stráženia sa mažú:** nepotvrdené po 7 dňoch, ukončené po 30.
 
 ## 7. Pravidlá výpočtu
@@ -314,7 +313,7 @@ s pokynom pre asistenta, aby ceny neodhadoval.
 | Ponuky bez EAN | Nespárujú sa a v porovnaní chýbajú. | Zmerať na prvom reálnom feede, koľko ich je; podľa toho doplniť párovanie podľa názvu. |
 | Ukážka na Verceli sa nedopatrením zverejní | Návštevník uvidí pracovné právne texty a formulár stráženia, ktorý e-mail nepošle. | Ochrana prihlásením je zapnutá pre všetky adresy projektu; nevypínať, kým web nie je pripravený. |
 | Všetko beží na jednom VPS | Výpadok alebo strata disku zastaví službu a zničí históriu. | Zálohy mimo VPS od prvého dňa zberu. |
-| E-maily v strážení ceny sú osobné údaje | Povinnosti podľa GDPR. | Potvrdenie e-mailom, odhlásenie, mazanie po lehote sú hotové; chýba uvedený prevádzkovateľ a kontrola textov. |
+| E-maily v strážení ceny sú osobné údaje | Povinnosti podľa GDPR. | Potvrdenie e-mailom, odhlásenie, mazanie po lehote sú hotové a prevádzkovateľ sa na webe zobrazí z nastavení; chýba služba na e-maily v zásadách a kontrola textov. |
 | Prevádzkovateľ je fyzická osoba | Na webe musí byť meno, adresa bydliska, e-mail a telefón (§ 4 zákona 22/2004 Z. z.); v katalógu ChatGPT meno majiteľa. | Majiteľ to 17. 11. prijal. Na telefón stačí samostatné číslo. Neskorší prechod na s.r.o. ostáva možný. |
 | Roboty a náhľady odkazov v chatoch | Nafúknu počet preklikov. | Zatiaľ neriešené; pri vyhodnocovaní porovnávať s reportom siete. |
 
@@ -326,6 +325,8 @@ Strategické, čakajú na majiteľa:
 - Len Slovensko na začiatok, alebo aj Česko. Kód podporuje obe.
 - Služba na odosielanie e-mailov a kam ukladať zálohy.
 - Kedy a podľa čoho projekt vyhodnotiť (napríklad počet preklikov po mesiaci).
+- Recenzie produktov a hodnotenie obchodov (nápad z 17. 11.; podklady
+  v [prieskum.md](prieskum.md), kapitola 10).
 
 Technické, vyriešia sa s reálnymi dátami:
 

@@ -13,10 +13,10 @@ _Aktualizované: 2026-11-17_
 | | |
 | --- | --- |
 | **Aktuálna fáza** | Prototyp celého reťazca je hotový, ukážka beží na Verceli s databázou v Neone. Prieskum realizovateľnosti je uzavretý. |
-| **Naposledy hotové** | Názov **Cenoradar** je v kóde aj na webe (hlavička, e-maily, popis API, MCP server). Domény cenoradar.sk, .cz a .com sú voľné a v TMview nie je zhodná ochranná známka. Ukážka na <https://porovnavac-cien-nu.vercel.app> (len po prihlásení do Vercelu) funguje celá, 265 testov. |
+| **Naposledy hotové** | Názov **Cenoradar** je v kóde aj na webe (hlavička, e-maily, popis API, MCP server). Stránky `/o-nas` a `/ochrana-sukromia` uvádzajú prevádzkovateľa podľa § 4 z nastavení `OPERATOR_*` a orgán dohľadu (SOI). Zásady ochrany súkromia uvádzajú IP adresu pri preklikoch aj v záznamoch servera. Domény cenoradar.sk, .cz a .com sú voľné a v TMview nie je zhodná ochranná známka. Ukážka na <https://porovnavac-cien-nu.vercel.app> (len po prihlásení do Vercelu) funguje celá, 270 testov. |
 | **Rozpracované** | Nič. |
-| **Ďalší krok (Claude)** | Fáza 2: údaje prevádzkovateľa na webe (podľa § 4 zákona o elektronickom obchode) a doplnenie zásad ochrany súkromia o IP adresu a príjemcov. |
-| **Čaká na majiteľa** | Kúpa domén cenoradar.sk a .cz (odporúčane aj .com), rozhodnutia 5 až 9 a dve krátke kontroly v ChatGPT. |
+| **Ďalší krok (Claude)** | Zvyšok fázy 2 čaká na rozhodnutia 6 (vizuál) a 7 (služba na e-maily). Po kúpe domény príprava nasadenia na ňu. |
+| **Čaká na majiteľa** | Kúpa domén cenoradar.sk a .cz (odporúčane aj .com), rozhodnutie 10 o recenziách, rozhodnutia 5 až 9 a dve krátke kontroly v ChatGPT. |
 
 ## Rozhodnutia majiteľa
 
@@ -61,6 +61,11 @@ platili odkazy na ne. Podklady sú v [prieskum.md](prieskum.md).
 9. **Zlúčiť vetvu `prototyp-api-ingestor` do `main`.** Vetva je na GitHube,
    `main` ostáva v stave z 15. 11. Vercel berie `main` ako produkčnú vetvu,
    takže po zlúčení sa z nej nasadí samo.
+10. **Recenzie produktov a hodnotenie obchodov** (nápad majiteľa zo 17. 11.).
+    Feedy recenzie neobsahujú; inak by sa dali získať len scrapingom alebo
+    dohodou s Heurekou či obchodmi. Zhrnutie recenzií z webu robí ChatGPT
+    sám. Odporúčanie Claude: do MVP nie, vrátiť sa po spustení. Podklady sú
+    v [prieskum.md](prieskum.md), kapitola 10.
 
 ## Stratégia
 
@@ -88,7 +93,7 @@ doménu, web a schválenie v sieťach.
 | --- | --- | --- | --- | --- | --- | --- |
 | 0 | Základy | Claude | Stack, schéma databázy, dokumentácia | – | 15. 11. | Hotovo |
 | 1 | Doména a právny základ | Majiteľ | Doména, DNS na VPS, jasné, na koho sa registrovať | – | 16.–22. 11. | Názov a subjekt rozhodnuté; chýba kúpa domény |
-| 2 | Fasádny web | Claude, nasadenie majiteľ | Verejný web: úvod, obsah, právne stránky | 1 (pre nasadenie) | 16.–29. 11. | Neutrálna verzia s názvom hotová; chýba vizuál a údaje prevádzkovateľa |
+| 2 | Fasádny web | Claude, nasadenie majiteľ | Verejný web: úvod, obsah, právne stránky | 1 (pre nasadenie) | 16.–29. 11. | Neutrálna verzia s názvom hotová, prevádzkovateľ sa berie z nastavení; chýba vizuál a v zásadách hosting a služba na e-maily |
 | 3 | Registrácie v sieťach | Majiteľ | Schválený účet a prvý reálny feed | 2 | 30. 11. – 13. 12. | Nezačaté |
 | 4 | Ingestor a história cien | Claude | Nočný import, párovanie cez EAN, história a štatistiky | Vývoj: 0; ostrý štart: 3 | 23. 11. – 13. 12. | Prototyp hotový; čaká na reálny feed |
 | 5 | API pre AI asistentov | Claude | `product-compare` ako MCP, REST a OpenAPI | 4 | 7.–27. 12. | Prototyp hotový |
@@ -155,7 +160,8 @@ marca 2027.
 - [ ] Otvoriť v prehliadači stránku OpenAI o konci vlastných GPT a potvrdiť dátum 11. 12. 2026 (odkaz je v `prieskum.md`).
 - [x] Vybrať názov: Cenoradar (17. 11.).
 - [ ] Kúpiť domény cenoradar.sk a cenoradar.cz, odporúčane aj cenoradar.com. Čím skôr, voľnú doménu môže ktokoľvek zaregistrovať.
-- [ ] Pripraviť údaje prevádzkovateľa na web: meno, adresa bydliska, e-mail a telefón (stačí samostatné číslo).
+- [ ] Pripraviť údaje prevádzkovateľa: meno, adresa bydliska, e-mail a telefón (stačí samostatné číslo). Pri nasadení ich zapísať do `.env` na serveri (`OPERATOR_NAME`, `OPERATOR_ADDRESS`, `OPERATOR_EMAIL`, `OPERATOR_PHONE`); do repozitára ani do chatu nepatria.
+- [ ] Pre zásady ochrany súkromia zistiť poskytovateľa VPS a ako dlho reverzný proxy uchováva logy s IP adresami (alebo IP v logoch skracovať).
 - [ ] Nasmerovať DNS domény na VPS.
 - [ ] Rozhodnúť: len Slovensko na začiatok, alebo aj Česko.
 - [ ] Rozhodnúť o vizuáli webu (spolu s Claude vo fáze 2).
@@ -174,6 +180,7 @@ marca 2027.
 | 2026-11-17 | Ukážka nasadená na Vercel (projekt `porovnavac-cien`, prepojený s GitHubom, región funkcií Frankfurt, prístup len po prihlásení do Vercelu). Prvé nasadenie padlo pri štarte, lebo preložené súbory odkazovali na moduly s príponou `.ts`; opravené voľbou `rewriteRelativeImportExtensions`. Overené: informačné stránky vracajú 200, API bez databázy 503, neprihlásený návštevník je presmerovaný na prihlásenie. |
 | 2026-11-17 | Databáza pre ukážku: projekt v Neone (bezplatný plán, Frankfurt, PostgreSQL 18), prepojený nástrojom `neon` (`neon.ts`, `.env.local`). Migrácie a ukážkové dáta prebehli; `pnpm migrate` a `pnpm demo:seed` používajú priame pripojenie `DATABASE_URL_UNPOOLED`, ak je nastavené. Aplikácia cez pooler overená lokálne. Na Verceli ešte treba nastaviť `DATABASE_URL`. |
 | 2026-11-17 | `DATABASE_URL` nastavená na Verceli ako citlivá premenná (Production aj Preview) priamo zo súboru cez nástroj `vercel`; nasadený commit `0c5fba3`. Na Verceli overené: API vracia porovnanie s verdiktom a upozornením na zdanlivú zľavu, stránka produktu má graf ceny, neprihlásený návštevník je presmerovaný na prihlásenie. Na VPS sú prihlásené nástroje `neon` a `vercel` (aktualizovaný na 65.17.0) a nainštalované ich pluginy pre Claude Code. |
-| 2026-11-17 | Prieskum realizovateľnosti distribúcie (`prieskum.md`, kapitoly 2, 3, 6 až 8 a 10). V katalógu ChatGPT sú porovnávače idealo a Klarna aj české služby Slevomat a Suri, takže pluginy v EÚ fungujú. Pravidlá OpenAI neprijímajú ukážkové pluginy ani všeobecné názvy. Gemini pripojí vlastný MCP server len v USA. Podmienky Dognetu porovnávač pripúšťajú. Písomne treba potvrdiť AI chat ako zdroj, odovzdávanie údajov z feedov platforme a upozornenia na zdanlivé zľavy. Prekliky neukladajú IP, sieť však áno, a zásady ochrany súkromia to musia uvádzať. |
+| 2026-11-17 | Prieskum realizovateľnosti distribúcie (`prieskum.md`, kapitoly 2, 3, 6 až 8 a 11). V katalógu ChatGPT sú porovnávače idealo a Klarna aj české služby Slevomat a Suri, takže pluginy v EÚ fungujú. Pravidlá OpenAI neprijímajú ukážkové pluginy ani všeobecné názvy. Gemini pripojí vlastný MCP server len v USA. Podmienky Dognetu porovnávač pripúšťajú. Písomne treba potvrdiť AI chat ako zdroj, odovzdávanie údajov z feedov platforme a upozornenia na zdanlivé zľavy. Prekliky neukladajú IP, sieť však áno, a zásady ochrany súkromia to musia uvádzať. |
 | 2026-11-17 | Majiteľ rozhodol: priame affiliate odkazy (pred žiadosťou otázka na podporu OpenAI), MCP ako hlavné rozhranie, registrácie na fyzickú osobu. Claude pripravil šesť kandidátov na názov s doménami overenými v registroch .sk, .cz a .com. Zistené: fyzická osoba musí podľa § 4 zákona o elektronickom obchode uviesť na webe adresu bydliska a telefón. |
 | 2026-11-17 | Majiteľ vybral názov Cenoradar a potvrdil prevádzku na fyzickú osobu aj s povinnými údajmi na webe. Názov je v kóde aj na webe (predvolený `SITE_NAME`, popis OpenAPI, názov MCP servera, hlavička pri sťahovaní feedov). Domény .sk, .cz a .com overené znova, v TMview nie je zhodná ochranná známka. |
+| 2026-11-17 | Údaje prevádzkovateľa podľa § 4 zákona o elektronickom obchode: web ich berie z premenných `OPERATOR_*` (do repozitára nepatria), chýbajúce označí na doplnenie, ako orgán dohľadu uvádza SOI. Zásady ochrany súkromia doplnené o IP adresu a cookies siete pri preklikoch a o technické záznamy servera; ostáva doplniť hosting, službu na e-maily a dobu uchovania logov. Nápad majiteľa na recenzie a hodnotenie obchodov rozobraný v `prieskum.md` (kapitola 10); odporúčanie: do MVP nie. |

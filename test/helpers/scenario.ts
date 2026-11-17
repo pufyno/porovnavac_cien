@@ -22,6 +22,7 @@ export const TEST_CONFIG = {
   publicBaseUrl: 'https://domena.example',
   redirectBaseUrl: 'https://go.domena.example',
   siteName: 'Cenoradar',
+  operator: {},
 };
 
 /**

@@ -350,7 +350,7 @@ o zaradenie (fáza 8).
 | Čo | Stav v prototype | Riziko | Čo s tým |
 | --- | --- | --- | --- |
 | Pole `_ai_instruction` v odpovedi | Pokyny pre model: tabuľka, upozornenie na zdanlivú zľavu, priznanie affiliate, ponuka stráženia ceny | Posudzovateľ ho môže čítať ako pokusy riadiť model; ponuka stráženia ceny môže pôsobiť ako „redirect the interaction“ | Pred žiadosťou prečítať texty proti pravidlám, ponechať vecný obsah (priznanie affiliate, obmedzené pokrytie); zvážiť neutrálny názov poľa |
-| Prekliky | `click_logs` ukladá čas, ponuku, obchod, produkt, zdroj a cenu, bez IP a prehliadača | Sieť pri preklike spracúva cookies a IP (VOP Dognet čl. 9.4) | Pracovná verzia zásad ochrany súkromia spomína cookies siete; doplniť IP adresu a príjemcov |
+| Prekliky | `click_logs` ukladá čas, ponuku, obchod, produkt, zdroj a cenu, bez IP a prehliadača | Sieť pri preklike spracúva cookies a IP (VOP Dognet čl. 9.4) | Zásady ochrany súkromia uvádzajú IP adresu a cookies siete aj záznamy servera; doplniť poskytovateľa hostingu a službu na e-maily |
 | Zakázaný tovar | Import berie celý feed | Skryté kamery, lokátory, e-cigarety či paralyzéry vo feede elektroniky | Pred žiadosťou vyradiť tieto kategórie pri importe |
 | Názov | Cenoradar (od 17. 11.) | Všeobecný slovníkový názov katalóg neprijme | Vyriešené: nie je slovníkové slovo, v TMview nie je zhodná ochranná známka |
 | Dáta | Ukážkové obchody | „Trial or demo plugins will not be accepted.“ | Žiadať až s reálnymi feedmi |
@@ -370,14 +370,61 @@ webe ľahko a trvalo sprístupniť (§ 4 ods. 1):
 - fyzická osoba: meno, priezvisko, miesto podnikania a **adresu bydliska**;
   právnická osoba: názov a sídlo;
 - adresu elektronickej pošty a **telefónne číslo**;
-- DIČ, ak je platiteľom DPH, a register so zápisom, ak v ňom je.
+- DIČ, ak je platiteľom DPH, a register so zápisom, ak v ňom je;
+- názov a adresu orgánu dozoru alebo dohľadu.
+
+Dohľad vykonáva Slovenská obchodná inšpekcia (§ 7). Za porušenie zákona
+môže uložiť pokutu od 50 € (§ 7a). Web ju preto uvádza na stránke `/o-nas`
+s adresou ústredného inšpektorátu.
 
 **Náš výklad:** porovnávač financovaný provízami je služba „za úhradu“, aj keď
 používateľ nič neplatí. Pri prevádzke na fyzickú osobu teda na web patrí aj
 adresa bydliska a telefón. Pred zverejnením webu je dobré overiť to
 u účtovníka alebo právnika.
 
-## 10. Čo ostáva overiť
+## 10. Recenzie produktov a hodnotenie obchodov
+
+Nápad majiteľa zo 17. 11. 2026: zhrnúť, či má produkt prevažne kladné alebo
+záporné recenzie, a ukázať, koľko hodnotení má obchod.
+
+**Odkiaľ by boli dáta.** Feedy vo formáte Heureka recenzie ani hodnotenie
+obchodu neobsahujú (kapitola 5). Recenzie sú na Heureke, v e-shopoch a na
+Googli. Hodnotenie „Overené zákazníkmi“ obchod prepája so svojím webom cez
+vlastný kľúč k Heureke.
+Zdroj: <https://apps.shopify.com/heureka?locale=cs>
+
+**AI asistenti to už robia sami.** ChatGPT od 24. 11. 2025 ponúka nákupný
+prieskum („shopping research“): zostaví prehľad produktov s rozdielmi, cenami
+a recenziami z webu, pre všetkých prihlásených používateľov.
+Zdroj: <https://www.retaildive.com/news/openai-launches-chatgpt-shopping-research-feature/806656/>
+
+**Pravidlá EÚ pre recenzie.** Smernica (EÚ) 2019/2161 (Omnibus) zakazuje
+tvrdiť, že recenzie sú od skutočných zákazníkov, ak to obchodník primerane
+neoverí, a zakazuje falošné alebo skreslené recenzie (príloha I k smernici
+o nekalých obchodných praktikách, body 23b a 23c). Kto recenzie sprístupňuje,
+musí uviesť, či a ako overuje, že pochádzajú od zákazníkov.
+Zdroj: <https://www.legislation.gov.uk/eudr/2019/2161/article/3/data.htm>
+
+**Náš výklad:**
+
+- Recenzie z cudzích stránok by sme museli získať scrapingom, ktorý sme
+  vylúčili, alebo dohodou. Databázy recenzií chráni aj právo k databáze
+  a podmienky týchto služieb. Hodnotenie obchodu z Heureky by sme mohli
+  ukazovať len so súhlasom obchodu a ak to dovolia podmienky Heureky; to sme
+  neoverili.
+- Zhrnutie recenzií v chate by zdvojovalo to, čo asistent urobí sám. Našou
+  odlišnosťou ostáva to, čo asistent nezíska: lokálne ceny, ich história
+  a zdanlivé zľavy.
+- Vlastné recenzie od používateľov nemáme od koho zbierať, kým nemáme
+  návštevnosť, a nákup overiť nevieme; podľa smernice by sme to museli
+  priznať.
+- Vlastný ukazovateľ obchodu z histórie cien (napríklad ako často robí
+  zdanlivé zľavy) by bol jedinečný, ale podmienky sietí zakazujú poškodzovať
+  dobré meno inzerenta (kapitola 6).
+- Odporúčanie: do MVP nie. Vrátiť sa k tomu po spustení, keď budú partnerské
+  obchody a návštevnosť.
+
+## 11. Čo ostáva overiť
 
 | Otázka | Kto a ako |
 | --- | --- |

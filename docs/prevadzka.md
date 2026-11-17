@@ -222,9 +222,11 @@ História cien sa nedá získať znova. Denný `pg_dump` musí odchádzať mimo 
 - **Odosielanie e-mailov.** Aplikácia e-maily len vypisuje do logu. Kým nie je
   vybraná služba a napísaný druhý `Mailer`, stráženie ceny nesmie byť verejné:
   formulár by sľuboval e-mail, ktorý nepríde.
-- **Právne texty.** Stránky `/o-nas` a `/ochrana-sukromia` sú pracovná verzia
-  s viditeľne označenými miestami na doplnenie.
+- **Právne texty.** Údaje prevádzkovateľa sa nastavia v `.env` premennými
+  `OPERATOR_*`; kým chýbajú, stránky ich označia na doplnenie. V zásadách
+  ochrany súkromia treba doplniť poskytovateľa hostingu, službu na e-maily
+  a dobu uchovania logov; celé texty dať skontrolovať.
 - **Obmedzenie počtu požiadaviek** na `/api/`, `/mcp` a `/alert` na úrovni
   reverzného proxy.
-- **Logy reverzného proxy** môžu obsahovať IP adresy; zásady ochrany súkromia
-  tvrdia, že pri preklikoch IP neukladáme, čo platí len pre aplikáciu.
+- **Logy reverzného proxy** obsahujú IP adresy. Zásady ochrany súkromia to
+  uvádzajú; dobu uchovania treba nastaviť na proxy a doplniť do textu.
