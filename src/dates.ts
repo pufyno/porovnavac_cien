@@ -12,6 +12,13 @@ export function diffDays(from: string, to: string): number {
   return Math.round((toMs(to) - toMs(from)) / DAY_MS);
 }
 
-export function todayUtc(): string {
-  return new Date().toISOString().slice(0, 10);
+/**
+ * Dnešný dátum v danom časovom pásme. Deň importu sa riadi miestnym časom
+ * e-shopov, nie UTC.
+ */
+export function todayIn(timeZone: string, now: Date = new Date()): string {
+  // Švédsky formát dátumu je priamo YYYY-MM-DD.
+  return new Intl.DateTimeFormat('sv-SE', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(now);
 }
+
+export const TIME_ZONE = 'Europe/Bratislava';
