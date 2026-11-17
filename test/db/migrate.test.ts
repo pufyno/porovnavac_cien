@@ -18,7 +18,7 @@ describe('migrate', () => {
   it('vytvorí tabuľky z migrácií v repozitári', async () => {
     const applied = await migrate(sql);
 
-    expect(applied).toEqual(['0001_init.sql', '0002_integrity.sql']);
+    expect(applied).toEqual(['0001_init.sql', '0002_integrity.sql', '0003_search_text.sql']);
     const tables = await sql<{ table_name: string }[]>`
       SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'`;
     expect(tables.map((t) => t.table_name)).toEqual(
@@ -42,6 +42,17 @@ describe('migrate', () => {
     await expect(
       sql`INSERT INTO product_price_history (product_id, country, valid_from, min_price) VALUES (1, 'SK', '2026-11-02', 11)`,
     ).rejects.toThrow(/product_price_history_open/);
+  });
+
+  it('vyhľadávací text nezdvojí značku, ktorá už je v názve', async () => {
+    await migrate(sql);
+
+    const rows = await sql<{ search_text: string }[]>`
+      INSERT INTO products (name, brand) VALUES
+        ('Roborock S8 White', 'Roborock'), ('S8 Čierny', 'Roborock'), ('Žltý čajník', NULL)
+      RETURNING search_text`;
+
+    expect(rows.map((r) => r.search_text)).toEqual(['roborock s8 white', 'roborock s8 cierny', 'zlty cajnik']);
   });
 
   it('pri druhom spustení už nič neaplikuje', async () => {

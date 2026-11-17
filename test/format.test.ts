@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { addDays, diffDays } from '../src/dates.ts';
-import { formatPrice } from '../src/format.ts';
+import { formatPrice, formatShops } from '../src/format.ts';
 
 describe('formatPrice', () => {
   it('celé sumy píše bez desatinných miest', () => {
@@ -26,5 +26,11 @@ describe('dátumy', () => {
   it('diffDays vráti počet dní medzi dátumami', () => {
     expect(diffDays('2026-11-10', '2026-11-17')).toBe(7);
     expect(diffDays('2026-11-17', '2026-11-10')).toBe(-7);
+  });
+});
+
+describe('formatShops', () => {
+  it('skloňuje podľa počtu', () => {
+    expect([1, 2, 4, 5, 12].map(formatShops)).toEqual(['1 obchod', '2 obchody', '4 obchody', '5 obchodov', '12 obchodov']);
   });
 });

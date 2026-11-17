@@ -14,3 +14,10 @@ export function formatDays(days: number): string {
   if (days >= 2 && days <= 4) return `${days} dni`;
   return `${days} dní`;
 }
+
+/** „1 obchod“, „3 obchody“, „7 obchodov“. */
+export function formatShops(count: number): string {
+  if (count === 1) return '1 obchod';
+  if (count >= 2 && count <= 4) return `${count} obchody`;
+  return `${count} obchodov`;
+}
