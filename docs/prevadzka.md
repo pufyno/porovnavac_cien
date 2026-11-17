@@ -120,6 +120,9 @@ a vetvou `prototyp-api-ingestor`); push na vetvu vytvorí len náhľad.
 - **Vstupný bod musí priamo importovať `hono`** a exportovať aplikáciu ako
   predvolený export, inak ho Vercel nerozpozná.
 - **Prvé nasadenie nového projektu ide vždy do produkcie**, aj z inej vetvy.
+- **Statické súbory z `public/` podáva CDN Vercelu**, nie aplikácia;
+  hlavičky pre písma nastavuje `vercel.json`. Nový súbor v `public/` treba
+  pridať aj do `src/web/static-files.ts`, inak ho na VPS aplikácia nepodá.
 - E-maily sa ani tu neodosielajú a nočný import nebeží, takže história cien
   končí dňom naplnenia.
 
@@ -167,6 +170,14 @@ pnpm start
 
 Aplikácia počúva na `127.0.0.1:3000`. Na internet ju vystavuje reverzný proxy
 s HTTPS. Stav sa dá overiť na `/health`.
+
+Aplikácia podáva aj statické súbory z `public/`: písma, favicon, ikonu pre
+iOS a obrázok na zdieľanie (zoznam je v `src/web/static-files.ts`). Písma
+majú hlavičku `Cache-Control: public, max-age=31536000, immutable`, ostatné
+súbory deň. Reverzný proxy ich môže podávať aj sám, ale s rovnakými
+hlavičkami. Prehliadače si písma držia natrvalo, preto nový súbor písma musí
+mať nový názov (zmeniť ho treba aj v `@font-face` v `src/web/layout.ts`
+a v `static-files.ts`).
 
 ### 4. Pridanie e-shopu
 

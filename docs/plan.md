@@ -12,11 +12,11 @@ _Aktualizované: 2026-11-17_
 
 | | |
 | --- | --- |
-| **Aktuálna fáza** | Prototyp celého reťazca je hotový, ukážka beží na Verceli s databázou v Neone: <https://porovnavac-cien-nu.vercel.app> (len po prihlásení do Vercelu), 270 testov. Prieskum realizovateľnosti je uzavretý. Vo fáze 2 sa web prerába na vizuál A „Radar“. |
-| **Naposledy hotové** | Tri smery vizuálu webu na výber: A „Radar“, B „Svieži“ a C „Nezávislý test“. Pri každom je úvodná stránka na počítači a stránka produktu na mobile, texty sú vo všetkých troch rovnaké. Náhľady sú na plátne <https://claude.ai/artifact/3JcfEyAZU2oFLn75mJ1QoF> (otvorí ho len majiteľ). Claude odporúča A. |
-| **Rozpracované** | Prepis webu na vizuál A „Radar“ podľa plánu `docs/superpowers/plans/2026-11-17-vizual-radar.md`. Hotová úloha 1 zo 7: písma Inter a Space Grotesk z vlastného servera (`public/fonts`, CSP `font-src 'self'`, `vercel.json`). |
-| **Ďalší krok (Claude)** | Pokračovať úlohou 2 plánu (logo, favicon, OG obrázok), potom rozloženie, úvod, stránka produktu a ostatné stránky; nakoniec nasadenie na Vercel. Služba na e-maily čaká na rozhodnutie 7. Po kúpe domény príprava nasadenia na ňu. |
-| **Čaká na majiteľa** | Kúpa domén cenoradar.sk a .cz (odporúčane aj .com), rozhodnutia 5 a 7 až 9 a dve krátke kontroly v ChatGPT. |
+| **Aktuálna fáza** | Prototyp celého reťazca je hotový, ukážka beží na Verceli s databázou v Neone: <https://porovnavac-cien-nu.vercel.app> (len po prihlásení do Vercelu), 308 testov. Prieskum realizovateľnosti je uzavretý. Web je prerobený na vizuál A „Radar“, vzhľad v prehliadači ešte musí pozrieť majiteľ. |
+| **Naposledy hotové** | Web prerobený na vizuál A „Radar“ podľa plánu `docs/superpowers/plans/2026-11-17-vizual-radar.md`: vlastné písma, logo, favicon a obrázok na zdieľanie, rozloženie s mobilným menu bez JavaScriptu, úvodná stránka „Je to naozaj zľava?“, stránka produktu s kartou verdiktu, grafom a ponukami ako kartami, výsledky vyhľadávania ako karty a chyby formulára stráženia priamo pri poli. Gemini z webu zmizol. |
+| **Rozpracované** | Kontrola vzhľadu. Claude na VPS nemôže spustiť prehliadač (účet `ai` má zámerne obmedzené práva), vzhľad preto overil len v kóde; na mobile a počítači ho treba pozrieť na Verceli. |
+| **Ďalší krok (Claude)** | Opraviť vzhľad podľa pripomienok majiteľa k náhľadu. Služba na e-maily čaká na rozhodnutie 7. Po kúpe domény príprava nasadenia na ňu. |
+| **Čaká na majiteľa** | Pozrieť nový vizuál na <https://porovnavac-cien-nu.vercel.app> na mobile aj na počítači a napísať pripomienky. Kúpa domén cenoradar.sk a .cz (odporúčane aj .com), rozhodnutia 5 a 7 až 9 a dve krátke kontroly v ChatGPT. |
 
 ## Rozhodnutia majiteľa
 
@@ -65,7 +65,8 @@ platili odkazy na ne. Podklady sú v [prieskum.md](prieskum.md).
    to nová funkcia, ktorá rozširuje rozsah fázy 2.
    **Rozhodnuté 17. 11.:** smer A (majiteľ prijal odporúčanie Claude).
    Sekcia „Ceny, ktoré sa pohli“ sa zapne až s prvým reálnym feedom.
-   Návrh je v [projekt.md](projekt.md), kapitola 4.
+   Návrh je v [projekt.md](projekt.md), kapitola 4. Na webe zavedené
+   17. 11. na vetve `prototyp-api-ingestor`.
 7. **Služba na e-maily a úložisko záloh mimo VPS.**
 8. **Podľa čoho a kedy projekt vyhodnotiť.**
 9. **Zlúčiť vetvu `prototyp-api-ingestor` do `main`.** Vetva je na GitHube,
@@ -104,7 +105,7 @@ doménu, web a schválenie v sieťach.
 | --- | --- | --- | --- | --- | --- | --- |
 | 0 | Základy | Claude | Stack, schéma databázy, dokumentácia | – | 15. 11. | Hotovo |
 | 1 | Doména a právny základ | Majiteľ | Doména, DNS na VPS, jasné, na koho sa registrovať | – | 16.–22. 11. | Názov a subjekt rozhodnuté; chýba kúpa domény |
-| 2 | Fasádny web | Claude, nasadenie majiteľ | Verejný web: úvod, obsah, právne stránky | 1 (pre nasadenie) | 16.–29. 11. | Neutrálna verzia s názvom hotová, prevádzkovateľ sa berie z nastavení; prepis na vizuál A rozpracovaný; v zásadách chýba hosting a služba na e-maily |
+| 2 | Fasádny web | Claude, nasadenie majiteľ | Verejný web: úvod, obsah, právne stránky | 1 (pre nasadenie) | 16.–29. 11. | Vizuál A „Radar“ hotový na vetve, vzhľad v prehliadači čaká na kontrolu majiteľa; prevádzkovateľ sa berie z nastavení; v zásadách chýba hosting a služba na e-maily |
 | 3 | Registrácie v sieťach | Majiteľ | Schválený účet a prvý reálny feed | 2 | 30. 11. – 13. 12. | Nezačaté |
 | 4 | Ingestor a história cien | Claude | Nočný import, párovanie cez EAN, história a štatistiky | Vývoj: 0; ostrý štart: 3 | 23. 11. – 13. 12. | Prototyp hotový; čaká na reálny feed |
 | 5 | API pre AI asistentov | Claude | `product-compare` ako MCP, REST a OpenAPI | 4 | 7.–27. 12. | Prototyp hotový |
@@ -176,6 +177,7 @@ marca 2027.
 - [ ] Nasmerovať DNS domény na VPS.
 - [ ] Rozhodnúť: len Slovensko na začiatok, alebo aj Česko.
 - [x] Vybrať smer vizuálu webu: A, B, C alebo kombináciu (plátno je v „Kde sme“).
+- [ ] Pozrieť nový vizuál na <https://porovnavac-cien-nu.vercel.app> na mobile aj na počítači (úvod, vyhľadávanie, stránka produktu, stráženie ceny) a napísať pripomienky. Claude prehliadač na VPS spustiť nemôže, vzhľad overil len v kóde.
 - [ ] Po spustení webu: registrácia v sieťach (Dognet, eHub) a žiadosti o kampane s elektronikou.
 - [ ] Pred fázou 4 naostro: produkčná databáza a zálohy mimo VPS.
 
@@ -198,3 +200,4 @@ marca 2027.
 | 2026-11-17 | Rozhodnutie 10: recenzie produktov a hodnotenie obchodov do MVP nie, vrátiť sa k nim po spustení. |
 | 2026-11-17 | Majiteľ chce modernejší a marketingovo presvedčivejší vizuál. Claude pripravil tri smery ako náhľady úvodnej stránky na počítači a stránky produktu na mobile: A „Radar“ (tmavý úvod s motívom radaru), B „Svieži“ (svetlé farby, nálepkový štýl), C „Nezávislý test“ (redakčný štýl spotrebiteľského testu). Čísla v náhľadoch zodpovedajú logike verdiktu a štatistík nad ukážkovými dátami. |
 | 2026-11-17 | Rozhodnutie 6: vizuál A „Radar“, sekcia „Ceny, ktoré sa pohli“ až s reálnym feedom. Návrh zapísaný v `projekt.md`, plán implementácie v `docs/superpowers/plans/2026-11-17-vizual-radar.md`. Hotová úloha 1: písma z vlastného servera (Fontsource 5.3.0, OFL), CSP `font-src 'self'`, `vercel.json` s trvalou vyrovnávacou pamäťou písiem. |
+| 2026-11-17 | Web prerobený na vizuál A „Radar“ (úlohy 2 až 7 plánu). Logo, favicon, ikona pre iOS a obrázok na zdieľanie; rozloženie s tmavou hlavičkou a mobilným menu bez JavaScriptu; úvodná stránka s ilustračným príkladom zdanlivej zľavy, sekciou o AI chate (len ChatGPT a Claude), pásom stráženia a blokom „Ako zarábame“. Stránka produktu: karta verdiktu vedie na najlacnejšiu ponuku skladom, dlaždice s priemermi, graf s plochou a viditeľnými cenami (písmo sa na mobile nezmenšuje), ponuky ako karty so štítkom najlepšej. Výsledky vyhľadávania sú karty, chyba formulára stráženia je priamo pri poli. 308 testov. Prehliadač sa na VPS bez rozšírenia práv spustiť nedá, vzhľad preto pozrie majiteľ na Verceli. |

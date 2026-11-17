@@ -113,7 +113,8 @@ Web má tri úlohy, v tomto poradí dôležitosti:
 | Stráženie ceny (formulár, potvrdenie, odhlásenie) | `/alert` | Hotové; e-maily sa zatiaľ neodosielajú |
 | Ďalší obsah (články, návody) | – | Nie je |
 
-Web nepoužíva cookies, JavaScript ani analytiku tretích strán.
+Od 17. 11. sú všetky stránky vo vizuáli A „Radar“ (nižšie). Web nepoužíva
+cookies, JavaScript ani analytiku tretích strán.
 
 ### Vizuál
 
@@ -144,10 +145,15 @@ z názvu robí obraz a je zapamätateľný.
   pás so strážením ceny a blok „Ako zarábame“. Z AI asistentov uvádzame len
   ChatGPT a Claude; Gemini pripojí vlastný MCP server len v USA. Žiadne
   vymyslené počty používateľov ani hodnotenia.
-- **Stránka produktu.** Tmavá karta s verdiktom, najnižšou cenou a tlačidlom
-  do obchodu, dlaždice s priemermi, graf ceny, ponuky ako karty
-  (najlacnejšia zvýraznená, zdanlivá zľava červeným blokom), karta
-  stráženia ceny.
+- **Stránka produktu.** Tmavá karta s verdiktom, cenou najlacnejšej ponuky
+  skladom a tlačidlom do toho istého obchodu (keď skladom nemá nikto,
+  najlacnejšia ponuka vôbec). Dlaždice s priemerom za 30 a 90 dní
+  a minimom za 90 dní, graf ceny s viditeľnou najvyššou a najnižšou cenou,
+  ponuky ako karty zoradené podľa ceny (najlepšia so štítkom „Najnižšia
+  cena“, alebo „Najlacnejšie skladom“, keď je lacnejšia ponuka mimo skladu;
+  zdanlivá zľava červeným blokom), karta stráženia ceny.
+- **Vyhľadávanie a stráženie.** Výsledky sú karty s cenou „od“. Chyba vo
+  formulári stráženia je priamo pri poli, ktorého sa týka.
 - **Bez JavaScriptu a cookies.** Mobilné menu je prvok `<details>`. Štýly
   sú vložené v stránke (`src/web/layout.ts`), statické súbory v `public/`:
   na Verceli ich podáva CDN, na VPS aplikácia. Písma sa ukladajú do
