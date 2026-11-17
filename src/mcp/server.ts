@@ -27,7 +27,7 @@ export function mcpSource(request: Request): Source {
 }
 
 export function createMcpServer(deps: AppDeps, source: Source): McpServer {
-  const server = new McpServer({ name: 'porovnavac-cien', version: '0.1.0' });
+  const server = new McpServer({ name: 'cenoradar', version: '0.1.0' });
 
   server.registerTool(
     'compare_prices',

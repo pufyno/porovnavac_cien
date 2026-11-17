@@ -26,7 +26,7 @@ describe('loadConfig', () => {
       port: 3000,
       publicBaseUrl: 'http://localhost:3000',
       redirectBaseUrl: 'http://localhost:3000',
-      siteName: 'Porovnávač cien',
+      siteName: 'Cenoradar',
     });
   });
 

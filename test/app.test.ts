@@ -100,6 +100,7 @@ describe('GET /openapi.json', () => {
     const doc = (await (await app.request('/openapi.json')).json()) as Record<string, any>;
 
     expect(doc.openapi).toMatch(/^3\.1/);
+    expect(doc.info.title).toContain('Cenoradar');
     expect(doc.servers).toEqual([{ url: 'https://domena.example' }]);
     const operation = doc.paths['/api/v1/product-compare'].get;
     expect(operation.operationId).toBe('compareProduct');

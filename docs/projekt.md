@@ -1,4 +1,4 @@
-# Porovnávač cien – popis projektu
+# Cenoradar – popis projektu
 
 Tento dokument hovorí, **čo staviame a prečo**. Ďalšie dokumenty:
 
@@ -6,8 +6,9 @@ Tento dokument hovorí, **čo staviame a prečo**. Ďalšie dokumenty:
 - [prieskum.md](prieskum.md) – čo sme zistili o AI platformách, sieťach a konkurencii, so zdrojmi
 - [prevadzka.md](prevadzka.md) – ako aplikáciu spustiť, nasadiť a pridať e-shop
 
-„Porovnávač cien“ je pracovný názov. Názov produktu ani doména zatiaľ nie sú
-vybrané.
+Produkt sa volá **Cenoradar** (rozhodol majiteľ 17. 11. 2026). Domény
+cenoradar.sk, .cz a .com boli v ten deň voľné; kúpu robí majiteľ. Technické
+názvy (repozitár, projekty na Verceli a v Neone) ostávajú pôvodné.
 
 ## 1. Čo staviame
 
@@ -116,9 +117,9 @@ Web nepoužíva cookies, JavaScript ani analytiku tretích strán.
 
 ### Vizuál
 
-Zatiaľ nerozhodnuté. Prototyp má zámerne neutrálny vzhľad bez značky; všetky
-štýly sú v `src/web/layout.ts`. Treba určiť názov a logo, farby a typografiu
-a tón textov.
+Zatiaľ nerozhodnuté. Prototyp má zámerne neutrálny vzhľad, názov Cenoradar je
+len text v hlavičke; všetky štýly sú v `src/web/layout.ts`. Treba určiť logo,
+farby, typografiu a tón textov.
 
 ## 5. Technológie a prevádzka
 
@@ -285,7 +286,8 @@ s pokynom pre asistenta, aby ceny neodhadoval.
 | 2026-11-17 | Prototyp celého reťazca na vzorových dátach skôr než web | Overiť realizovateľnosť distribúcie v AI chate nezávisle od čakania na siete. |
 | 2026-11-17 | Hlavné rozhranie je MCP server, REST je druhé (potvrdil majiteľ) | ChatGPT ruší vlastné GPT s Actions k 11. 12. 2026; MCP podporujú ChatGPT aj Claude. Gemini pripojí vlastný MCP server len v USA. |
 | 2026-11-17 | V chate priame affiliate odkazy do obchodu, priznané, ponuky zoradené len podľa ceny (rozhodol majiteľ) | V katalógu ChatGPT sú porovnávače idealo a Klarna s rovnakým modelom. Pred žiadosťou otázka na podporu OpenAI; ak žiadosť zamietnu, odkazy povedú cez našu stránku produktu. |
-| 2026-11-17 | Registrácie v sieťach aj overenie v OpenAI na fyzickú osobu (rozhodol majiteľ) | Najrýchlejšie a bez nákladov; Dognet vypláca aj fyzickej osobe. Plugin sa v katalógu ChatGPT zverejní pod menom majiteľa. |
+| 2026-11-17 | Registrácie v sieťach aj overenie v OpenAI na fyzickú osobu (rozhodol majiteľ) | Najrýchlejšie a bez nákladov; Dognet vypláca aj fyzickej osobe. Plugin sa v katalógu ChatGPT zverejní pod menom majiteľa. Majiteľ to potvrdil aj s vedomím, že na webe musí byť jeho adresa bydliska a telefón. |
+| 2026-11-17 | Názov produktu Cenoradar (vybral majiteľ zo šiestich kandidátov) | Funguje po slovensky aj po česky, nie je slovníkové slovo a nadväzuje na pracovný názov „Price Radar“. Domény .sk, .cz a .com boli voľné; v TMview nie je zhodná ochranná známka, podobnostné vyhľadávanie našlo len brazílsku „Cenoradas“. |
 | 2026-11-17 | Zdanlivá zľava sa zisťuje len z vlastnej histórie | Formát Heureka pôvodnú cenu neobsahuje. |
 | 2026-11-17 | Nejasný dopyt vracia kandidátov, nie najlepší odhad | Nesprávne spárovaný produkt by znamenal nesprávnu cenu a verdikt. |
 | 2026-11-17 | Stráženie ceny je jednorazové a vyžaduje potvrdenie e-mailom | GDPR a ochrana pred zneužitím cudzej adresy. |
@@ -313,14 +315,13 @@ s pokynom pre asistenta, aby ceny neodhadoval.
 | Ukážka na Verceli sa nedopatrením zverejní | Návštevník uvidí pracovné právne texty a formulár stráženia, ktorý e-mail nepošle. | Ochrana prihlásením je zapnutá pre všetky adresy projektu; nevypínať, kým web nie je pripravený. |
 | Všetko beží na jednom VPS | Výpadok alebo strata disku zastaví službu a zničí históriu. | Zálohy mimo VPS od prvého dňa zberu. |
 | E-maily v strážení ceny sú osobné údaje | Povinnosti podľa GDPR. | Potvrdenie e-mailom, odhlásenie, mazanie po lehote sú hotové; chýba uvedený prevádzkovateľ a kontrola textov. |
-| Prevádzkovateľ je fyzická osoba | Na webe musí byť meno, adresa bydliska, e-mail a telefón (§ 4 zákona 22/2004 Z. z.); v katalógu ChatGPT meno majiteľa. | Majiteľ potvrdí; alternatívou je s.r.o. so sídlom mimo bydliska. |
+| Prevádzkovateľ je fyzická osoba | Na webe musí byť meno, adresa bydliska, e-mail a telefón (§ 4 zákona 22/2004 Z. z.); v katalógu ChatGPT meno majiteľa. | Majiteľ to 17. 11. prijal. Na telefón stačí samostatné číslo. Neskorší prechod na s.r.o. ostáva možný. |
 | Roboty a náhľady odkazov v chatoch | Nafúknu počet preklikov. | Zatiaľ neriešené; pri vyhodnocovaní porovnávať s reportom siete. |
 
 ## 11. Otvorené otázky
 
 Strategické, čakajú na majiteľa:
 
-- Názov produktu a doména.
 - Vizuál webu.
 - Len Slovensko na začiatok, alebo aj Česko. Kód podporuje obe.
 - Služba na odosielanie e-mailov a kam ukladať zálohy.

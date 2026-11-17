@@ -46,7 +46,7 @@ describe('úvodná stránka', () => {
     const { res, html } = await get('/');
 
     expect(res.status).toBe(200);
-    expect(html).toContain('Porovnávač cien');
+    expect(html).toContain('Cenoradar');
     expect(html).toContain('action="/hladat"');
   });
 

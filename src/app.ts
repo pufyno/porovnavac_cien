@@ -26,7 +26,7 @@ export function createApp(deps: AppDeps): OpenAPIHono {
   app.doc31('/openapi.json', {
     openapi: '3.1.0',
     info: {
-      title: 'Porovnávač cien elektroniky (SK/CZ)',
+      title: `${deps.config.siteName} – porovnanie cien elektroniky (SK/CZ)`,
       version: '0.1.0',
       description: 'Aktuálne ceny, história cien a odhalenie zdanlivých zliav v slovenských a českých e-shopoch.',
     },

@@ -1,10 +1,11 @@
-# Porovnávač cien
+# Cenoradar
 
 Služba, ktorá AI asistentom (ChatGPT, Claude, Gemini) dodáva živé ceny
 elektroniky zo slovenských a českých e-shopov: porovnanie ponúk, históriu
 cien, upozornenie na zdanlivé zľavy a odporúčanie, či kúpiť teraz.
 
-„Porovnávač cien“ je pracovný názov.
+Názov vybral majiteľ 17. 11. 2026. Technické názvy (repozitár, projekty na
+Verceli a v Neone) ostávajú pôvodné.
 
 ## Stav
 

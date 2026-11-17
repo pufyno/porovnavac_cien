@@ -21,7 +21,7 @@ export const TEST_CONFIG = {
   port: 0,
   publicBaseUrl: 'https://domena.example',
   redirectBaseUrl: 'https://go.domena.example',
-  siteName: 'Porovnávač cien',
+  siteName: 'Cenoradar',
 };
 
 /**

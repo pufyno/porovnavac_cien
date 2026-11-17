@@ -28,7 +28,7 @@ export function loadConfig(env: Record<string, string | undefined>): AppConfig {
     port,
     publicBaseUrl,
     redirectBaseUrl: baseUrl('REDIRECT_BASE_URL', env.REDIRECT_BASE_URL ?? publicBaseUrl),
-    siteName: env.SITE_NAME ?? 'Porovnávač cien',
+    siteName: env.SITE_NAME ?? 'Cenoradar',
   };
 }
 

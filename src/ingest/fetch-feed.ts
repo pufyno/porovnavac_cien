@@ -12,7 +12,7 @@ async function openRaw(url: string): Promise<Readable> {
 
   const response = await fetch(url, {
     signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-    headers: { 'User-Agent': 'porovnavac-cien-feed-import/0.1' },
+    headers: { 'User-Agent': 'cenoradar-feed-import/0.1' },
   });
   if (!response.ok || !response.body) {
     await response.body?.cancel();

@@ -13,10 +13,10 @@ _Aktualizované: 2026-11-17_
 | | |
 | --- | --- |
 | **Aktuálna fáza** | Prototyp celého reťazca je hotový, ukážka beží na Verceli s databázou v Neone. Prieskum realizovateľnosti je uzavretý. |
-| **Naposledy hotové** | Prieskum realizovateľnosti ([prieskum.md](prieskum.md)). V katalógu ChatGPT sú porovnávače cien (idealo, Klarna) aj české služby, takže kanál v EÚ funguje. Ukážkové pluginy OpenAI neprijíma. Gemini pripojí vlastný MCP server len v USA. Podmienky Dognetu porovnávač pripúšťajú, ale tri body treba potvrdiť písomne. Ukážka na <https://porovnavac-cien-nu.vercel.app> (len po prihlásení do Vercelu) funguje celá, 264 testov. |
+| **Naposledy hotové** | Názov **Cenoradar** je v kóde aj na webe (hlavička, e-maily, popis API, MCP server). Domény cenoradar.sk, .cz a .com sú voľné a v TMview nie je zhodná ochranná známka. Ukážka na <https://porovnavac-cien-nu.vercel.app> (len po prihlásení do Vercelu) funguje celá, 265 testov. |
 | **Rozpracované** | Nič. |
-| **Ďalší krok (Claude)** | Po výbere názvu: doplniť ho do webu a textov, pripraviť nasadenie na doménu. Všetko, čo sa dá urobiť bez názvu, domény a reálnych feedov, je hotové. |
-| **Čaká na majiteľa** | Výber názvu z kandidátov (rozhodnutie 3), potvrdenie fyzickej osoby napriek povinným údajom na webe (rozhodnutie 4) a dve krátke kontroly v ChatGPT. |
+| **Ďalší krok (Claude)** | Fáza 2: údaje prevádzkovateľa na webe (podľa § 4 zákona o elektronickom obchode) a doplnenie zásad ochrany súkromia o IP adresu a príjemcov. |
+| **Čaká na majiteľa** | Kúpa domén cenoradar.sk a .cz (odporúčane aj .com), rozhodnutia 5 až 9 a dve krátke kontroly v ChatGPT. |
 
 ## Rozhodnutia majiteľa
 
@@ -31,12 +31,11 @@ platili odkazy na ne. Podklady sú v [prieskum.md](prieskum.md).
    stránku produktu.
 2. **MCP ako hlavné rozhranie.** **Rozhodnuté 17. 11.:** áno, REST API
    ostáva ako druhé rozhranie.
-3. **Názov a doména.** Blokuje web, registrácie aj testovanie v ChatGPT, ktoré
-   potrebuje verejnú adresu s HTTPS. Pravidlá OpenAI neprijmú všeobecný
-   slovníkový názov a adresu MCP servera po zverejnení zmení len podpora.
-   Vyberá majiteľ z kandidátov nižšie. Domény sme overili v registroch
-   17. 11. 2026; pred kúpou ich treba overiť znova a pozrieť ochranné známky
-   v [TMview](https://www.tmdn.org/tmview/).
+3. **Názov a doména.** **Rozhodnuté 17. 11.:** Cenoradar. Domény
+   cenoradar.sk, .cz a .com boli 17. 11. v registroch voľné; kúpu robí
+   majiteľ. V [TMview](https://www.tmdn.org/tmview/) nie je ochranná známka
+   „Cenoradar“; podobnostné vyhľadávanie našlo len brazílsku „Cenoradas“.
+   Kandidáti, z ktorých sa vyberalo:
 
    | Názov | Význam | .sk | .cz | .com |
    | --- | --- | --- | --- | --- |
@@ -52,10 +51,9 @@ platili odkazy na ne. Podklady sú v [prieskum.md](prieskum.md).
    a podobný Cenomeru), Cenopilot (pripomína Microsoft Copilot).
 4. **Na koho sa registrovať v sieťach.** **Rozhodnuté 17. 11.:** na fyzickú
    osobu, v sieťach aj pri overení v OpenAI. Plugin sa v katalógu ChatGPT
-   zverejní pod menom majiteľa. **Treba ešte potvrdiť:** zákon
-   o elektronickom obchode (§ 4 ods. 1) vyžaduje od fyzickej osoby uviesť na
-   webe meno, adresu bydliska, e-mail a telefón. Adresu bydliska nemusí
-   zverejniť len firma (s.r.o.), ktorá má sídlo inde.
+   zverejní pod menom majiteľa. Majiteľ potvrdil aj povinné údaje na webe:
+   zákon o elektronickom obchode (§ 4 ods. 1) vyžaduje od fyzickej osoby
+   uviesť meno, adresu bydliska, e-mail a telefón.
 5. **Len Slovensko, alebo aj Česko od začiatku.**
 6. **Vizuál webu.**
 7. **Služba na e-maily a úložisko záloh mimo VPS.**
@@ -89,8 +87,8 @@ doménu, web a schválenie v sieťach.
 | # | Fáza | Kto | Výstup | Závisí od | Odhad | Stav |
 | --- | --- | --- | --- | --- | --- | --- |
 | 0 | Základy | Claude | Stack, schéma databázy, dokumentácia | – | 15. 11. | Hotovo |
-| 1 | Doména a právny základ | Majiteľ | Doména, DNS na VPS, jasné, na koho sa registrovať | – | 16.–22. 11. | Nezačaté |
-| 2 | Fasádny web | Claude, nasadenie majiteľ | Verejný web: úvod, obsah, právne stránky | 1 (pre nasadenie) | 16.–29. 11. | Neutrálna verzia hotová; chýba názov, vizuál a údaje prevádzkovateľa |
+| 1 | Doména a právny základ | Majiteľ | Doména, DNS na VPS, jasné, na koho sa registrovať | – | 16.–22. 11. | Názov a subjekt rozhodnuté; chýba kúpa domény |
+| 2 | Fasádny web | Claude, nasadenie majiteľ | Verejný web: úvod, obsah, právne stránky | 1 (pre nasadenie) | 16.–29. 11. | Neutrálna verzia s názvom hotová; chýba vizuál a údaje prevádzkovateľa |
 | 3 | Registrácie v sieťach | Majiteľ | Schválený účet a prvý reálny feed | 2 | 30. 11. – 13. 12. | Nezačaté |
 | 4 | Ingestor a história cien | Claude | Nočný import, párovanie cez EAN, história a štatistiky | Vývoj: 0; ostrý štart: 3 | 23. 11. – 13. 12. | Prototyp hotový; čaká na reálny feed |
 | 5 | API pre AI asistentov | Claude | `product-compare` ako MCP, REST a OpenAPI | 4 | 7.–27. 12. | Prototyp hotový |
@@ -155,7 +153,9 @@ marca 2027.
 - [x] Rozhodnúť, na koho sa registrovať: fyzická osoba (17. 11.). Dognet vypláca aj fyzickej osobe (minimum 100 €); pri eHub treba overiť.
 - [ ] Pri registrácii v Dognete sa písomne opýtať na štyri body z `prieskum.md` (kapitola 6); v eHube na pravidlá pre zdroj návštevnosti.
 - [ ] Otvoriť v prehliadači stránku OpenAI o konci vlastných GPT a potvrdiť dátum 11. 12. 2026 (odkaz je v `prieskum.md`).
-- [ ] Vybrať názov a kúpiť doménu.
+- [x] Vybrať názov: Cenoradar (17. 11.).
+- [ ] Kúpiť domény cenoradar.sk a cenoradar.cz, odporúčane aj cenoradar.com. Čím skôr, voľnú doménu môže ktokoľvek zaregistrovať.
+- [ ] Pripraviť údaje prevádzkovateľa na web: meno, adresa bydliska, e-mail a telefón (stačí samostatné číslo).
 - [ ] Nasmerovať DNS domény na VPS.
 - [ ] Rozhodnúť: len Slovensko na začiatok, alebo aj Česko.
 - [ ] Rozhodnúť o vizuáli webu (spolu s Claude vo fáze 2).
@@ -176,3 +176,4 @@ marca 2027.
 | 2026-11-17 | `DATABASE_URL` nastavená na Verceli ako citlivá premenná (Production aj Preview) priamo zo súboru cez nástroj `vercel`; nasadený commit `0c5fba3`. Na Verceli overené: API vracia porovnanie s verdiktom a upozornením na zdanlivú zľavu, stránka produktu má graf ceny, neprihlásený návštevník je presmerovaný na prihlásenie. Na VPS sú prihlásené nástroje `neon` a `vercel` (aktualizovaný na 65.17.0) a nainštalované ich pluginy pre Claude Code. |
 | 2026-11-17 | Prieskum realizovateľnosti distribúcie (`prieskum.md`, kapitoly 2, 3, 6 až 8 a 10). V katalógu ChatGPT sú porovnávače idealo a Klarna aj české služby Slevomat a Suri, takže pluginy v EÚ fungujú. Pravidlá OpenAI neprijímajú ukážkové pluginy ani všeobecné názvy. Gemini pripojí vlastný MCP server len v USA. Podmienky Dognetu porovnávač pripúšťajú. Písomne treba potvrdiť AI chat ako zdroj, odovzdávanie údajov z feedov platforme a upozornenia na zdanlivé zľavy. Prekliky neukladajú IP, sieť však áno, a zásady ochrany súkromia to musia uvádzať. |
 | 2026-11-17 | Majiteľ rozhodol: priame affiliate odkazy (pred žiadosťou otázka na podporu OpenAI), MCP ako hlavné rozhranie, registrácie na fyzickú osobu. Claude pripravil šesť kandidátov na názov s doménami overenými v registroch .sk, .cz a .com. Zistené: fyzická osoba musí podľa § 4 zákona o elektronickom obchode uviesť na webe adresu bydliska a telefón. |
+| 2026-11-17 | Majiteľ vybral názov Cenoradar a potvrdil prevádzku na fyzickú osobu aj s povinnými údajmi na webe. Názov je v kóde aj na webe (predvolený `SITE_NAME`, popis OpenAPI, názov MCP servera, hlavička pri sťahovaní feedov). Domény .sk, .cz a .com overené znova, v TMview nie je zhodná ochranná známka. |

@@ -352,7 +352,7 @@ o zaradenie (fáza 8).
 | Pole `_ai_instruction` v odpovedi | Pokyny pre model: tabuľka, upozornenie na zdanlivú zľavu, priznanie affiliate, ponuka stráženia ceny | Posudzovateľ ho môže čítať ako pokusy riadiť model; ponuka stráženia ceny môže pôsobiť ako „redirect the interaction“ | Pred žiadosťou prečítať texty proti pravidlám, ponechať vecný obsah (priznanie affiliate, obmedzené pokrytie); zvážiť neutrálny názov poľa |
 | Prekliky | `click_logs` ukladá čas, ponuku, obchod, produkt, zdroj a cenu, bez IP a prehliadača | Sieť pri preklike spracúva cookies a IP (VOP Dognet čl. 9.4) | Pracovná verzia zásad ochrany súkromia spomína cookies siete; doplniť IP adresu a príjemcov |
 | Zakázaný tovar | Import berie celý feed | Skryté kamery, lokátory, e-cigarety či paralyzéry vo feede elektroniky | Pred žiadosťou vyradiť tieto kategórie pri importe |
-| Názov | Pracovný názov „Porovnávač cien“ | Všeobecný slovníkový názov katalóg neprijme | Rozhodnutie 3 v [plan.md](plan.md) |
+| Názov | Cenoradar (od 17. 11.) | Všeobecný slovníkový názov katalóg neprijme | Vyriešené: nie je slovníkové slovo, v TMview nie je zhodná ochranná známka |
 | Dáta | Ukážkové obchody | „Trial or demo plugins will not be accepted.“ | Žiadať až s reálnymi feedmi |
 | Adresa MCP servera | Zatiaľ na Verceli, chránená prihlásením | Po zverejnení sa mení len cez podporu | Žiadať až s adresou na vlastnej doméne |
 

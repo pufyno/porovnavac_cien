@@ -41,6 +41,12 @@ const callCompare = async (client: Client, args: Record<string, unknown>) =>
   };
 
 describe('MCP server na /mcp', () => {
+  it('predstaví sa názvom služby', async () => {
+    const client = await connect();
+
+    expect(client.getServerVersion()?.name).toBe('cenoradar');
+  });
+
   it('ponúka jeden nástroj len na čítanie', async () => {
     const client = await connect();
 
