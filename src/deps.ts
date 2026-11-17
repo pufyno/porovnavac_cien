@@ -7,6 +7,8 @@ export interface AppDeps {
   sql: postgres.Sql;
   config: AppConfig;
   mailer: Mailer;
+  /** Dnešný dátum ako YYYY-MM-DD. Testy ho fixujú. */
+  today: () => string;
 }
 
 export const UNAVAILABLE_INSTRUCTION =

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { addDays, diffDays } from '../src/dates.ts';
-import { formatPrice, formatShops } from '../src/format.ts';
+import { formatDate, formatPrice, formatShops } from '../src/format.ts';
 
 describe('formatPrice', () => {
   it('celé sumy píše bez desatinných miest', () => {
@@ -32,5 +32,11 @@ describe('dátumy', () => {
 describe('formatShops', () => {
   it('skloňuje podľa počtu', () => {
     expect([1, 2, 4, 5, 12].map(formatShops)).toEqual(['1 obchod', '2 obchody', '4 obchody', '5 obchodov', '12 obchodov']);
+  });
+});
+
+describe('formatDate', () => {
+  it('píše dátum po slovensky bez núl na začiatku', () => {
+    expect(formatDate('2026-08-09')).toBe('9. 8. 2026');
   });
 });

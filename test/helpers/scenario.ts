@@ -66,5 +66,5 @@ export function memoryMailer(failFor?: string): Mailer & { sent: Mail[] } {
 }
 
 export function testDeps(sql: Sql, mailer: Mailer = memoryMailer()): AppDeps {
-  return { sql, config: TEST_CONFIG, mailer };
+  return { sql, config: TEST_CONFIG, mailer, today: () => '2026-11-17' };
 }

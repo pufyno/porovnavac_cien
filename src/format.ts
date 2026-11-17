@@ -21,3 +21,9 @@ export function formatShops(count: number): string {
   if (count >= 2 && count <= 4) return `${count} obchody`;
   return `${count} obchodov`;
 }
+
+/** „9. 8. 2026“ z dátumu YYYY-MM-DD. */
+export function formatDate(date: string): string {
+  const [year = '', month = '', day = ''] = date.split('-');
+  return `${Number(day)}. ${Number(month)}. ${year}`;
+}

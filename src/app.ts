@@ -3,6 +3,7 @@ import { registerCompareRoute } from './api/compare-route.ts';
 import { UNAVAILABLE_INSTRUCTION, type AppDeps } from './deps.ts';
 import { handleMcpRequest } from './mcp/server.ts';
 import { registerRedirectRoute } from './redirect/route.ts';
+import { registerWeb } from './web/index.ts';
 
 export function createApp(deps: AppDeps): OpenAPIHono {
   const app = new OpenAPIHono();
@@ -11,6 +12,8 @@ export function createApp(deps: AppDeps): OpenAPIHono {
     console.error(`${c.req.method} ${c.req.path} zlyhalo:`, error);
     return c.json({ status: 'unavailable', _ai_instruction: UNAVAILABLE_INSTRUCTION }, 503);
   });
+
+  registerWeb(app, deps);
 
   app.get('/health', async (c) => {
     await deps.sql`SELECT 1`;
