@@ -8,15 +8,15 @@ Po každom dokončenom kroku alebo novom rozhodnutí sa aktualizuje sekcia
 
 ## Kde sme
 
-_Aktualizované: 2026-11-15_
+_Aktualizované: 2026-11-17_
 
 | | |
 | --- | --- |
-| **Aktuálna fáza** | 1 – Doména a právny základ, 2 – Fasádny web |
-| **Naposledy hotové** | Stack, databázová schéma, popis projektu a tento plán |
-| **Rozpracované** | Nič |
-| **Ďalší krok (Claude)** | Návrh fasádneho webu: štruktúra stránok, funkcie, vizuál |
-| **Čaká na majiteľa** | Pozri „Úlohy majiteľa“ nižšie |
+| **Aktuálna fáza** | Prototyp celého reťazca na vetve `prototyp-api-ingestor` (lokálne, nepushnuté) |
+| **Naposledy hotové** | Import feedov, história a štatistiky, falošné zľavy, porovnanie, REST API + OpenAPI, MCP server, redirector, stráženie ceny, neutrálny web, nočný import, ukážka `pnpm demo`. 260 testov. |
+| **Rozpracované** | Dokumentácia: výsledky prieskumu (koniec vlastných GPT v ChatGPT 11. 12. 2026, pravidlá katalógov proti reklame) ešte nie sú v `docs/projekt.md`; README nemá návod na spustenie. |
+| **Ďalší krok (Claude)** | Dopísať dokumentáciu a prieskum so zdrojmi; potom podľa rozhodnutí majiteľa. |
+| **Čaká na majiteľa** | Strategické rozhodnutia: affiliate odkazy vs. zákaz reklamy v katalógoch OpenAI a Anthropic; MCP ako hlavné rozhranie; názov a doména; vizuál; služba na e-maily; zlúčenie vetvy. Pozri aj „Úlohy majiteľa“. |
 
 ## Stratégia
 
@@ -113,3 +113,4 @@ marca 2027.
 | --- | --- |
 | 2026-11-15 | Prijaté zadanie. Zvolený stack (TypeScript, PostgreSQL 17, vlastný VPS). Navrhnutá a otestovaná databázová schéma, uložená ako `db/migrations/0001_init.sql`. |
 | 2026-11-15 | Zistené, že chýba doména, web aj registrácie v sieťach. Web presunutý pred ingestor. Vznikli `docs/projekt.md` a `docs/plan.md`. |
+| 2026-11-17 | Na vetve `prototyp-api-ingestor` vznikol funkčný prototyp všetkých štyroch modulov proti vzorovým feedom (`pnpm demo`). Prieskum: ChatGPT ruší vlastné GPT s Actions (11. 12. 2026, zo sekundárnych zdrojov), náhradou je MCP; katalógy OpenAI a Anthropic zakazujú reklamu a platené umiestnenia, affiliate odkazy výslovne neriešia. E-maily sa zatiaľ len vypisujú do logu. |
