@@ -74,7 +74,7 @@ export const STATIC_PAGES: StaticPage[] = [
   {
     path: '/pre-ai-asistentov',
     title: 'Ceny priamo v AI chate',
-    description: 'Ako sa na ceny elektroniky pýtať v ChatGPT, Claude alebo Gemini.',
+    description: 'Ako sa na ceny elektroniky pýtať v ChatGPT alebo Claude.',
     body: (config) => html`<h1>Ceny priamo v AI chate</h1>
       <p>
         AI asistenti nepoznajú aktuálne ceny v slovenských a českých obchodoch ani to, či je zľava skutočná.

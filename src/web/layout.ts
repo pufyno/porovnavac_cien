@@ -302,7 +302,31 @@ const PRODUCT = `
 .alert-card .button{display:flex;margin-top:14px}
 `;
 
-const STYLES = [FONTS, BASE, FORMS, CHROME, PARTS, HOME, PRODUCT].join('\n');
+/** Vyhľadávanie a stráženie ceny (search.ts, alert.ts). */
+const FLOWS = `
+.search-page{max-width:760px;margin:0 auto}
+.search-page h1{font-size:clamp(28px,4.4vw,40px)}
+.search-page .search-full{margin-bottom:24px}
+.results{display:grid;gap:10px;margin:16px 0 0;padding:0;list-style:none}
+.result a{display:flex;align-items:center;gap:16px;padding:16px 18px;background:var(--card);border:1px solid var(--border);border-radius:16px;color:var(--ink);text-decoration:none}
+.result a:hover{border-color:var(--navy)}
+.result-text{display:grid;gap:2px;flex:1 1 auto;min-width:0}
+.result-name{font-weight:600;overflow-wrap:anywhere}
+.result-price{color:var(--muted);font-size:15px;font-variant-numeric:tabular-nums}
+.result .icon{color:var(--good)}
+.alert-product{margin:0 0 4px;padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:14px}
+.alert-product p{margin:0}
+.alert-product .alert-product-name{font-weight:700}
+.alert-product p+p{margin-top:4px;color:var(--muted)}
+.field-error{display:flex;align-items:flex-start;gap:6px;margin:8px 0 0;color:var(--bad);font-size:14px;font-weight:600}
+.field-error .icon{margin-top:2px;color:var(--bad-icon)}
+input[aria-invalid=true]{border:2px solid var(--bad-icon)}
+.form-note{margin:16px 0 20px;color:var(--muted);font-size:14px}
+.alert-form button{width:100%}
+@media (min-width:640px){.alert-form button{width:auto}}
+`;
+
+const STYLES = [FONTS, BASE, FORMS, CHROME, PARTS, HOME, PRODUCT, FLOWS].join('\n');
 
 const navLinks = (variant: 'desktop' | 'mobile') =>
   variant === 'desktop'

@@ -7,6 +7,7 @@ import type { Country } from '../compare/schema.ts';
 import type { AppDeps } from '../deps.ts';
 import { formatPrice } from '../format.ts';
 import { normalizeSource, type Source } from '../source.ts';
+import { icon } from './icons.ts';
 import { page, type Html } from './layout.ts';
 
 type AlertProduct = NonNullable<Awaited<ReturnType<typeof findAlertProduct>>>;
@@ -24,16 +25,31 @@ function parsePrice(raw: string): number {
   return /^\d+(\.\d{1,2})?$/.test(cleaned) ? Number(cleaned) : Number.NaN;
 }
 
-function alertForm(product: AlertProduct, values: FormValues, error?: string): Html {
+/** Chyba formulára pri konkrétnom poli. */
+interface FieldError {
+  field: 'email' | 'target';
+  message: string;
+}
+
+function alertForm(product: AlertProduct, values: FormValues, error?: FieldError): Html {
+  // Chyba je priamo pod poľom a pole na ňu odkazuje, aby ju prečítala aj čítačka obrazovky.
+  const invalid = (name: FieldError['field']) =>
+    error?.field === name ? html` aria-invalid="true" aria-describedby="${name}-chyba"` : '';
+  const fieldError = (name: FieldError['field']) =>
+    error?.field === name
+      ? html`<p class="field-error" id="${name}-chyba">${icon('alert-triangle', 16)}${error.message}</p>`
+      : '';
+
   return html`<h1>Strážiť cenu</h1>
-    <p>
-      <strong>${product.name}</strong><br />
-      ${product.currentMin === null
-        ? 'Tento produkt teraz nikto z našich partnerov nepredáva.'
-        : `Najnižšia cena teraz: ${formatPrice(product.currentMin, product.currency)}`}
-    </p>
-    ${error ? html`<div class="box warn" role="alert">${error}</div>` : ''}
-    <form action="/alert" method="post">
+    <div class="alert-product">
+      <p class="alert-product-name">${product.name}</p>
+      <p>
+        ${product.currentMin === null
+          ? 'Tento produkt teraz nikto z našich partnerov nepredáva.'
+          : `Najnižšia cena teraz: ${formatPrice(product.currentMin, product.currency)}`}
+      </p>
+    </div>
+    <form class="alert-form" action="/alert" method="post">
       <input type="hidden" name="ean" value="${product.ean}" />
       <input type="hidden" name="country" value="${values.country}" />
       <input type="hidden" name="source" value="${values.source}" />
@@ -41,15 +57,21 @@ function alertForm(product: AlertProduct, values: FormValues, error?: string): H
         <label for="website">Toto pole nevypĺňajte</label>
         <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
       </div>
-      <label for="target">Dajte mi vedieť, keď cena klesne na (${product.currency === 'EUR' ? '€' : 'Kč'})</label>
-      <input type="text" inputmode="decimal" id="target" name="target" value="${values.target}" required />
-      <label for="email">Váš e-mail</label>
-      <input type="email" id="email" name="email" value="${values.email}" autocomplete="email" required />
-      <p class="muted">
+      <div class="field">
+        <label for="target">Dajte mi vedieť, keď cena klesne na (${product.currency === 'EUR' ? '€' : 'Kč'})</label>
+        <input type="text" inputmode="decimal" id="target" name="target" value="${values.target}" required${invalid('target')} />
+        ${fieldError('target')}
+      </div>
+      <div class="field">
+        <label for="email">Váš e-mail</label>
+        <input type="email" id="email" name="email" value="${values.email}" autocomplete="email" required${invalid('email')} />
+        ${fieldError('email')}
+      </div>
+      <p class="form-note">
         Pošleme vám potvrdzovací e-mail a potom jednu správu, keď cena klesne. Žiadna reklama; stráženie
         zrušíte jedným klikom. <a href="/ochrana-sukromia">Ochrana súkromia</a>
       </p>
-      <button type="submit">Strážiť cenu</button>
+      <button type="submit">Strážiť cenu${icon('bell', 18)}</button>
     </form>`;
 }
 
@@ -131,7 +153,12 @@ export function registerAlertRoutes(app: OpenAPIHono, deps: AppDeps): void {
 
     const product = await findAlertProduct(deps.sql, field('ean'), values.country);
     if (!product) return productNotFound(c);
-    return render(c, `Strážiť cenu: ${product.name}`, alertForm(product, values, result.message), 400);
+    return render(
+      c,
+      `Strážiť cenu: ${product.name}`,
+      alertForm(product, values, { field: result.field, message: result.message }),
+      400,
+    );
   });
 
   app.get('/alert/potvrdit', async (c) => {

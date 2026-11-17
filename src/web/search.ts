@@ -160,7 +160,7 @@ export function registerSearchRoutes(app: OpenAPIHono, deps: AppDeps): void {
           noindex: true,
           layout: 'wide',
           search: false,
-          body: html`<h1>Hľadať produkt</h1>${searchForm(query, country)}${body}`,
+          body: html`<div class="search-page"><h1>Hľadať produkt</h1>${searchForm(query, country)}${body}</div>`,
         }),
       );
     if (query === '') return render('Hľadať produkt', html``);
@@ -181,11 +181,16 @@ export function registerSearchRoutes(app: OpenAPIHono, deps: AppDeps): void {
             ? 'Dopytu zodpovedá viac produktov. Vyberte ten, ktorý hľadáte:'
             : 'Presný produkt sme nenašli. Mysleli ste niektorý z týchto?'}
         </p>
-        <ul class="plain">
+        <ul class="results">
           ${result.candidates.map(
-            (candidate) => html`<li>
-              <a href="/produkt/${candidate.ean}${countrySuffix(country)}">${candidate.product_name}</a>
-              <span class="muted"> od ${formatPrice(candidate.lowest_price, candidate.currency)}</span>
+            (candidate) => html`<li class="result">
+              <a href="/produkt/${candidate.ean}${countrySuffix(country)}">
+                <span class="result-text">
+                  <span class="result-name">${candidate.product_name}</span>
+                  <span class="result-price">od ${formatPrice(candidate.lowest_price, candidate.currency)}</span>
+                </span>
+                ${icon('arrow-right', 20)}
+              </a>
             </li>`,
           )}
         </ul>`,

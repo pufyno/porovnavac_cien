@@ -158,6 +158,13 @@ describe('obsahové a právne stránky', () => {
     },
   );
 
+  it('stránka pre AI asistentov nespomína Gemini', async () => {
+    const { html } = await get('/pre-ai-asistentov');
+
+    expect(html).toContain('ChatGPT');
+    expect(html).not.toContain('Gemini');
+  });
+
   it('zásady ochrany súkromia priznávajú IP adresu pri preklikoch aj v technických záznamoch servera', async () => {
     const { html } = await get('/ochrana-sukromia');
 
@@ -244,6 +251,15 @@ describe('vyhľadávanie', () => {
     expect(html).toContain(`href="/produkt/${EAN.galaxyS24}"`);
     expect(html).toContain('Samsung Galaxy S24 8GB/256GB Onyx Black');
     expect(html).toContain('od 699 €');
+  });
+
+  it('výsledky vyhľadávania sú karty s cenou', async () => {
+    const { html } = await get('/hladat?q=galaxy+s24');
+    const cards = html.match(/<li class="result">[^]*?<\/li>/g) ?? [];
+
+    expect(cards).toHaveLength(2);
+    expect(cards[0]).toContain(`href="/produkt/${EAN.galaxyS24}"`);
+    expect(text(cards[0] ?? '')).toContain('od 699 €');
   });
 
   it('neznámy produkt oznámi a nespadne', async () => {
@@ -452,6 +468,20 @@ describe('stráženie ceny na webe', () => {
     expect(html).toContain('Zadajte platnú e-mailovú adresu.');
     expect(html).toContain('value="jana"');
     expect(html).toContain('name="target" value="440"');
+  });
+
+  it.each([
+    ['email', { email: 'jana' }, 'Zadajte platnú e-mailovú adresu.'],
+    ['target', { target: 'veľa' }, 'Zadajte cieľovú cenu ako kladné číslo.'],
+  ])('chybu poľa %s ukáže priamo pri ňom', async (name, change, message) => {
+    const { html } = await post('/alert', { ...form, ...change });
+    const input = html.match(new RegExp(`<input [^>]*id="${name}"[^>]*>`))?.[0];
+    const error = html.match(new RegExp(`<p class="field-error" id="${name}-chyba">[^]*?</p>`))?.[0];
+
+    expect(input).toContain('aria-invalid="true"');
+    expect(input).toContain(`aria-describedby="${name}-chyba"`);
+    expect(text(error ?? '')).toContain(message);
+    expect(html.indexOf(error ?? '-')).toBeGreaterThan(html.indexOf(input ?? '-'));
   });
 
   it('robota, ktorý vyplní skryté pole, potichu ignoruje', async () => {
