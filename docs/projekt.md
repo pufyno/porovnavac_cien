@@ -37,8 +37,9 @@ AI chat je bezplatný distribučný kanál. Zarábame na dvoch miestach:
 Používateľ sa v chate nikde neprihlasuje.
 
 **Otvorené riziko:** katalógy OpenAI aj Anthropic zakazujú reklamu a platené
-umiestnenia a affiliate odkazy výslovne neriešia. Pozri kapitolu 9
-a [prieskum.md](prieskum.md).
+umiestnenia a affiliate odkazy výslovne neriešia. V katalógu ChatGPT však už
+sú porovnávače idealo a Klarna, ktoré zarábajú tiež na preklikoch do obchodov.
+Pozri kapitolu 10 a [prieskum.md](prieskum.md).
 
 ## 3. Moduly
 
@@ -71,7 +72,9 @@ Reálne dáta zatiaľ nemáme.
   `ok`, `needs_clarification` (zoznam kandidátov) alebo `not_found`.
 - Každá odpoveď má pole `_ai_instruction`, ktoré asistentovi povie, ako
   výsledok podať: tabuľka, upozornenie na zdanlivú zľavu, priznanie
-  partnerských odkazov a obmedzeného pokrytia, ponuka stráženia ceny.
+  partnerských odkazov a obmedzeného pokrytia, ponuka stráženia ceny. Pred
+  žiadosťou do katalógu ChatGPT treba tieto texty prejsť proti pravidlám
+  ([prieskum.md](prieskum.md), kapitola 8).
 
 ### Modul 3 – Redirector a meranie preklikov
 
@@ -192,7 +195,10 @@ Dôležité vlastnosti:
   v rámci jednej krajiny. Databáza to vynucuje.
 - **Najnižšia cena produktu** je najlacnejšia ponuka skladom; ak nie je
   skladom nikde, najlacnejšia vôbec.
-- **Prekliky sú anonymné**, neukladá sa IP adresa.
+- **Prekliky sú anonymné**, neukladá sa IP adresa ani údaje o prehliadači.
+  Affiliate sieť pri preklike spracúva cookies aj IP adresu. Pracovná verzia
+  zásad ochrany súkromia spomína cookies; pred zverejnením treba doplniť IP
+  adresu a príjemcov.
 - **E-maily zo stráženia sa mažú:** nepotvrdené po 7 dňoch, ukončené po 30.
 
 ## 7. Pravidlá výpočtu
@@ -277,22 +283,28 @@ s pokynom pre asistenta, aby ceny neodhadoval.
 | 2026-11-15 | História cien len pri zmene | Veľkosť tabuľky. |
 | 2026-11-15 | Web sa robí pred ingestorom | Bez webu nie je schválenie v sieťach, bez schválenia nie sú feedy. |
 | 2026-11-17 | Prototyp celého reťazca na vzorových dátach skôr než web | Overiť realizovateľnosť distribúcie v AI chate nezávisle od čakania na siete. |
-| 2026-11-17 | Hlavné rozhranie je MCP server, REST je druhé (**návrh, čaká na potvrdenie majiteľa**) | ChatGPT ruší vlastné GPT s Actions k 11. 12. 2026; MCP podporujú ChatGPT aj Claude. |
+| 2026-11-17 | Hlavné rozhranie je MCP server, REST je druhé (**návrh, čaká na potvrdenie majiteľa**) | ChatGPT ruší vlastné GPT s Actions k 11. 12. 2026; MCP podporujú ChatGPT aj Claude. Gemini pripojí vlastný MCP server len v USA. |
 | 2026-11-17 | Zdanlivá zľava sa zisťuje len z vlastnej histórie | Formát Heureka pôvodnú cenu neobsahuje. |
 | 2026-11-17 | Nejasný dopyt vracia kandidátov, nie najlepší odhad | Nesprávne spárovaný produkt by znamenal nesprávnu cenu a verdikt. |
 | 2026-11-17 | Stráženie ceny je jednorazové a vyžaduje potvrdenie e-mailom | GDPR a ochrana pred zneužitím cudzej adresy. |
 | 2026-11-17 | Ukážka na pozretie beží na Verceli (`src/index.ts`); ostrá prevádzka ostáva na VPS | Majiteľ si chce web pozrieť bez nastavovania VPS. Vercel potrebuje hostovanú PostgreSQL. |
 | 2026-11-17 | TypeScript 6 namiesto 7 | Zostavovací nástroj Vercelu s TypeScriptom 7 padá; typová kontrola aj testy prechádzajú na oboch. |
 | 2026-11-17 | Databáza ukážky je v Neone (bezplatný plán); ostrá databáza ostáva na VPS | Funkcie Vercelu nemajú pevné adresy, takže databázu na VPS by bolo treba otvoriť do internetu. Ukážkové dáta majú približne 10 MB. Neon založil PostgreSQL 18; ostrá prevádzka a testy ostávajú na 17. |
+| 2026-11-17 | Žiadosť o zaradenie do katalógu ChatGPT až s reálnymi feedmi a s MCP serverom na vlastnej doméne | Pravidlá OpenAI neprijímajú ukážkové pluginy; adresu MCP servera po zverejnení zmení len podpora. |
 
 ## 10. Riziká
 
 | Riziko | Dopad | Čo s tým |
 | --- | --- | --- |
-| Katalógy AI platforiem zakazujú reklamu a platené umiestnenia | Konektor s affiliate odkazmi nemusí byť schválený; bez katalógu je dosah malý. | Strategické rozhodnutie majiteľa. Možnosti: opýtať sa podpory vopred, podať žiadosť a uvidieť, alebo v chate odkazovať na vlastný web namiesto priamo na obchod. |
-| ChatGPT má vlastné nakupovanie a Heureka je v ňom silno citovaná | Používateľ dostane ceny aj bez nás. | Odlíšiť sa históriou cien a odhalením zdanlivých zliav, ktoré tieto zdroje nedávajú. |
+| Katalógy AI platforiem zakazujú reklamu a platené umiestnenia | Konektor s affiliate odkazmi nemusí byť schválený; bez katalógu je dosah malý (vlastný konektor majú v ChatGPT naplno len firemné plány, Gemini ho pripojí len v USA). | Strategické rozhodnutie majiteľa. Precedensy idealo a Klarna v katalógu hovoria v náš prospech. Možnosti: opýtať sa podpory vopred, podať žiadosť a uvidieť, alebo v chate odkazovať na vlastný web namiesto priamo na obchod. |
+| ChatGPT má vlastné nakupovanie, obchody mu môžu posielať feedy priamo a Heureka je v ňom silno citovaná | Používateľ dostane ceny aj bez nás. | Odlíšiť sa históriou cien a odhalením zdanlivých zliav, ktoré tieto zdroje nedávajú. |
+| Veľký hráč (Heureka, Klarna) spustí v ChatGPT porovnávač pre SK/CZ | Konkurent s oveľa väčším pokrytím obchodov. | Odlíšenie obsahom (história, zdanlivé zľavy); čím skôr začať zbierať históriu. |
+| Do katalógu ChatGPT sa dá ísť až s reálnymi dátami | Verejná distribúcia v ChatGPT čaká na schválenie v sieťach a prvé feedy. | Distribúciu skúšať vlastným konektorom (ak to plán ChatGPT alebo Claude dovolí); žiadosť podať hneď po prvých feedoch. |
 | Nízke provízie pri elektronike | Jednotky percent, pri niektorých obchodoch pod 1 %. | Počítať s tým pri odhade návratnosti; vyberať kampane aj podľa provízie. |
 | Siete alebo inzerenti neschvália AI chat ako zdroj | Bez schválenia nie sú feedy alebo sa nevyplatia provízie; pri Alze hrozí zmluvná pokuta. | Zdroj návštevnosti uviesť v žiadosti otvorene, pri Alze mať súhlas písomne. |
+| Výstup do ChatGPT sieť posúdi ako odovzdanie údajov o kampani tretej strane | VOP Dognetu (čl. 9.3) za to určujú pokutu 15 000 € za každé porušenie. | Pred spustením MCP s reálnymi dátami mať písomný súhlas siete. |
+| Upozornenie na zdanlivú zľavu s názvom obchodu sa inzerentovi nepáči | Podmienky siete zakazujú poškodzovať dobré meno inzerenta (VOP Dognetu, čl. 7.17); hrozí vyradenie z kampane. | Upozornenia formulovať len ako overiteľné fakty z histórie cien (tak sú napísané); opýtať sa siete vopred. |
+| Zakázaný tovar vo feedoch elektroniky | Pravidlá OpenAI zakazujú napríklad skryté kamery, lokátory, e-cigarety a paralyzéry; plugin môže byť stiahnutý. | Pred žiadosťou vyradiť tieto kategórie pri importe. |
 | Studený štart histórie | Verdikt má zmysel po 14 dňoch, 90-dňový priemer po 90 dňoch zberu. | Ingestor spustiť hneď po prvom feede. API verdikt nevydá, kým dát nie je dosť. |
 | Pokrytie | Porovnávame len obchody s partnerským programom; najlacnejší obchod môže chýbať. | Odpoveď aj web to priznávajú a uvádzajú počet porovnaných obchodov. |
 | Ponuky bez EAN | Nespárujú sa a v porovnaní chýbajú. | Zmerať na prvom reálnom feede, koľko ich je; podľa toho doplniť párovanie podľa názvu. |
@@ -320,4 +332,6 @@ Technické, vyriešia sa s reálnymi dátami:
 - Doladenie prahov verdiktu a zdanlivej zľavy.
 - Jazyk popisov nástroja a pokynov pre asistenta (teraz slovensky; pre katalógy
   možno bude treba angličtinu) a české texty pre českých používateľov.
+- Texty a názov poľa `_ai_instruction` voči pravidlám katalógov a filter
+  zakázaných kategórií tovaru; obe pred žiadosťou o zaradenie.
 - Obmedzenie počtu požiadaviek (na úrovni reverzného proxy).
