@@ -12,11 +12,11 @@ _Aktualizované: 2026-11-17_
 
 | | |
 | --- | --- |
-| **Aktuálna fáza** | Prototyp celého reťazca je hotový, ukážka beží na Verceli s databázou v Neone. Prieskum realizovateľnosti je uzavretý. |
-| **Naposledy hotové** | Názov **Cenoradar** je v kóde aj na webe (hlavička, e-maily, popis API, MCP server). Stránky `/o-nas` a `/ochrana-sukromia` uvádzajú prevádzkovateľa podľa § 4 z nastavení `OPERATOR_*` a orgán dohľadu (SOI). Zásady ochrany súkromia uvádzajú IP adresu pri preklikoch aj v záznamoch servera. Domény cenoradar.sk, .cz a .com sú voľné a v TMview nie je zhodná ochranná známka. Ukážka na <https://porovnavac-cien-nu.vercel.app> (len po prihlásení do Vercelu) funguje celá, 270 testov. |
+| **Aktuálna fáza** | Prototyp celého reťazca je hotový, ukážka beží na Verceli s databázou v Neone: <https://porovnavac-cien-nu.vercel.app> (len po prihlásení do Vercelu), 270 testov. Prieskum realizovateľnosti je uzavretý. Vo fáze 2 sa vyberá vizuál webu. |
+| **Naposledy hotové** | Tri smery vizuálu webu na výber: A „Radar“, B „Svieži“ a C „Nezávislý test“. Pri každom je úvodná stránka na počítači a stránka produktu na mobile, texty sú vo všetkých troch rovnaké. Náhľady sú na plátne <https://claude.ai/artifact/3JcfEyAZU2oFLn75mJ1QoF> (otvorí ho len majiteľ). Claude odporúča A. |
 | **Rozpracované** | Nič. |
-| **Ďalší krok (Claude)** | Zvyšok fázy 2 čaká na rozhodnutia 6 (vizuál) a 7 (služba na e-maily). Po kúpe domény príprava nasadenia na ňu. |
-| **Čaká na majiteľa** | Kúpa domén cenoradar.sk a .cz (odporúčane aj .com), rozhodnutia 5 až 9 a dve krátke kontroly v ChatGPT. |
+| **Ďalší krok (Claude)** | Po výbere smeru krátky návrh vizuálu na schválenie, potom prepis štýlov a šablón webu. Služba na e-maily čaká na rozhodnutie 7. Po kúpe domény príprava nasadenia na ňu. |
+| **Čaká na majiteľa** | Výber smeru vizuálu (rozhodnutie 6) a či má úvodná stránka už teraz sekciu „Ceny, ktoré sa pohli“. Kúpa domén cenoradar.sk a .cz (odporúčane aj .com), rozhodnutia 5 a 7 až 9 a dve krátke kontroly v ChatGPT. |
 
 ## Rozhodnutia majiteľa
 
@@ -55,7 +55,14 @@ platili odkazy na ne. Podklady sú v [prieskum.md](prieskum.md).
    zákon o elektronickom obchode (§ 4 ods. 1) vyžaduje od fyzickej osoby
    uviesť meno, adresu bydliska, e-mail a telefón.
 5. **Len Slovensko, alebo aj Česko od začiatku.**
-6. **Vizuál webu.**
+6. **Vizuál webu.** Majiteľ 17. 11.: súčasný vizuál je slabý, má byť moderný
+   a marketingovo presvedčivý. Claude pripravil tri smery na plátne (odkaz
+   v „Kde sme“) a odporúča A „Radar“, lebo z názvu robí obraz a je
+   zapamätateľný. Vo všetkých smeroch je rovnaký nový obsah: úvod „Je to
+   naozaj zľava?“ s príkladom zdanlivej zľavy, logo, sekcia o použití
+   v AI chate, pás so strážením ceny a vysvetlenie, ako zarábame. Otvorené
+   je aj to, či pridať na úvodnú stránku sekciu „Ceny, ktoré sa pohli“. Je
+   to nová funkcia, ktorá rozširuje rozsah fázy 2.
 7. **Služba na e-maily a úložisko záloh mimo VPS.**
 8. **Podľa čoho a kedy projekt vyhodnotiť.**
 9. **Zlúčiť vetvu `prototyp-api-ingestor` do `main`.** Vetva je na GitHube,
@@ -94,7 +101,7 @@ doménu, web a schválenie v sieťach.
 | --- | --- | --- | --- | --- | --- | --- |
 | 0 | Základy | Claude | Stack, schéma databázy, dokumentácia | – | 15. 11. | Hotovo |
 | 1 | Doména a právny základ | Majiteľ | Doména, DNS na VPS, jasné, na koho sa registrovať | – | 16.–22. 11. | Názov a subjekt rozhodnuté; chýba kúpa domény |
-| 2 | Fasádny web | Claude, nasadenie majiteľ | Verejný web: úvod, obsah, právne stránky | 1 (pre nasadenie) | 16.–29. 11. | Neutrálna verzia s názvom hotová, prevádzkovateľ sa berie z nastavení; chýba vizuál a v zásadách hosting a služba na e-maily |
+| 2 | Fasádny web | Claude, nasadenie majiteľ | Verejný web: úvod, obsah, právne stránky | 1 (pre nasadenie) | 16.–29. 11. | Neutrálna verzia s názvom hotová, prevádzkovateľ sa berie z nastavení; tri smery vizuálu čakajú na výber; v zásadách chýba hosting a služba na e-maily |
 | 3 | Registrácie v sieťach | Majiteľ | Schválený účet a prvý reálny feed | 2 | 30. 11. – 13. 12. | Nezačaté |
 | 4 | Ingestor a história cien | Claude | Nočný import, párovanie cez EAN, história a štatistiky | Vývoj: 0; ostrý štart: 3 | 23. 11. – 13. 12. | Prototyp hotový; čaká na reálny feed |
 | 5 | API pre AI asistentov | Claude | `product-compare` ako MCP, REST a OpenAPI | 4 | 7.–27. 12. | Prototyp hotový |
@@ -165,7 +172,7 @@ marca 2027.
 - [ ] Pre zásady ochrany súkromia zistiť poskytovateľa VPS a ako dlho reverzný proxy uchováva logy s IP adresami (alebo IP v logoch skracovať).
 - [ ] Nasmerovať DNS domény na VPS.
 - [ ] Rozhodnúť: len Slovensko na začiatok, alebo aj Česko.
-- [ ] Rozhodnúť o vizuáli webu (spolu s Claude vo fáze 2).
+- [ ] Vybrať smer vizuálu webu: A, B, C alebo kombináciu (plátno je v „Kde sme“).
 - [ ] Po spustení webu: registrácia v sieťach (Dognet, eHub) a žiadosti o kampane s elektronikou.
 - [ ] Pred fázou 4 naostro: produkčná databáza a zálohy mimo VPS.
 
@@ -186,3 +193,4 @@ marca 2027.
 | 2026-11-17 | Majiteľ vybral názov Cenoradar a potvrdil prevádzku na fyzickú osobu aj s povinnými údajmi na webe. Názov je v kóde aj na webe (predvolený `SITE_NAME`, popis OpenAPI, názov MCP servera, hlavička pri sťahovaní feedov). Domény .sk, .cz a .com overené znova, v TMview nie je zhodná ochranná známka. |
 | 2026-11-17 | Údaje prevádzkovateľa podľa § 4 zákona o elektronickom obchode: web ich berie z premenných `OPERATOR_*` (do repozitára nepatria), chýbajúce označí na doplnenie, ako orgán dohľadu uvádza SOI. Zásady ochrany súkromia doplnené o IP adresu a cookies siete pri preklikoch a o technické záznamy servera; ostáva doplniť hosting, službu na e-maily a dobu uchovania logov. Nápad majiteľa na recenzie a hodnotenie obchodov rozobraný v `prieskum.md` (kapitola 10); odporúčanie: do MVP nie. |
 | 2026-11-17 | Rozhodnutie 10: recenzie produktov a hodnotenie obchodov do MVP nie, vrátiť sa k nim po spustení. |
+| 2026-11-17 | Majiteľ chce modernejší a marketingovo presvedčivejší vizuál. Claude pripravil tri smery ako náhľady úvodnej stránky na počítači a stránky produktu na mobile: A „Radar“ (tmavý úvod s motívom radaru), B „Svieži“ (svetlé farby, nálepkový štýl), C „Nezávislý test“ (redakčný štýl spotrebiteľského testu). Čísla v náhľadoch zodpovedajú logike verdiktu a štatistík nad ukážkovými dátami. |
