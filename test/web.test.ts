@@ -29,6 +29,13 @@ const post = async (path: string, fields: Record<string, string>) => {
   return { res, html: await res.text() };
 };
 
+/** Viditeľný text stránky bez štýlov a značiek, s jednou medzerou medzi slovami. */
+const text = (html: string) =>
+  html
+    .replace(/<style[^]*?<\/style>/g, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ');
+
 /** Samostatná databáza pre testy, ktoré dáta menia. */
 async function isolated<T>(run: (ctx: { sql: Sql; app: ReturnType<typeof createApp>; mailer: typeof mailer }) => Promise<T>) {
   const fresh = await createTestDb();
@@ -48,6 +55,42 @@ describe('úvodná stránka', () => {
     expect(res.status).toBe(200);
     expect(html).toContain('Cenoradar');
     expect(html).toContain('action="/hladat"');
+  });
+
+  it('úvod sa pýta, či je zľava skutočná, a hneď ponúka vyhľadávanie', async () => {
+    const { html } = await get('/');
+
+    expect(text(html)).toContain('Je to naozaj zľava?');
+    expect(html).toMatch(/<h1>[^]*?<\/h1>\s*<p class="lead">[^]*?<form class="search-full" action="\/hladat"/);
+  });
+
+  it('príklad zdanlivej zľavy je označený ako ilustračný a nevedie do obchodu', async () => {
+    const { html } = await get('/');
+
+    expect(text(html)).toContain('Ilustračný príklad');
+    expect(html).toContain('aria-label="Graf ceny v Obchode Beta za 60 dní');
+    expect(html).not.toContain('rel="sponsored');
+    expect(html).not.toContain('/redirect');
+  });
+
+  it('AI chat spomína len ChatGPT a Claude a vedie na návod', async () => {
+    const { html } = await get('/');
+    const page = text(html);
+
+    expect(page).toContain('Pýtajte sa v ChatGPT alebo Claude');
+    expect(html).toMatch(/href="\/pre-ai-asistentov">Návod na pripojenie/);
+    expect(page).toContain('Ukážka rozhovoru. Obchody a ceny sú vymyslené.');
+    expect(page).not.toContain('Gemini');
+  });
+
+  it('úvod vedie k stráženiu ceny a vysvetľuje, ako zarábame', async () => {
+    const { html } = await get('/');
+    const page = text(html);
+
+    expect(page).toContain('Nechajte ju strážiť');
+    expect(html).toMatch(/href="\/hladat">Vybrať produkt na stráženie/);
+    expect(page).toContain('poradie ponúk určuje len cena');
+    expect(html).toMatch(/href="\/affiliate">Viac o tom, ako zarábame/);
   });
 
   it('každá stránka priznáva partnerské odkazy', async () => {
