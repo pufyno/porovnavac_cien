@@ -41,32 +41,66 @@ končia na ukážkovej stránke, lebo e-shopy neexistujú.
 
 ## Ukážka na Verceli
 
-Slúži len na pozretie webu, nie ako ostrá prevádzka. Vercel si aplikáciu
-zostaví sám zo súboru `src/index.ts`.
+Slúži len na pozretie webu, nie ako ostrá prevádzka.
 
-Projekt na Verceli sa volá `porovnavac-cien`, je prepojený s repozitárom na
-GitHube a má adresu <https://porovnavac-cien-nu.vercel.app>. Všetky adresy
-sú chránené prihlásením do Vercelu (Vercel Authentication, nastavenie „all“),
-takže ukážku vidí len majiteľ účtu. Kým web nemá prevádzkovateľa, právne
-texty a odosielanie e-mailov, ochranu nevypínať.
+| | |
+| --- | --- |
+| Adresa | <https://porovnavac-cien-nu.vercel.app> |
+| Projekt | `porovnavac-cien` v osobnom tíme majiteľa |
+| Zdroj | Repozitár `pufyno/porovnavac_cien` na GitHube; každý push sa nasadí sám |
+| Produkčná vetva | `main`. Ostatné vetvy dostanú vlastnú náhľadovú adresu; na hlavnú adresu sa dostanú až ručným nasadením alebo zlúčením do `main`. |
+| Vstupný bod | `src/index.ts`, Vercel ho nájde sám (framework Hono) |
+| Región funkcií | Frankfurt (`fra1`) |
+| Prístup | Len po prihlásení do Vercelu (Vercel Authentication, nastavenie „all“) |
+| Premenné | `DEMO=1`, `DATABASE_URL` |
 
-1. Vytvoriť hostovanú PostgreSQL 17 s rozšíreniami `pg_trgm`, `unaccent`
-   a `citext` (napríklad Neon alebo Supabase).
-2. V projekte na Verceli nastaviť premenné `DATABASE_URL` a `DEMO=1`.
-   `PUBLIC_BASE_URL` netreba; použije sa adresa, ktorú pridelí Vercel.
-3. Raz naplniť databázu ukážkovými dátami z ľubovoľného počítača:
+Ochranu prihlásením nevypínať, kým web nemá prevádzkovateľa, hotové právne
+texty a odosielanie e-mailov.
+
+### Stav k 17. 11. 2026
+
+Projekt nemá databázu; `DATABASE_URL` je zástupná hodnota, aby aplikácia
+naštartovala. Informačné stránky fungujú. Vyhľadávanie, stránka produktu,
+stráženie ceny, API a MCP hlásia nedostupnosť.
+
+### Pripojenie databázy
+
+1. Založiť hostovanú PostgreSQL 17 (napríklad Neon alebo nový projekt
+   v Supabase), najlepšie v regióne Frankfurt. Rozšírenia `pg_trgm`, `unaccent`
+   a `citext` si vytvoria migrácie; obe služby ich povoľujú.
+2. Pripojovací reťazec uložiť do súboru `.env` v koreni projektu ako riadok
+   `DATABASE_URL=postgres://…`. Súbor je v `.gitignore`.
+3. Tú istú hodnotu nastaviť v projekte na Verceli ako `DATABASE_URL`
+   (prepísať zástupnú hodnotu) pre prostredia Production aj Preview.
+4. Raz naplniť databázu ukážkovými dátami:
 
    ```
-   DATABASE_URL=… PUBLIC_BASE_URL=https://ADRESA-UKAZKY pnpm demo:seed
+   PUBLIC_BASE_URL=https://porovnavac-cien-nu.vercel.app node --env-file=.env src/dev/demo-seed-cli.ts
    ```
 
-   Príkaz spustí migrácie a vloží vzorové e-shopy so 100 dňami histórie.
-   Odmietne bežať nad databázou, v ktorej už nejaké obchody sú.
+   Príkaz spustí migrácie a vloží štyri vymyslené e-shopy so 100 dňami
+   histórie. Odmietne bežať nad databázou, v ktorej už nejaké obchody sú.
+   `PUBLIC_BASE_URL` určuje, kam povedú prekliky z ukážky.
+5. Nasadiť znova, aby funkcia dostala novú hodnotu premennej, a overiť
+   `/hladat?q=roborock+s8+pro+ultra`.
 
-Lokálne sa zostavenie dá overiť príkazom `vercel build`. Vercel prekladá
-súbory jednotlivo, preto `tsconfig.json` musí mať zapnuté
-`rewriteRelativeImportExtensions`; inak funkcia po štarte nenájde moduly. E-maily sa ani tu
-neodosielajú a nočný import nebeží, takže história cien končí dňom naplnenia.
+### Na čo si dať pozor
+
+- **TypeScript 7 nepoužívať.** Zostavovací nástroj Vercelu s ním padá
+  (`Cannot read properties of undefined (reading 'readFile')`). Projekt je
+  preto na TypeScripte 6.
+- **`rewriteRelativeImportExtensions` v `tsconfig.json` musí ostať zapnuté.**
+  Vercel prekladá súbory jednotlivo; bez tejto voľby ostanú v preložených
+  súboroch importy s príponou `.ts` a funkcia po štarte nenájde moduly.
+- **Vstupný bod musí priamo importovať `hono`** a exportovať aplikáciu ako
+  predvolený export, inak ho Vercel nerozpozná.
+- **Prvé nasadenie nového projektu ide vždy do produkcie**, aj z inej vetvy.
+- E-maily sa ani tu neodosielajú a nočný import nebeží, takže história cien
+  končí dňom naplnenia.
+
+Lokálne sa zostavenie dá overiť príkazom `vercel build`; stačí súbor
+`.vercel/project.json` s nastavením `{"settings":{"framework":"hono"}}`
+a vymyslenými identifikátormi `projectId` a `orgId`.
 
 ## Testy a merania
 

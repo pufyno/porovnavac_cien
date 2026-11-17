@@ -12,6 +12,9 @@ Funkčný prototyp všetkých štyroch modulov (import feedov, rozhranie pre AI
 cez MCP a REST, merané prekliky, web so strážením ceny) nad vzorovými dátami.
 Reálne feedy, doména ani odosielanie e-mailov zatiaľ nie sú.
 
+Ukážka webu je nasadená na Verceli (prístup len po prihlásení majiteľa);
+podrobnosti sú v [`docs/prevadzka.md`](docs/prevadzka.md).
+
 ## Vyskúšanie
 
 ```

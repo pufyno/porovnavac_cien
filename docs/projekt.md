@@ -122,12 +122,13 @@ a tón textov.
 | Vrstva | Voľba |
 | --- | --- |
 | Databáza | PostgreSQL 17 s rozšíreniami `pg_trgm`, `unaccent`, `citext` |
-| Backend | TypeScript na Node 22 bez kroku zostavenia, framework Hono, `@hono/zod-openapi` |
+| Backend | TypeScript 6 na Node 22 bez kroku zostavenia, framework Hono, `@hono/zod-openapi` |
 | MCP | Oficiálne `@modelcontextprotocol/sdk` v tom istom procese ako API |
 | Ingestor | Samostatný príkaz, streamový XML parser `saxes`, zápis po dávkach v jednej transakcii |
 | Web | Vykresľovaný na serveri z tej istej aplikácie (`hono/html`) |
 | Testy | vitest proti skutočnej PostgreSQL 17 (`embedded-postgres`, bez Dockeru) |
-| Hosting | Vlastný VPS (2 jadrá, 7,8 GB RAM), za existujúcim reverzným proxy |
+| Hosting | Ostrá prevádzka: vlastný VPS (2 jadrá, 7,8 GB RAM), za existujúcim reverzným proxy |
+| Ukážka | Vercel, projekt `porovnavac-cien`, chránený prihlásením; potrebuje hostovanú PostgreSQL |
 | E-maily | Nerozhodnuté; kód má rozhranie `Mailer`, zatiaľ len výpis do logu |
 
 Prevádzkové pravidlá:
@@ -137,6 +138,11 @@ Prevádzkové pravidlá:
 - Zálohy databázy musia odchádzať mimo VPS. História cien sa nedá získať znova.
 
 Postup spustenia a nasadenia je v [prevadzka.md](prevadzka.md).
+
+Aplikácia má dva vstupné body nad tým istým kódom: `src/server.ts` pre VPS
+(sám počúva na porte) a `src/index.ts` pre Vercel (exportuje aplikáciu, ktorú
+obslúži Vercel). Nočný import na Verceli nebeží; ukážka má dáta len z
+jednorazového naplnenia.
 
 ### Výkon
 
@@ -289,6 +295,7 @@ s pokynom pre asistenta, aby ceny neodhadoval.
 | Studený štart histórie | Verdikt má zmysel po 14 dňoch, 90-dňový priemer po 90 dňoch zberu. | Ingestor spustiť hneď po prvom feede. API verdikt nevydá, kým dát nie je dosť. |
 | Pokrytie | Porovnávame len obchody s partnerským programom; najlacnejší obchod môže chýbať. | Odpoveď aj web to priznávajú a uvádzajú počet porovnaných obchodov. |
 | Ponuky bez EAN | Nespárujú sa a v porovnaní chýbajú. | Zmerať na prvom reálnom feede, koľko ich je; podľa toho doplniť párovanie podľa názvu. |
+| Ukážka na Verceli sa nedopatrením zverejní | Návštevník uvidí pracovné právne texty a formulár stráženia, ktorý e-mail nepošle. | Ochrana prihlásením je zapnutá pre všetky adresy projektu; nevypínať, kým web nie je pripravený. |
 | Všetko beží na jednom VPS | Výpadok alebo strata disku zastaví službu a zničí históriu. | Zálohy mimo VPS od prvého dňa zberu. |
 | E-maily v strážení ceny sú osobné údaje | Povinnosti podľa GDPR. | Potvrdenie e-mailom, odhlásenie, mazanie po lehote sú hotové; chýba uvedený prevádzkovateľ a kontrola textov. |
 | Roboty a náhľady odkazov v chatoch | Nafúknu počet preklikov. | Zatiaľ neriešené; pri vyhodnocovaní porovnávať s reportom siete. |

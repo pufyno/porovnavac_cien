@@ -12,11 +12,11 @@ _Aktualizované: 2026-11-17_
 
 | | |
 | --- | --- |
-| **Aktuálna fáza** | Prototyp celého reťazca je hotový a zdokumentovaný na vetve `prototyp-api-ingestor` (lokálne, nepushnuté). Ďalší postup závisí od rozhodnutí majiteľa. |
-| **Naposledy hotové** | Import feedov, história a štatistiky, zdanlivé zľavy, porovnanie, REST API + OpenAPI, MCP server, redirector, stráženie ceny, neutrálny web, nočný import, ukážka `pnpm demo`, meranie výkonu `pnpm bench`. 260 testov. Dokumentácia: `projekt.md`, `prieskum.md`, `prevadzka.md`. |
-| **Rozpracované** | Nič. |
-| **Ďalší krok (Claude)** | Podľa rozhodnutí majiteľa. Bez nich sa dá len ladiť na syntetických dátach, čo nemá veľký prínos. |
-| **Čaká na majiteľa** | Pozri „Rozhodnutia, ktoré čakajú na majiteľa“ nižšie. |
+| **Aktuálna fáza** | Prototyp celého reťazca je hotový. Ukážka webu je nasadená na Verceli, zatiaľ bez databázy. |
+| **Naposledy hotové** | Vetva `prototyp-api-ingestor` je na GitHube. Projekt `porovnavac-cien` na Verceli beží na <https://porovnavac-cien-nu.vercel.app> (len po prihlásení do Vercelu); informačné stránky fungujú. 262 testov. |
+| **Rozpracované** | Ukážka na Verceli: vyhľadávanie, stránka produktu, stráženie ceny a API hlásia nedostupnosť, lebo projekt nemá databázu. `DATABASE_URL` na Verceli je zatiaľ zástupná hodnota. |
+| **Ďalší krok (Claude)** | Po dodaní pripojovacieho reťazca: nastaviť `DATABASE_URL` na Verceli, spustiť `pnpm demo:seed`, nasadiť znova a overiť vyhľadávanie, graf ceny a preklik. Postup je v [prevadzka.md](prevadzka.md). |
+| **Čaká na majiteľa** | Hostovaná PostgreSQL 17 pre ukážku (Neon alebo nový projekt v Supabase) a jej pripojovací reťazec. Potom rozhodnutia nižšie. |
 
 ## Rozhodnutia, ktoré čakajú na majiteľa
 
@@ -35,7 +35,9 @@ v [prieskum.md](prieskum.md).
 6. **Vizuál webu.**
 7. **Služba na e-maily a úložisko záloh mimo VPS.**
 8. **Podľa čoho a kedy projekt vyhodnotiť.**
-9. **Zlúčiť vetvu `prototyp-api-ingestor` do `main` a pushnúť.**
+9. **Zlúčiť vetvu `prototyp-api-ingestor` do `main`.** Vetva je na GitHube,
+   `main` ostáva v stave z 15. 11. Vercel berie `main` ako produkčnú vetvu,
+   takže po zlúčení sa z nej nasadí samo.
 
 ## Stratégia
 
@@ -121,6 +123,7 @@ marca 2027.
 
 ## Úlohy majiteľa
 
+- [ ] Založiť hostovanú PostgreSQL 17 pre ukážku na Verceli a dodať pripojovací reťazec (do súboru `.env` ako `DATABASE_URL=…`).
 - [ ] Rozhodnúť, na koho sa registrovať. Dognet podľa podmienok vypláca aj fyzickej osobe (minimum 100 €); pri eHub treba overiť.
 - [ ] Overiť pravidlá sietí pre zdroj návštevnosti (odkazy v AI chate).
 - [ ] Otvoriť v prehliadači stránku OpenAI o konci vlastných GPT a potvrdiť dátum 11. 12. 2026 (odkaz je v `prieskum.md`).
@@ -140,3 +143,4 @@ marca 2027.
 | 2026-11-17 | Na vetve `prototyp-api-ingestor` vznikol funkčný prototyp všetkých štyroch modulov proti vzorovým feedom (`pnpm demo`). Prieskum: ChatGPT ruší vlastné GPT s Actions (11. 12. 2026, zo sekundárnych zdrojov), náhradou je MCP; katalógy OpenAI a Anthropic zakazujú reklamu a platené umiestnenia, affiliate odkazy výslovne neriešia. E-maily sa zatiaľ len vypisujú do logu. |
 | 2026-11-17 | Dopísaná dokumentácia: prepísaný `projekt.md`, nové `prieskum.md` (so zdrojmi) a `prevadzka.md`, README. Zmeraný výkon na 100 000 produktoch (`pnpm bench`): import feedu 7–17 s bez nárastu pamäte, porovnanie podľa názvu medián do 100 ms, najpomalší dopyt 435–727 ms. |
 | 2026-11-17 | Príprava ukážky na Verceli: vstupný bod `src/index.ts`, naplnenie hostovanej databázy `pnpm demo:seed`, prechod na TypeScript 6 (Vercel so 7 nezostaví). Vetva `prototyp-api-ingestor` pushnutá na GitHub. Chýba hostovaná databáza. |
+| 2026-11-17 | Ukážka nasadená na Vercel (projekt `porovnavac-cien`, prepojený s GitHubom, región funkcií Frankfurt, prístup len po prihlásení do Vercelu). Prvé nasadenie padlo pri štarte, lebo preložené súbory odkazovali na moduly s príponou `.ts`; opravené voľbou `rewriteRelativeImportExtensions`. Overené: informačné stránky vracajú 200, API bez databázy 503, neprihlásený návštevník je presmerovaný na prihlásenie. |
