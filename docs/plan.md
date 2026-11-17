@@ -12,11 +12,30 @@ _Aktualizované: 2026-11-17_
 
 | | |
 | --- | --- |
-| **Aktuálna fáza** | Prototyp celého reťazca na vetve `prototyp-api-ingestor` (lokálne, nepushnuté) |
-| **Naposledy hotové** | Import feedov, história a štatistiky, falošné zľavy, porovnanie, REST API + OpenAPI, MCP server, redirector, stráženie ceny, neutrálny web, nočný import, ukážka `pnpm demo`. 260 testov. |
-| **Rozpracované** | Dokumentácia: výsledky prieskumu (koniec vlastných GPT v ChatGPT 11. 12. 2026, pravidlá katalógov proti reklame) ešte nie sú v `docs/projekt.md`; README nemá návod na spustenie. |
-| **Ďalší krok (Claude)** | Dopísať dokumentáciu a prieskum so zdrojmi; potom podľa rozhodnutí majiteľa. |
-| **Čaká na majiteľa** | Strategické rozhodnutia: affiliate odkazy vs. zákaz reklamy v katalógoch OpenAI a Anthropic; MCP ako hlavné rozhranie; názov a doména; vizuál; služba na e-maily; zlúčenie vetvy. Pozri aj „Úlohy majiteľa“. |
+| **Aktuálna fáza** | Prototyp celého reťazca je hotový a zdokumentovaný na vetve `prototyp-api-ingestor` (lokálne, nepushnuté). Ďalší postup závisí od rozhodnutí majiteľa. |
+| **Naposledy hotové** | Import feedov, história a štatistiky, zdanlivé zľavy, porovnanie, REST API + OpenAPI, MCP server, redirector, stráženie ceny, neutrálny web, nočný import, ukážka `pnpm demo`, meranie výkonu `pnpm bench`. 260 testov. Dokumentácia: `projekt.md`, `prieskum.md`, `prevadzka.md`. |
+| **Rozpracované** | Nič. |
+| **Ďalší krok (Claude)** | Podľa rozhodnutí majiteľa. Bez nich sa dá len ladiť na syntetických dátach, čo nemá veľký prínos. |
+| **Čaká na majiteľa** | Pozri „Rozhodnutia, ktoré čakajú na majiteľa“ nižšie. |
+
+## Rozhodnutia, ktoré čakajú na majiteľa
+
+Zoradené podľa toho, ako veľmi blokujú ďalšiu prácu. Podklady sú
+v [prieskum.md](prieskum.md).
+
+1. **Affiliate odkazy voči zákazu reklamy v katalógoch OpenAI a Anthropic.**
+   Možnosti: (a) opýtať sa podpory vopred, (b) podať žiadosť a uvidieť,
+   (c) v chate odkazovať na vlastnú stránku produktu a affiliate odkaz mať až
+   na webe, (d) nespoliehať sa na katalógy a šíriť adresu konektora inak.
+2. **MCP ako hlavné rozhranie.** Prototyp s tým počíta; treba potvrdiť.
+3. **Názov a doména.** Blokuje web, registrácie aj testovanie v ChatGPT, ktoré
+   potrebuje verejnú adresu s HTTPS.
+4. **Na koho sa registrovať v sieťach.** Dognet vypláca aj fyzickej osobe.
+5. **Len Slovensko, alebo aj Česko od začiatku.**
+6. **Vizuál webu.**
+7. **Služba na e-maily a úložisko záloh mimo VPS.**
+8. **Podľa čoho a kedy projekt vyhodnotiť.**
+9. **Zlúčiť vetvu `prototyp-api-ingestor` do `main` a pushnúť.**
 
 ## Stratégia
 
@@ -36,18 +55,22 @@ _Aktualizované: 2026-11-17_
 Termíny sú odhad pri práci po krokoch. Dĺžku schvaľovania v sieťach nepoznáme
 a neovplyvníme ju; všetko po fáze 3 sa posúva podľa nej.
 
+Prototyp z 17. 11. predbehol vývojovú časť fáz 4 až 7. Termíny v tabuľke
+a na časovej osi sú pôvodný odhad; kritická cesta sa nezmenila a vedie cez
+doménu, web a schválenie v sieťach.
+
 | # | Fáza | Kto | Výstup | Závisí od | Odhad | Stav |
 | --- | --- | --- | --- | --- | --- | --- |
 | 0 | Základy | Claude | Stack, schéma databázy, dokumentácia | – | 15. 11. | Hotovo |
 | 1 | Doména a právny základ | Majiteľ | Doména, DNS na VPS, jasné, na koho sa registrovať | – | 16.–22. 11. | Nezačaté |
-| 2 | Fasádny web | Claude, nasadenie majiteľ | Verejný web: úvod, obsah, právne stránky | 1 (pre nasadenie) | 16.–29. 11. | Nezačaté |
+| 2 | Fasádny web | Claude, nasadenie majiteľ | Verejný web: úvod, obsah, právne stránky | 1 (pre nasadenie) | 16.–29. 11. | Neutrálna verzia hotová; chýba názov, vizuál a údaje prevádzkovateľa |
 | 3 | Registrácie v sieťach | Majiteľ | Schválený účet a prvý reálny feed | 2 | 30. 11. – 13. 12. | Nezačaté |
-| 4 | Ingestor a história cien | Claude | Nočný import, párovanie cez EAN, história a štatistiky | Vývoj: 0; ostrý štart: 3 | 23. 11. – 13. 12. | Nezačaté |
-| 5 | API pre AI asistentov | Claude | `product-compare` ako REST, OpenAPI a MCP | 4 | 7.–27. 12. | Nezačaté |
-| 6 | Redirector a produktové stránky | Claude | Merané prekliky; vyhľadávač a stránka produktu na webe | 5 | 28. 12. – 10. 1. | Nezačaté |
-| 7 | Stráženie ceny | Claude | Stránka `/alert`, potvrdzovacie a cenové e-maily | 6 | 11.–24. 1. | Nezačaté |
-| 8 | Distribúcia v AI platformách | Claude a majiteľ | Konektor v ChatGPT, Claude a Gemini | 5, 6 | 25. 1. – 7. 2. | Nezačaté |
-| 9 | Falošné zľavy a verdikty | Claude | Varovania a verdikty postavené na reálnej histórii | 30 a 90 dní po štarte zberu | od polovice januára | Nezačaté |
+| 4 | Ingestor a história cien | Claude | Nočný import, párovanie cez EAN, história a štatistiky | Vývoj: 0; ostrý štart: 3 | 23. 11. – 13. 12. | Prototyp hotový; čaká na reálny feed |
+| 5 | API pre AI asistentov | Claude | `product-compare` ako MCP, REST a OpenAPI | 4 | 7.–27. 12. | Prototyp hotový |
+| 6 | Redirector a produktové stránky | Claude | Merané prekliky; vyhľadávač a stránka produktu na webe | 5 | 28. 12. – 10. 1. | Prototyp hotový |
+| 7 | Stráženie ceny | Claude | Stránka `/alert`, potvrdzovacie a cenové e-maily | 6 | 11.–24. 1. | Prototyp hotový; chýba odosielanie e-mailov |
+| 8 | Distribúcia v AI platformách | Claude a majiteľ | MCP konektor v ChatGPT a Claude; Gemini treba overiť | 5, 6, rozhodnutie 1 | 25. 1. – 7. 2. | Nezačaté |
+| 9 | Zdanlivé zľavy a verdikty | Claude | Varovania a verdikty postavené na reálnej histórii | 30 a 90 dní po štarte zberu | od polovice januára | Logika hotová; prahy sa doladia na reálnych dátach |
 
 ## Časová os
 
@@ -98,8 +121,9 @@ marca 2027.
 
 ## Úlohy majiteľa
 
-- [ ] Overiť, či siete vyplácajú provízie fyzickej osobe, alebo treba živnosť či firmu.
+- [ ] Rozhodnúť, na koho sa registrovať. Dognet podľa podmienok vypláca aj fyzickej osobe (minimum 100 €); pri eHub treba overiť.
 - [ ] Overiť pravidlá sietí pre zdroj návštevnosti (odkazy v AI chate).
+- [ ] Otvoriť v prehliadači stránku OpenAI o konci vlastných GPT a potvrdiť dátum 11. 12. 2026 (odkaz je v `prieskum.md`).
 - [ ] Vybrať názov a kúpiť doménu.
 - [ ] Nasmerovať DNS domény na VPS.
 - [ ] Rozhodnúť: len Slovensko na začiatok, alebo aj Česko.
@@ -114,3 +138,4 @@ marca 2027.
 | 2026-11-15 | Prijaté zadanie. Zvolený stack (TypeScript, PostgreSQL 17, vlastný VPS). Navrhnutá a otestovaná databázová schéma, uložená ako `db/migrations/0001_init.sql`. |
 | 2026-11-15 | Zistené, že chýba doména, web aj registrácie v sieťach. Web presunutý pred ingestor. Vznikli `docs/projekt.md` a `docs/plan.md`. |
 | 2026-11-17 | Na vetve `prototyp-api-ingestor` vznikol funkčný prototyp všetkých štyroch modulov proti vzorovým feedom (`pnpm demo`). Prieskum: ChatGPT ruší vlastné GPT s Actions (11. 12. 2026, zo sekundárnych zdrojov), náhradou je MCP; katalógy OpenAI a Anthropic zakazujú reklamu a platené umiestnenia, affiliate odkazy výslovne neriešia. E-maily sa zatiaľ len vypisujú do logu. |
+| 2026-11-17 | Dopísaná dokumentácia: prepísaný `projekt.md`, nové `prieskum.md` (so zdrojmi) a `prevadzka.md`, README. Zmeraný výkon na 100 000 produktoch (`pnpm bench`): import feedu 7–17 s bez nárastu pamäte, porovnanie podľa názvu medián do 100 ms, najpomalší dopyt 435–727 ms. |
