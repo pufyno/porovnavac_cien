@@ -1,21 +1,37 @@
 # Porovnávač cien
 
-AI porovnávač cien elektroniky na internete. Podobný Heureke, ale efektívnejší
-a dostupný priamo v ChatGPT chate.
+Služba, ktorá AI asistentom (ChatGPT, Claude, Gemini) dodáva živé ceny
+elektroniky zo slovenských a českých e-shopov: porovnanie ponúk, históriu
+cien, upozornenie na zdanlivé zľavy a odporúčanie, či kúpiť teraz.
 
-## Cieľ
-
-- Vyhľadať produkt (elektroniku) naprieč e-shopmi
-- Porovnať ceny, dostupnosť a dopravu
-- Odpovedať prirodzeným jazykom priamo v chate (ChatGPT)
+„Porovnávač cien“ je pracovný názov.
 
 ## Stav
 
-Hotový je návrh stacku a databázová schéma. Kód aplikácie zatiaľ neexistuje.
+Funkčný prototyp všetkých štyroch modulov (import feedov, rozhranie pre AI
+cez MCP a REST, merané prekliky, web so strážením ceny) nad vzorovými dátami.
+Reálne feedy, doména ani odosielanie e-mailov zatiaľ nie sú.
 
-- **Popis projektu:** [`docs/projekt.md`](docs/projekt.md)
-- **Plán, časová os a aktuálny stav:** [`docs/plan.md`](docs/plan.md)
-- **Schéma databázy:** [`db/migrations/0001_init.sql`](db/migrations/0001_init.sql)
+Ukážka webu je nasadená na Verceli (prístup len po prihlásení majiteľa);
+podrobnosti sú v [`docs/prevadzka.md`](docs/prevadzka.md).
+
+## Vyskúšanie
+
+```
+pnpm install
+pnpm demo
+```
+
+Ukážka beží na <http://localhost:3000> bez databázy a bez Dockeru. Skúste
+vyhľadať `roborock s8 pro ultra`. Ďalšie príkazy: `pnpm test`,
+`pnpm typecheck`, `pnpm bench`.
+
+## Dokumentácia
+
+- [`docs/projekt.md`](docs/projekt.md) – čo staviame a prečo, moduly, rozhodnutia, riziká
+- [`docs/plan.md`](docs/plan.md) – aktuálny stav, fázy a časová os
+- [`docs/prieskum.md`](docs/prieskum.md) – AI platformy, affiliate siete a konkurencia, so zdrojmi
+- [`docs/prevadzka.md`](docs/prevadzka.md) – spustenie, nasadenie, pridanie e-shopu
 
 ## Vývoj s Claude Code
 
