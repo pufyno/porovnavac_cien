@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { loadConfig } from '../src/config.ts';
+import { loadConfig, withDirectDatabase } from '../src/config.ts';
 import { todayIn } from '../src/dates.ts';
 
 describe('loadConfig', () => {
@@ -42,6 +42,23 @@ describe('loadConfig', () => {
     expect(() => loadConfig({ DATABASE_URL: 'postgres://localhost/db', PUBLIC_BASE_URL: 'domena.sk' })).toThrow(
       'PUBLIC_BASE_URL',
     );
+  });
+});
+
+describe('withDirectDatabase', () => {
+  it('migrácie idú cez priame pripojenie, ak ho prostredie ponúka', () => {
+    const env = withDirectDatabase({
+      DATABASE_URL: 'postgres://u:p@db-pooler.example/app',
+      DATABASE_URL_UNPOOLED: 'postgres://u:p@db.example/app',
+    });
+
+    expect(loadConfig(env).databaseUrl).toBe('postgres://u:p@db.example/app');
+  });
+
+  it('bez priameho pripojenia ostáva DATABASE_URL', () => {
+    const env = withDirectDatabase({ DATABASE_URL: 'postgres://u:p@localhost/app' });
+
+    expect(loadConfig(env).databaseUrl).toBe('postgres://u:p@localhost/app');
   });
 });
 

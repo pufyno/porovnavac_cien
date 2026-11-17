@@ -3,3 +3,6 @@ node_modules/
 .dev-db/
 *.log
 .vercel/
+.env.local
+.env*.local
+.neon

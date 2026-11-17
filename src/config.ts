@@ -31,3 +31,12 @@ export function loadConfig(env: Record<string, string | undefined>): AppConfig {
     siteName: env.SITE_NAME ?? 'Porovnávač cien',
   };
 }
+
+/**
+ * Pre migrácie a jednorazové skripty. Hostované databázy s poolerom (Neon)
+ * dávajú popri `DATABASE_URL` aj priame pripojenie `DATABASE_URL_UNPOOLED`;
+ * zmeny schémy majú ísť cezeň.
+ */
+export function withDirectDatabase(env: Record<string, string | undefined>): Record<string, string | undefined> {
+  return env.DATABASE_URL_UNPOOLED ? { ...env, DATABASE_URL: env.DATABASE_URL_UNPOOLED } : env;
+}

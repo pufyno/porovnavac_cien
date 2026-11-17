@@ -57,32 +57,45 @@ Slúži len na pozretie webu, nie ako ostrá prevádzka.
 Ochranu prihlásením nevypínať, kým web nemá prevádzkovateľa, hotové právne
 texty a odosielanie e-mailov.
 
+### Databáza ukážky
+
+| | |
+| --- | --- |
+| Služba | Neon, bezplatný plán |
+| Projekt | `shiny-star-23924927`, organizácia `org-spring-recipe-48010383` |
+| Vetva | `production` |
+| Región | Frankfurt (AWS `eu-central-1`), rovnaký ako funkcie na Verceli |
+| Verzia | PostgreSQL 18. Testy aj ostrá prevádzka sú na verzii 17; ukážka na 18 prešla bez zmien. |
+
+Repozitár je s projektom prepojený nástrojom `neon` (súbory `.neon`
+a `neon.ts`). Prístupové údaje stiahne `neon env pull` do `.env.local`; oba
+súbory s údajmi sú v `.gitignore`. Neon dáva dve adresy tej istej databázy:
+
+- `DATABASE_URL` ide cez pooler. Používa ju bežiaca aplikácia, teda aj funkcia
+  na Verceli.
+- `DATABASE_URL_UNPOOLED` je priame pripojenie. Používajú ho `pnpm migrate`
+  a `pnpm demo:seed`, ak je nastavené; inak siahnu po `DATABASE_URL`.
+
+Ukážkové dáta sa vložili príkazom:
+
+```
+PUBLIC_BASE_URL=https://porovnavac-cien-nu.vercel.app node --env-file=.env.local src/dev/demo-seed-cli.ts
+```
+
+Príkaz spustí migrácie a vloží štyri vymyslené e-shopy so 100 dňami histórie.
+Odmietne bežať nad databázou, v ktorej už nejaké obchody sú. `PUBLIC_BASE_URL`
+určuje, kam povedú prekliky z ukážky.
+
+Na Verceli musí byť tá istá hodnota `DATABASE_URL` (s poolerom) nastavená pre
+prostredia Production aj Preview. Po zmene premennej treba nasadiť znova, inak
+funkcia beží so starou hodnotou.
+
 ### Stav k 17. 11. 2026
 
-Projekt nemá databázu; `DATABASE_URL` je zástupná hodnota, aby aplikácia
-naštartovala. Informačné stránky fungujú. Vyhľadávanie, stránka produktu,
-stráženie ceny, API a MCP hlásia nedostupnosť.
-
-### Pripojenie databázy
-
-1. Založiť hostovanú PostgreSQL 17 (napríklad Neon alebo nový projekt
-   v Supabase), najlepšie v regióne Frankfurt. Rozšírenia `pg_trgm`, `unaccent`
-   a `citext` si vytvoria migrácie; obe služby ich povoľujú.
-2. Pripojovací reťazec uložiť do súboru `.env` v koreni projektu ako riadok
-   `DATABASE_URL=postgres://…`. Súbor je v `.gitignore`.
-3. Tú istú hodnotu nastaviť v projekte na Verceli ako `DATABASE_URL`
-   (prepísať zástupnú hodnotu) pre prostredia Production aj Preview.
-4. Raz naplniť databázu ukážkovými dátami:
-
-   ```
-   PUBLIC_BASE_URL=https://porovnavac-cien-nu.vercel.app node --env-file=.env src/dev/demo-seed-cli.ts
-   ```
-
-   Príkaz spustí migrácie a vloží štyri vymyslené e-shopy so 100 dňami
-   histórie. Odmietne bežať nad databázou, v ktorej už nejaké obchody sú.
-   `PUBLIC_BASE_URL` určuje, kam povedú prekliky z ukážky.
-5. Nasadiť znova, aby funkcia dostala novú hodnotu premennej, a overiť
-   `/hladat?q=roborock+s8+pro+ultra`.
+Databáza v Neone je naplnená a aplikácia nad ňou lokálne funguje:
+vyhľadávanie, stránka produktu s grafom, API, MCP aj preklik. Na Verceli je
+`DATABASE_URL` ešte zástupná hodnota, takže nasadená ukážka zatiaľ ukazuje len
+informačné stránky.
 
 ### Na čo si dať pozor
 

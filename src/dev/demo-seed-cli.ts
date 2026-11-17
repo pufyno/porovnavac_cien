@@ -6,12 +6,12 @@ import os from 'node:os';
 import path from 'node:path';
 import postgres from 'postgres';
 import { logMailer } from '../alerts/mailer.ts';
-import { loadConfig } from '../config.ts';
+import { loadConfig, withDirectDatabase } from '../config.ts';
 import { TIME_ZONE, todayIn } from '../dates.ts';
 import { migrate } from '../db/migrate.ts';
 import { seedDemo } from './demo-seed.ts';
 
-const config = loadConfig(process.env);
+const config = loadConfig(withDirectDatabase(process.env));
 const sql = postgres(config.databaseUrl, { max: 5, onnotice: () => {} });
 const feedDir = await mkdtemp(path.join(os.tmpdir(), 'porovnavac-demo-'));
 try {

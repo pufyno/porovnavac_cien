@@ -128,7 +128,7 @@ a tón textov.
 | Web | Vykresľovaný na serveri z tej istej aplikácie (`hono/html`) |
 | Testy | vitest proti skutočnej PostgreSQL 17 (`embedded-postgres`, bez Dockeru) |
 | Hosting | Ostrá prevádzka: vlastný VPS (2 jadrá, 7,8 GB RAM), za existujúcim reverzným proxy |
-| Ukážka | Vercel, projekt `porovnavac-cien`, chránený prihlásením; potrebuje hostovanú PostgreSQL |
+| Ukážka | Vercel, projekt `porovnavac-cien`, chránený prihlásením; databáza v Neone (bezplatný plán, Frankfurt) |
 | E-maily | Nerozhodnuté; kód má rozhranie `Mailer`, zatiaľ len výpis do logu |
 
 Prevádzkové pravidlá:
@@ -283,6 +283,7 @@ s pokynom pre asistenta, aby ceny neodhadoval.
 | 2026-11-17 | Stráženie ceny je jednorazové a vyžaduje potvrdenie e-mailom | GDPR a ochrana pred zneužitím cudzej adresy. |
 | 2026-11-17 | Ukážka na pozretie beží na Verceli (`src/index.ts`); ostrá prevádzka ostáva na VPS | Majiteľ si chce web pozrieť bez nastavovania VPS. Vercel potrebuje hostovanú PostgreSQL. |
 | 2026-11-17 | TypeScript 6 namiesto 7 | Zostavovací nástroj Vercelu s TypeScriptom 7 padá; typová kontrola aj testy prechádzajú na oboch. |
+| 2026-11-17 | Databáza ukážky je v Neone (bezplatný plán); ostrá databáza ostáva na VPS | Funkcie Vercelu nemajú pevné adresy, takže databázu na VPS by bolo treba otvoriť do internetu. Ukážkové dáta majú približne 10 MB. Neon založil PostgreSQL 18; ostrá prevádzka a testy ostávajú na 17. |
 
 ## 10. Riziká
 
