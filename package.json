@@ -12,7 +12,8 @@
     "start": "node src/server.ts",
     "migrate": "node src/db/migrate-cli.ts",
     "ingest": "node src/ingest/cli.ts",
-    "demo": "node src/dev/demo.ts"
+    "demo": "node src/dev/demo.ts",
+    "bench": "node --expose-gc src/dev/bench.ts"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.8",
