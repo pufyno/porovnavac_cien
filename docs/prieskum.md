@@ -356,7 +356,28 @@ o zaradenie (fáza 8).
 | Dáta | Ukážkové obchody | „Trial or demo plugins will not be accepted.“ | Žiadať až s reálnymi feedmi |
 | Adresa MCP servera | Zatiaľ na Verceli, chránená prihlásením | Po zverejnení sa mení len cez podporu | Žiadať až s adresou na vlastnej doméne |
 
-## 9. Čo ostáva overiť
+## 9. Údaje o prevádzkovateľovi na webe
+
+**Overené** v znení účinnom od 1. 7. 2024; text novšieho znenia
+(od 28. 6. 2025) sa nepodarilo načítať.
+Zdroj: <https://static.slov-lex.sk/static/SK/ZZ/2004/22/20240701.html>
+
+Zákon č. 22/2004 Z. z. o elektronickom obchode sa vzťahuje na každú fyzickú
+alebo právnickú osobu, ktorá „na účely podnikania alebo na iné účely“
+poskytuje službu na diaľku „spravidla za úhradu“ (§ 2). Poskytovateľ musí na
+webe ľahko a trvalo sprístupniť (§ 4 ods. 1):
+
+- fyzická osoba: meno, priezvisko, miesto podnikania a **adresu bydliska**;
+  právnická osoba: názov a sídlo;
+- adresu elektronickej pošty a **telefónne číslo**;
+- DIČ, ak je platiteľom DPH, a register so zápisom, ak v ňom je.
+
+**Náš výklad:** porovnávač financovaný provízami je služba „za úhradu“, aj keď
+používateľ nič neplatí. Pri prevádzke na fyzickú osobu teda na web patrí aj
+adresa bydliska a telefón. Pred zverejnením webu je dobré overiť to
+u účtovníka alebo právnika.
+
+## 10. Čo ostáva overiť
 
 | Otázka | Kto a ako |
 | --- | --- |

@@ -283,7 +283,9 @@ s pokynom pre asistenta, aby ceny neodhadoval.
 | 2026-11-15 | História cien len pri zmene | Veľkosť tabuľky. |
 | 2026-11-15 | Web sa robí pred ingestorom | Bez webu nie je schválenie v sieťach, bez schválenia nie sú feedy. |
 | 2026-11-17 | Prototyp celého reťazca na vzorových dátach skôr než web | Overiť realizovateľnosť distribúcie v AI chate nezávisle od čakania na siete. |
-| 2026-11-17 | Hlavné rozhranie je MCP server, REST je druhé (**návrh, čaká na potvrdenie majiteľa**) | ChatGPT ruší vlastné GPT s Actions k 11. 12. 2026; MCP podporujú ChatGPT aj Claude. Gemini pripojí vlastný MCP server len v USA. |
+| 2026-11-17 | Hlavné rozhranie je MCP server, REST je druhé (potvrdil majiteľ) | ChatGPT ruší vlastné GPT s Actions k 11. 12. 2026; MCP podporujú ChatGPT aj Claude. Gemini pripojí vlastný MCP server len v USA. |
+| 2026-11-17 | V chate priame affiliate odkazy do obchodu, priznané, ponuky zoradené len podľa ceny (rozhodol majiteľ) | V katalógu ChatGPT sú porovnávače idealo a Klarna s rovnakým modelom. Pred žiadosťou otázka na podporu OpenAI; ak žiadosť zamietnu, odkazy povedú cez našu stránku produktu. |
+| 2026-11-17 | Registrácie v sieťach aj overenie v OpenAI na fyzickú osobu (rozhodol majiteľ) | Najrýchlejšie a bez nákladov; Dognet vypláca aj fyzickej osobe. Plugin sa v katalógu ChatGPT zverejní pod menom majiteľa. |
 | 2026-11-17 | Zdanlivá zľava sa zisťuje len z vlastnej histórie | Formát Heureka pôvodnú cenu neobsahuje. |
 | 2026-11-17 | Nejasný dopyt vracia kandidátov, nie najlepší odhad | Nesprávne spárovaný produkt by znamenal nesprávnu cenu a verdikt. |
 | 2026-11-17 | Stráženie ceny je jednorazové a vyžaduje potvrdenie e-mailom | GDPR a ochrana pred zneužitím cudzej adresy. |
@@ -296,7 +298,7 @@ s pokynom pre asistenta, aby ceny neodhadoval.
 
 | Riziko | Dopad | Čo s tým |
 | --- | --- | --- |
-| Katalógy AI platforiem zakazujú reklamu a platené umiestnenia | Konektor s affiliate odkazmi nemusí byť schválený; bez katalógu je dosah malý (vlastný konektor majú v ChatGPT naplno len firemné plány, Gemini ho pripojí len v USA). | Strategické rozhodnutie majiteľa. Precedensy idealo a Klarna v katalógu hovoria v náš prospech. Možnosti: opýtať sa podpory vopred, podať žiadosť a uvidieť, alebo v chate odkazovať na vlastný web namiesto priamo na obchod. |
+| Katalógy AI platforiem zakazujú reklamu a platené umiestnenia | Konektor s affiliate odkazmi nemusí byť schválený; bez katalógu je dosah malý (vlastný konektor majú v ChatGPT naplno len firemné plány, Gemini ho pripojí len v USA). | Rozhodnuté: priame priznané odkazy, poradie len podľa ceny; precedensy idealo a Klarna hovoria v náš prospech. Pred žiadosťou otázka na podporu OpenAI; pri zamietnutí odkazy cez našu stránku produktu. |
 | ChatGPT má vlastné nakupovanie, obchody mu môžu posielať feedy priamo a Heureka je v ňom silno citovaná | Používateľ dostane ceny aj bez nás. | Odlíšiť sa históriou cien a odhalením zdanlivých zliav, ktoré tieto zdroje nedávajú. |
 | Veľký hráč (Heureka, Klarna) spustí v ChatGPT porovnávač pre SK/CZ | Konkurent s oveľa väčším pokrytím obchodov. | Odlíšenie obsahom (história, zdanlivé zľavy); čím skôr začať zbierať históriu. |
 | Do katalógu ChatGPT sa dá ísť až s reálnymi dátami | Verejná distribúcia v ChatGPT čaká na schválenie v sieťach a prvé feedy. | Distribúciu skúšať vlastným konektorom (ak to plán ChatGPT alebo Claude dovolí); žiadosť podať hneď po prvých feedoch. |
@@ -311,16 +313,14 @@ s pokynom pre asistenta, aby ceny neodhadoval.
 | Ukážka na Verceli sa nedopatrením zverejní | Návštevník uvidí pracovné právne texty a formulár stráženia, ktorý e-mail nepošle. | Ochrana prihlásením je zapnutá pre všetky adresy projektu; nevypínať, kým web nie je pripravený. |
 | Všetko beží na jednom VPS | Výpadok alebo strata disku zastaví službu a zničí históriu. | Zálohy mimo VPS od prvého dňa zberu. |
 | E-maily v strážení ceny sú osobné údaje | Povinnosti podľa GDPR. | Potvrdenie e-mailom, odhlásenie, mazanie po lehote sú hotové; chýba uvedený prevádzkovateľ a kontrola textov. |
+| Prevádzkovateľ je fyzická osoba | Na webe musí byť meno, adresa bydliska, e-mail a telefón (§ 4 zákona 22/2004 Z. z.); v katalógu ChatGPT meno majiteľa. | Majiteľ potvrdí; alternatívou je s.r.o. so sídlom mimo bydliska. |
 | Roboty a náhľady odkazov v chatoch | Nafúknu počet preklikov. | Zatiaľ neriešené; pri vyhodnocovaní porovnávať s reportom siete. |
 
 ## 11. Otvorené otázky
 
 Strategické, čakajú na majiteľa:
 
-- Ako naložiť s affiliate odkazmi voči pravidlám katalógov (riziko vyššie).
-- Potvrdiť MCP ako hlavné rozhranie.
 - Názov produktu a doména.
-- Na koho sa registrovať v sieťach (fyzická osoba, živnosť, firma).
 - Vizuál webu.
 - Len Slovensko na začiatok, alebo aj Česko. Kód podporuje obe.
 - Služba na odosielanie e-mailov a kam ukladať zálohy.

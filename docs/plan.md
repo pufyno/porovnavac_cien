@@ -15,29 +15,47 @@ _Aktualizované: 2026-11-17_
 | **Aktuálna fáza** | Prototyp celého reťazca je hotový, ukážka beží na Verceli s databázou v Neone. Prieskum realizovateľnosti je uzavretý. |
 | **Naposledy hotové** | Prieskum realizovateľnosti ([prieskum.md](prieskum.md)). V katalógu ChatGPT sú porovnávače cien (idealo, Klarna) aj české služby, takže kanál v EÚ funguje. Ukážkové pluginy OpenAI neprijíma. Gemini pripojí vlastný MCP server len v USA. Podmienky Dognetu porovnávač pripúšťajú, ale tri body treba potvrdiť písomne. Ukážka na <https://porovnavac-cien-nu.vercel.app> (len po prihlásení do Vercelu) funguje celá, 264 testov. |
 | **Rozpracované** | Nič. |
-| **Ďalší krok (Claude)** | Podľa rozhodnutí majiteľa nižšie. Všetko, čo sa dá urobiť bez názvu, domény a reálnych feedov, je hotové. |
-| **Čaká na majiteľa** | Rozhodnutia 1 až 3 a dve krátke kontroly v ChatGPT (úlohy majiteľa). |
+| **Ďalší krok (Claude)** | Po výbere názvu: doplniť ho do webu a textov, pripraviť nasadenie na doménu. Všetko, čo sa dá urobiť bez názvu, domény a reálnych feedov, je hotové. |
+| **Čaká na majiteľa** | Výber názvu z kandidátov (rozhodnutie 3), potvrdenie fyzickej osoby napriek povinným údajom na webe (rozhodnutie 4) a dve krátke kontroly v ChatGPT. |
 
-## Rozhodnutia, ktoré čakajú na majiteľa
+## Rozhodnutia majiteľa
 
-Zoradené podľa toho, ako veľmi blokujú ďalšiu prácu. Podklady sú
-v [prieskum.md](prieskum.md).
+Zoradené podľa toho, ako veľmi blokujú ďalšiu prácu. Čísla sa nemenia, aby
+platili odkazy na ne. Podklady sú v [prieskum.md](prieskum.md).
 
 1. **Affiliate odkazy voči zákazu reklamy v katalógoch OpenAI a Anthropic.**
-   Možnosti: (a) opýtať sa podpory vopred, (b) podať žiadosť a uvidieť,
-   (c) v chate odkazovať na vlastnú stránku produktu a affiliate odkaz mať až
-   na webe, (d) nespoliehať sa na katalógy a šíriť adresu konektora inak.
-   Nové podklady: v katalógu ChatGPT sú porovnávače idealo a Klarna, ktoré
-   zarábajú na preklikoch do obchodov. Možnosť (d) má malý dosah: vlastný
-   konektor majú v ChatGPT naplno len firemné plány a Gemini ho pripojí len
-   v USA. Žiadosť sa dá podať až s reálnymi dátami.
-2. **MCP ako hlavné rozhranie.** Prototyp s tým počíta; treba potvrdiť. Do
-   katalógu ChatGPT ani Claude iná cesta nevedie.
+   **Rozhodnuté 17. 11.:** priame odkazy ako v prototype. Preklik vedie cez
+   náš merací odkaz rovno do obchodu, partnerské odkazy sa priznávajú
+   a ponuky sú zoradené len podľa ceny. Pred žiadosťou do katalógu sa
+   opýtať podpory OpenAI. Ak žiadosť zamietnu, prejsť na odkazy cez našu
+   stránku produktu.
+2. **MCP ako hlavné rozhranie.** **Rozhodnuté 17. 11.:** áno, REST API
+   ostáva ako druhé rozhranie.
 3. **Názov a doména.** Blokuje web, registrácie aj testovanie v ChatGPT, ktoré
    potrebuje verejnú adresu s HTTPS. Pravidlá OpenAI neprijmú všeobecný
    slovníkový názov a adresu MCP servera po zverejnení zmení len podpora.
-4. **Na koho sa registrovať v sieťach.** Dognet vypláca aj fyzickej osobe.
-   Plugin v ChatGPT sa zverejní pod overeným menom jednotlivca alebo firmy.
+   Vyberá majiteľ z kandidátov nižšie. Domény sme overili v registroch
+   17. 11. 2026; pred kúpou ich treba overiť znova a pozrieť ochranné známky
+   v [TMview](https://www.tmdn.org/tmview/).
+
+   | Názov | Význam | .sk | .cz | .com |
+   | --- | --- | --- | --- | --- |
+   | Cenoradar | sleduje ceny a upozorní na zmenu | voľná | voľná | voľná |
+   | Cenostopa | cenová stopa, teda história ceny | voľná | voľná | voľná |
+   | Cenopis | kronika cien (ako letopis) | voľná | voľná | voľná |
+   | Cenokompas | ukáže, kedy kúpiť | voľná | voľná | voľná |
+   | Cenograf | graf ceny | voľná | voľná | obsadená |
+   | Cenotrend | vývoj ceny | voľná | voľná | voľná |
+
+   Vyradené: Cenoskop (existujúci český porovnávač nákupných zoznamov),
+   Cenomer (oceňovanie nehnuteľností), Cenometer (po česky neprirodzený
+   a podobný Cenomeru), Cenopilot (pripomína Microsoft Copilot).
+4. **Na koho sa registrovať v sieťach.** **Rozhodnuté 17. 11.:** na fyzickú
+   osobu, v sieťach aj pri overení v OpenAI. Plugin sa v katalógu ChatGPT
+   zverejní pod menom majiteľa. **Treba ešte potvrdiť:** zákon
+   o elektronickom obchode (§ 4 ods. 1) vyžaduje od fyzickej osoby uviesť na
+   webe meno, adresu bydliska, e-mail a telefón. Adresu bydliska nemusí
+   zverejniť len firma (s.r.o.), ktorá má sídlo inde.
 5. **Len Slovensko, alebo aj Česko od začiatku.**
 6. **Vizuál webu.**
 7. **Služba na e-maily a úložisko záloh mimo VPS.**
@@ -78,7 +96,7 @@ doménu, web a schválenie v sieťach.
 | 5 | API pre AI asistentov | Claude | `product-compare` ako MCP, REST a OpenAPI | 4 | 7.–27. 12. | Prototyp hotový |
 | 6 | Redirector a produktové stránky | Claude | Merané prekliky; vyhľadávač a stránka produktu na webe | 5 | 28. 12. – 10. 1. | Prototyp hotový |
 | 7 | Stráženie ceny | Claude | Stránka `/alert`, potvrdzovacie a cenové e-maily | 6 | 11.–24. 1. | Prototyp hotový; chýba odosielanie e-mailov |
-| 8 | Distribúcia v AI platformách | Claude a majiteľ | Plugin v katalógu ChatGPT, konektor pre Claude; Gemini zatiaľ len v USA | 5, 6, rozhodnutie 1, reálne feedy | 25. 1. – 7. 2. | Nezačaté; pravidlá a požiadavky zistené |
+| 8 | Distribúcia v AI platformách | Claude a majiteľ | Plugin v katalógu ChatGPT, konektor pre Claude; Gemini zatiaľ len v USA | 5, 6, reálne feedy | 25. 1. – 7. 2. | Nezačaté; pravidlá a požiadavky zistené |
 | 9 | Zdanlivé zľavy a verdikty | Claude | Varovania a verdikty postavené na reálnej histórii | 30 a 90 dní po štarte zberu | od polovice januára | Logika hotová; prahy sa doladia na reálnych dátach |
 
 ## Časová os
@@ -134,7 +152,7 @@ marca 2027.
 - [x] Prihlásiť nástroj Vercel na VPS, aby sa dala nastaviť `DATABASE_URL` (17. 11.).
 - [ ] V ChatGPT (účet zo Slovenska) pozrieť, či je v bočnom paneli sekcia aplikácií alebo pluginov, či sa v nej dá nájsť napríklad „idealo“ alebo „Slevomat“ a či sa v nastaveniach dá pridať vlastný MCP server. Pár minút; overí, že kanál je dostupný aj zo Slovenska.
 - [ ] V ChatGPT vyskúšať Klarna Shopping Search s otázkou na cenu na Slovensku (či Klarna pokrýva SK).
-- [ ] Rozhodnúť, na koho sa registrovať. Dognet podľa podmienok vypláca aj fyzickej osobe (minimum 100 €); pri eHub treba overiť.
+- [x] Rozhodnúť, na koho sa registrovať: fyzická osoba (17. 11.). Dognet vypláca aj fyzickej osobe (minimum 100 €); pri eHub treba overiť.
 - [ ] Pri registrácii v Dognete sa písomne opýtať na štyri body z `prieskum.md` (kapitola 6); v eHube na pravidlá pre zdroj návštevnosti.
 - [ ] Otvoriť v prehliadači stránku OpenAI o konci vlastných GPT a potvrdiť dátum 11. 12. 2026 (odkaz je v `prieskum.md`).
 - [ ] Vybrať názov a kúpiť doménu.
@@ -156,4 +174,5 @@ marca 2027.
 | 2026-11-17 | Ukážka nasadená na Vercel (projekt `porovnavac-cien`, prepojený s GitHubom, región funkcií Frankfurt, prístup len po prihlásení do Vercelu). Prvé nasadenie padlo pri štarte, lebo preložené súbory odkazovali na moduly s príponou `.ts`; opravené voľbou `rewriteRelativeImportExtensions`. Overené: informačné stránky vracajú 200, API bez databázy 503, neprihlásený návštevník je presmerovaný na prihlásenie. |
 | 2026-11-17 | Databáza pre ukážku: projekt v Neone (bezplatný plán, Frankfurt, PostgreSQL 18), prepojený nástrojom `neon` (`neon.ts`, `.env.local`). Migrácie a ukážkové dáta prebehli; `pnpm migrate` a `pnpm demo:seed` používajú priame pripojenie `DATABASE_URL_UNPOOLED`, ak je nastavené. Aplikácia cez pooler overená lokálne. Na Verceli ešte treba nastaviť `DATABASE_URL`. |
 | 2026-11-17 | `DATABASE_URL` nastavená na Verceli ako citlivá premenná (Production aj Preview) priamo zo súboru cez nástroj `vercel`; nasadený commit `0c5fba3`. Na Verceli overené: API vracia porovnanie s verdiktom a upozornením na zdanlivú zľavu, stránka produktu má graf ceny, neprihlásený návštevník je presmerovaný na prihlásenie. Na VPS sú prihlásené nástroje `neon` a `vercel` (aktualizovaný na 65.17.0) a nainštalované ich pluginy pre Claude Code. |
-| 2026-11-17 | Prieskum realizovateľnosti distribúcie (`prieskum.md`, kapitoly 2, 3 a 6 až 9). V katalógu ChatGPT sú porovnávače idealo a Klarna aj české služby Slevomat a Suri, takže pluginy v EÚ fungujú. Pravidlá OpenAI neprijímajú ukážkové pluginy ani všeobecné názvy. Gemini pripojí vlastný MCP server len v USA. Podmienky Dognetu porovnávač pripúšťajú. Písomne treba potvrdiť AI chat ako zdroj, odovzdávanie údajov z feedov platforme a upozornenia na zdanlivé zľavy. Prekliky neukladajú IP, sieť však áno, a zásady ochrany súkromia to musia uvádzať. |
+| 2026-11-17 | Prieskum realizovateľnosti distribúcie (`prieskum.md`, kapitoly 2, 3, 6 až 8 a 10). V katalógu ChatGPT sú porovnávače idealo a Klarna aj české služby Slevomat a Suri, takže pluginy v EÚ fungujú. Pravidlá OpenAI neprijímajú ukážkové pluginy ani všeobecné názvy. Gemini pripojí vlastný MCP server len v USA. Podmienky Dognetu porovnávač pripúšťajú. Písomne treba potvrdiť AI chat ako zdroj, odovzdávanie údajov z feedov platforme a upozornenia na zdanlivé zľavy. Prekliky neukladajú IP, sieť však áno, a zásady ochrany súkromia to musia uvádzať. |
+| 2026-11-17 | Majiteľ rozhodol: priame affiliate odkazy (pred žiadosťou otázka na podporu OpenAI), MCP ako hlavné rozhranie, registrácie na fyzickú osobu. Claude pripravil šesť kandidátov na názov s doménami overenými v registroch .sk, .cz a .com. Zistené: fyzická osoba musí podľa § 4 zákona o elektronickom obchode uviesť na webe adresu bydliska a telefón. |
