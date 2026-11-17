@@ -14,6 +14,10 @@ export const STATIC_FILES: Record<string, string> = {
   '/fonts/inter-v20-latin-ext-wght.woff2': 'font/woff2',
   '/fonts/space-grotesk-v22-latin-wght.woff2': 'font/woff2',
   '/fonts/space-grotesk-v22-latin-ext-wght.woff2': 'font/woff2',
+  '/favicon.svg': 'image/svg+xml',
+  '/favicon.ico': 'image/x-icon',
+  '/apple-touch-icon.png': 'image/png',
+  '/og.png': 'image/png',
 };
 
 const PUBLIC_DIR = new URL('../../public/', import.meta.url);

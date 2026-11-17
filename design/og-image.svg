@@ -1,0 +1,61 @@
+<!-- Obrázok na zdieľanie (og:image), 1200 × 630. PNG vykreslí vykreslit-obrazky.mjs. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="ziara" cx="990" cy="340" r="560" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#35E0A1" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#35E0A1" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#0B1220"/>
+  <rect width="1200" height="630" fill="url(#ziara)"/>
+  <!-- Radar: kruhy každých 80 px -->
+  <g fill="none" stroke="#35E0A1" stroke-opacity="0.16" stroke-width="1.5">
+    <circle cx="990" cy="340" r="80"/>
+    <circle cx="990" cy="340" r="160"/>
+    <circle cx="990" cy="340" r="240"/>
+    <circle cx="990" cy="340" r="320"/>
+    <circle cx="990" cy="340" r="400"/>
+    <circle cx="990" cy="340" r="480"/>
+    <circle cx="990" cy="340" r="560"/>
+    <circle cx="990" cy="340" r="640"/>
+    <circle cx="990" cy="340" r="720"/>
+    <circle cx="990" cy="340" r="800"/>
+    <circle cx="990" cy="340" r="880"/>
+  </g>
+  <g fill="#35E0A1" fill-opacity="0.02">
+    <path d="M990 340 L990.0 -420.0 A760 760 0 0 1 1712.8 105.1 Z"/>
+    <path d="M990 340 L1043.0 -418.1 A760 760 0 0 1 1712.8 105.1 Z"/>
+    <path d="M990 340 L1095.8 -412.6 A760 760 0 0 1 1712.8 105.1 Z"/>
+    <path d="M990 340 L1148.0 -403.4 A760 760 0 0 1 1712.8 105.1 Z"/>
+    <path d="M990 340 L1199.5 -390.6 A760 760 0 0 1 1712.8 105.1 Z"/>
+    <path d="M990 340 L1249.9 -374.2 A760 760 0 0 1 1712.8 105.1 Z"/>
+    <path d="M990 340 L1299.1 -354.3 A760 760 0 0 1 1712.8 105.1 Z"/>
+    <path d="M990 340 L1346.8 -331.0 A760 760 0 0 1 1712.8 105.1 Z"/>
+    <path d="M990 340 L1392.7 -304.5 A760 760 0 0 1 1712.8 105.1 Z"/>
+    <path d="M990 340 L1436.7 -274.9 A760 760 0 0 1 1712.8 105.1 Z"/>
+    <path d="M990 340 L1478.5 -242.2 A760 760 0 0 1 1712.8 105.1 Z"/>
+    <path d="M990 340 L1517.9 -206.7 A760 760 0 0 1 1712.8 105.1 Z"/>
+    <path d="M990 340 L1554.8 -168.5 A760 760 0 0 1 1712.8 105.1 Z"/>
+    <path d="M990 340 L1588.9 -127.9 A760 760 0 0 1 1712.8 105.1 Z"/>
+    <path d="M990 340 L1620.1 -85.0 A760 760 0 0 1 1712.8 105.1 Z"/>
+    <path d="M990 340 L1648.2 -40.0 A760 760 0 0 1 1712.8 105.1 Z"/>
+    <path d="M990 340 L1673.1 6.8 A760 760 0 0 1 1712.8 105.1 Z"/>
+    <path d="M990 340 L1694.7 55.3 A760 760 0 0 1 1712.8 105.1 Z"/>
+  </g>
+  <line x1="990" y1="340" x2="1712.8" y2="105.1" stroke="#35E0A1" stroke-opacity="0.5" stroke-width="2"/>
+  <circle cx="990" cy="340" r="6" fill="#35E0A1" fill-opacity="0.6"/>
+  <circle cx="1131.4" cy="198.6" r="24" fill="#35E0A1" fill-opacity="0.18"/>
+  <circle cx="1131.4" cy="198.6" r="10" fill="#35E0A1"/>
+  <!-- Logo a názov -->
+  <g transform="translate(80 72) scale(2)"><circle cx="16" cy="16" r="14.5" fill="#131D33" stroke="#35E0A1" stroke-width="2"/><circle cx="16" cy="16" r="8.5" fill="none" stroke="#35E0A1" stroke-opacity="0.45" stroke-width="1.5"/><path d="M16 16 L16 1.5 A14.5 14.5 0 0 1 29.8 11.5 Z" fill="#35E0A1" fill-opacity="0.35"/><circle cx="22.5" cy="9.5" r="2.6" fill="#35E0A1"/></g>
+  <text x="162" y="120" font-family="Space Grotesk" font-weight="700" font-size="46" letter-spacing="-0.5" fill="#F4F7FC">Cenoradar</text>
+  <!-- Nadpis ako na úvodnej stránke -->
+  <text font-family="Space Grotesk" font-weight="700" font-size="116" letter-spacing="-4" fill="#F4F7FC">
+    <tspan x="74" y="320">Je to <tspan fill="#35E0A1">naozaj</tspan></tspan>
+    <tspan x="74" y="438">zľava?</tspan>
+  </text>
+  <text font-family="Inter" font-weight="400" font-size="32" fill="#B8C5D9">
+    <tspan x="80" y="516">Porovnanie cien elektroniky s históriou cien</tspan>
+    <tspan x="80" y="562">a odhalením zdanlivých zliav. Slovensko a Česko.</tspan>
+  </text>
+</svg>
