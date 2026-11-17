@@ -44,6 +44,12 @@ končia na ukážkovej stránke, lebo e-shopy neexistujú.
 Slúži len na pozretie webu, nie ako ostrá prevádzka. Vercel si aplikáciu
 zostaví sám zo súboru `src/index.ts`.
 
+Projekt na Verceli sa volá `porovnavac-cien`, je prepojený s repozitárom na
+GitHube a má adresu <https://porovnavac-cien-nu.vercel.app>. Všetky adresy
+sú chránené prihlásením do Vercelu (Vercel Authentication, nastavenie „all“),
+takže ukážku vidí len majiteľ účtu. Kým web nemá prevádzkovateľa, právne
+texty a odosielanie e-mailov, ochranu nevypínať.
+
 1. Vytvoriť hostovanú PostgreSQL 17 s rozšíreniami `pg_trgm`, `unaccent`
    a `citext` (napríklad Neon alebo Supabase).
 2. V projekte na Verceli nastaviť premenné `DATABASE_URL` a `DEMO=1`.
@@ -57,7 +63,9 @@ zostaví sám zo súboru `src/index.ts`.
    Príkaz spustí migrácie a vloží vzorové e-shopy so 100 dňami histórie.
    Odmietne bežať nad databázou, v ktorej už nejaké obchody sú.
 
-Lokálne sa zostavenie dá overiť príkazom `vercel build`. E-maily sa ani tu
+Lokálne sa zostavenie dá overiť príkazom `vercel build`. Vercel prekladá
+súbory jednotlivo, preto `tsconfig.json` musí mať zapnuté
+`rewriteRelativeImportExtensions`; inak funkcia po štarte nenájde moduly. E-maily sa ani tu
 neodosielajú a nočný import nebeží, takže história cien končí dňom naplnenia.
 
 ## Testy a merania
