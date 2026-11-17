@@ -3,6 +3,7 @@ import path from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { compareProduct } from '../src/compare/compare.ts';
 import type { CompareResponse } from '../src/compare/schema.ts';
+import { createDemoApp } from '../src/dev/demo-app.ts';
 import { seedDemo } from '../src/dev/demo-seed.ts';
 import { createTestDb, first, type Sql } from './helpers/db.ts';
 import { memoryMailer, TEST_CONFIG } from './helpers/scenario.ts';
@@ -86,5 +87,29 @@ describe('ukážkové dáta', () => {
     const template = first(await sql`SELECT DISTINCT deeplink_template FROM shop_feeds`).deeplink_template;
 
     expect(template).toBe('http://localhost:3000/demo/eshop?sub={click_id}&url={url}');
+  });
+});
+
+describe('ukážková aplikácia', () => {
+  const app = () =>
+    createDemoApp({ sql, config: TEST_CONFIG, mailer: memoryMailer(), today: () => '2026-11-17' });
+
+  it('preklik z ukážky skončí na zástupnej stránke e-shopu, nie v cudzom obchode', async () => {
+    const offer = first(await sql<{ id: string }[]>`SELECT id FROM offers WHERE is_active ORDER BY id LIMIT 1`);
+
+    const redirect = await app().request(`/redirect?offer_id=${offer.id}&source=web`);
+    expect(redirect.status).toBe(302);
+    const target = new URL(redirect.headers.get('location')!);
+    expect(target.origin + target.pathname).toBe('http://localhost:3000/demo/eshop');
+
+    const page = await app().request(target.pathname + target.search);
+    expect(page.status).toBe(200);
+    expect(await page.text()).toContain('Tu by bol e-shop');
+  });
+
+  it('obsahuje aj celú ostrú aplikáciu', async () => {
+    const res = await app().request('/hladat?q=roborock+s8+pro+ultra');
+
+    expect([200, 302]).toContain(res.status);
   });
 });

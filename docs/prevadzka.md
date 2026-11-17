@@ -39,6 +39,27 @@ claude mcp add --transport http porovnavac http://localhost:3000/mcp
 E-maily stráženia ceny sa v ukážke vypisujú do konzoly. Prekliky do obchodov
 končia na ukážkovej stránke, lebo e-shopy neexistujú.
 
+## Ukážka na Verceli
+
+Slúži len na pozretie webu, nie ako ostrá prevádzka. Vercel si aplikáciu
+zostaví sám zo súboru `src/index.ts`.
+
+1. Vytvoriť hostovanú PostgreSQL 17 s rozšíreniami `pg_trgm`, `unaccent`
+   a `citext` (napríklad Neon alebo Supabase).
+2. V projekte na Verceli nastaviť premenné `DATABASE_URL` a `DEMO=1`.
+   `PUBLIC_BASE_URL` netreba; použije sa adresa, ktorú pridelí Vercel.
+3. Raz naplniť databázu ukážkovými dátami z ľubovoľného počítača:
+
+   ```
+   DATABASE_URL=… PUBLIC_BASE_URL=https://ADRESA-UKAZKY pnpm demo:seed
+   ```
+
+   Príkaz spustí migrácie a vloží vzorové e-shopy so 100 dňami histórie.
+   Odmietne bežať nad databázou, v ktorej už nejaké obchody sú.
+
+Lokálne sa zostavenie dá overiť príkazom `vercel build`. E-maily sa ani tu
+neodosielajú a nočný import nebeží, takže história cien končí dňom naplnenia.
+
 ## Testy a merania
 
 ```

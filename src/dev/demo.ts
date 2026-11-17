@@ -5,14 +5,12 @@ import net from 'node:net';
 import path from 'node:path';
 import { serve } from '@hono/node-server';
 import EmbeddedPostgres from 'embedded-postgres';
-import { Hono } from 'hono';
-import { html } from 'hono/html';
 import postgres from 'postgres';
 import { logMailer } from '../alerts/mailer.ts';
-import { createApp } from '../app.ts';
 import { loadConfig } from '../config.ts';
 import { TIME_ZONE, todayIn } from '../dates.ts';
 import { migrate } from '../db/migrate.ts';
+import { createDemoApp } from './demo-app.ts';
 import { seedDemo } from './demo-seed.ts';
 
 function freePort(): Promise<number> {
@@ -52,21 +50,7 @@ await migrate(sql);
 console.log('Importujem vzorové feedy (100 dní histórie)…');
 await seedDemo(deps, { today, feedDir: path.join(dir, 'feeds'), shopBaseUrl: config.redirectBaseUrl });
 
-// Ukážkové e-shopy neexistujú; preklik skončí na tejto stránke namiesto obchodu.
-const app = new Hono();
-app.get('/demo/eshop', (c) =>
-  c.html(html`<!doctype html>
-    <meta charset="utf-8" />
-    <title>Ukážkový e-shop</title>
-    <body style="font:16px system-ui;max-width:40rem;margin:3rem auto;padding:0 1rem">
-      <h1>Tu by bol e-shop</h1>
-      <p>V ostrej prevádzke by vás partnerská sieť presmerovala na stránku produktu:</p>
-      <p><code>${c.req.query('url') ?? ''}</code></p>
-      <p>Identifikátor prekliku (sub-ID pre sieť): <code>${c.req.query('sub') ?? ''}</code></p>
-      <p><a href="/">Späť na ukážku</a></p>
-    </body>`),
-);
-app.route('/', createApp(deps));
+const app = createDemoApp(deps);
 
 const hostname = process.env.HOST ?? '127.0.0.1';
 const server = serve({ fetch: app.fetch, port: config.port, hostname }, () => {

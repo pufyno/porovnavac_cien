@@ -275,6 +275,8 @@ s pokynom pre asistenta, aby ceny neodhadoval.
 | 2026-11-17 | Zdanlivá zľava sa zisťuje len z vlastnej histórie | Formát Heureka pôvodnú cenu neobsahuje. |
 | 2026-11-17 | Nejasný dopyt vracia kandidátov, nie najlepší odhad | Nesprávne spárovaný produkt by znamenal nesprávnu cenu a verdikt. |
 | 2026-11-17 | Stráženie ceny je jednorazové a vyžaduje potvrdenie e-mailom | GDPR a ochrana pred zneužitím cudzej adresy. |
+| 2026-11-17 | Ukážka na pozretie beží na Verceli (`src/index.ts`); ostrá prevádzka ostáva na VPS | Majiteľ si chce web pozrieť bez nastavovania VPS. Vercel potrebuje hostovanú PostgreSQL. |
+| 2026-11-17 | TypeScript 6 namiesto 7 | Zostavovací nástroj Vercelu s TypeScriptom 7 padá; typová kontrola aj testy prechádzajú na oboch. |
 
 ## 10. Riziká
 
