@@ -54,9 +54,8 @@ function alertForm(product: AlertProduct, values: FormValues, error?: string): H
 }
 
 export function registerAlertRoutes(app: OpenAPIHono, deps: AppDeps): void {
-  const { siteName } = deps.config;
   const render = (c: Context, title: string, body: Html, status: 200 | 400 | 404 = 200) =>
-    c.html(page({ siteName, title, noindex: true, body }), status);
+    c.html(page({ site: deps.config, title, noindex: true, body }), status);
 
   const productNotFound = (c: Context) =>
     render(

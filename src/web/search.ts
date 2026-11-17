@@ -9,6 +9,7 @@ import { formatDays, formatPrice, formatShops } from '../format.ts';
 import { normalizeEan } from '../ingest/gtin.ts';
 import { loadPriceHistory } from '../stats/history.ts';
 import { historyChart } from './chart.ts';
+import { searchForm } from './components.ts';
 import { page, type Html } from './layout.ts';
 
 type Ok = Extract<CompareResponse, { status: 'ok' }>;
@@ -21,18 +22,6 @@ const VERDICT_LABEL: Record<Verdict, string> = {
 };
 
 const countrySuffix = (country: Country) => (country === 'SK' ? '' : `?country=${country}`);
-
-export function searchForm(query: string, country: Country): Html {
-  return html`<form class="search" action="/hladat" method="get" role="search">
-    <input type="search" name="q" value="${query}" placeholder="Napríklad Roborock S8 alebo EAN kód"
-      aria-label="Názov produktu alebo EAN" maxlength="200" required />
-    <select name="country" aria-label="Krajina">
-      <option value="SK" ${country === 'SK' ? 'selected' : ''}>Slovensko</option>
-      <option value="CZ" ${country === 'CZ' ? 'selected' : ''}>Česko</option>
-    </select>
-    <button type="submit">Hľadať</button>
-  </form>`;
-}
 
 function availability(offer: Ok['offers'][number]): string {
   if (offer.in_stock) return 'Skladom';
@@ -90,14 +79,21 @@ function productBody(result: Ok, chart: Html | null, alertPath: string): Html {
 }
 
 export function registerSearchRoutes(app: OpenAPIHono, deps: AppDeps): void {
-  const { siteName } = deps.config;
+  const site = deps.config;
 
   app.get('/hladat', async (c) => {
     const query = (c.req.query('q') ?? '').trim();
     const country = parseCountry(c.req.query('country'));
     const render = (title: string, body: Html) =>
       c.html(
-        page({ siteName, title, noindex: true, body: html`<h1>Hľadať produkt</h1>${searchForm(query, country)}${body}` }),
+        page({
+          site,
+          title,
+          noindex: true,
+          layout: 'wide',
+          search: false,
+          body: html`<h1>Hľadať produkt</h1>${searchForm(query, country)}${body}`,
+        }),
       );
     if (query === '') return render('Hľadať produkt', html``);
 
@@ -135,9 +131,10 @@ export function registerSearchRoutes(app: OpenAPIHono, deps: AppDeps): void {
     if (!ean || result?.status !== 'ok') {
       return c.html(
         page({
-          siteName,
+          site,
           title: 'Produkt sme nenašli',
           noindex: true,
+          search: false,
           body: html`<h1>Produkt sme nenašli</h1>
             <p>Tento produkt neevidujeme alebo ho v zvolenej krajine práve nikto z našich partnerov nepredáva.</p>
             ${searchForm('', country)}`,
@@ -150,7 +147,9 @@ export function registerSearchRoutes(app: OpenAPIHono, deps: AppDeps): void {
     const lowest = formatPrice(result.price_analysis.current_lowest_price, result.currency);
     return c.html(
       page({
-        siteName,
+        site,
+        layout: 'wide',
+        search: country,
         title: `${result.product_name}: ceny od ${lowest}`,
         description: `${result.product_name} od ${lowest}. ${result.price_analysis.verdict_reason}`,
         body: productBody(

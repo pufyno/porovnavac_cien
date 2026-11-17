@@ -3,7 +3,8 @@ import { html } from 'hono/html';
 import type { AppDeps } from '../deps.ts';
 import { registerAlertRoutes } from './alert.ts';
 import { page } from './layout.ts';
-import { registerSearchRoutes, searchForm } from './search.ts';
+import { searchForm } from './components.ts';
+import { registerSearchRoutes } from './search.ts';
 import { STATIC_PAGES } from './static-pages.ts';
 import { registerStaticFiles } from './static-files.ts';
 
@@ -36,11 +37,12 @@ export function registerWeb(app: OpenAPIHono, deps: AppDeps): void {
   app.get('/', (c) =>
     c.html(
       page({
-        siteName: config.siteName,
+        site: config,
+        layout: 'landing',
         title: 'Ceny elektroniky a história zliav',
         description:
           'Porovnanie cien elektroniky v slovenských a českých e-shopoch s históriou cien a odhalením zdanlivých zliav.',
-        body: html`<h1>Koľko to naozaj stojí a je tá zľava skutočná?</h1>
+        body: html`<div class="wrap main-wide"><h1>Koľko to naozaj stojí a je tá zľava skutočná?</h1>
           <p>
             Porovnávame ceny elektroniky v slovenských a českých e-shopoch, sledujeme ich vývoj a upozorníme, keď
             obchod cenu pred „akciou“ zdvihol.
@@ -62,7 +64,7 @@ export function registerWeb(app: OpenAPIHono, deps: AppDeps): void {
           <p>
             Cena je zatiaľ vysoká? Pri každom produkte si nastavíte cenu, pri ktorej vám pošleme e-mail. Bez
             registrácie.
-          </p>`,
+          </p></div>`,
       }),
     ),
   );
@@ -71,7 +73,7 @@ export function registerWeb(app: OpenAPIHono, deps: AppDeps): void {
     app.get(staticPage.path, (c) =>
       c.html(
         page({
-          siteName: config.siteName,
+          site: config,
           title: staticPage.title,
           description: staticPage.description,
           body: staticPage.body(config),

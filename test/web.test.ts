@@ -62,6 +62,45 @@ describe('úvodná stránka', () => {
   });
 });
 
+describe('rozloženie', () => {
+  it('hlavička má logo, menu pre mobil a odkaz na obsah', async () => {
+    const { html } = await get('/ako-to-funguje');
+
+    expect(html).toContain('<a class="brand" href="/"');
+    expect(html).toContain('<details');
+    expect(html).toContain('href="#obsah"');
+    expect(html).toContain('id="obsah"');
+  });
+
+  it.each(['/', '/ako-to-funguje', `/produkt/${EAN.roborockS8}`])(
+    'stránka %s nemá JavaScript ani cookies',
+    async (path) => {
+      const { res, html } = await get(path);
+
+      expect(res.status).toBe(200);
+      expect(html).not.toContain('<script');
+      expect(res.headers.get('set-cookie')).toBeNull();
+    },
+  );
+
+  it('zdieľanie má obrázok s absolútnou adresou a ikonu', async () => {
+    const { html } = await get('/');
+
+    expect(html).toContain('<meta property="og:image" content="https://domena.example/og.png"');
+    expect(html).toContain('<meta property="og:title"');
+    expect(html).toContain('<meta name="twitter:card" content="summary_large_image"');
+    expect(html).toContain('<link rel="icon" href="/favicon.svg"');
+  });
+
+  it('vyhľadávanie v hlavičke si drží krajinu, úvod ho nemá', async () => {
+    const cz = await get(`/produkt/${EAN.roborockS8}?country=CZ`);
+    const home = await get('/');
+
+    expect(cz.html).toMatch(/<form class="search-compact"[^]*?name="country" value="CZ"[^]*?<\/form>/);
+    expect(home.html).not.toContain('<form class="search-compact"');
+  });
+});
+
 describe('obsahové a právne stránky', () => {
   it.each(['/ako-to-funguje', '/pre-ai-asistentov', '/o-nas', '/ochrana-sukromia', '/affiliate'])(
     '%s sa zobrazí',

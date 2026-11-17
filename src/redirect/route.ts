@@ -19,7 +19,7 @@ export function registerRedirectRoute(app: OpenAPIHono, deps: AppDeps): void {
 
     return c.html(
       page({
-        siteName: deps.config.siteName,
+        site: deps.config,
         title: 'Ponuka už nie je dostupná',
         noindex: true,
         body: html`<h1>Ponuka už nie je dostupná</h1>
